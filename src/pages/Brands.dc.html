@@ -102,7 +102,7 @@ For brands</p>
 <p style="margin: 0; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em">{{p.kicker}}</p>
 <h3 style="margin: 0; font-weight: 800; font-size: clamp(28px, 3.06vw, 44px); line-height: 1; letter-spacing: -0.03em">{{p.title}}</h3>
 <p style="margin: 0; font-size: 18px; line-height: 1.5">{{p.body}}</p>
-<p style="margin: auto 0 0; padding: 14px 18px; border-radius: 16px; background: #FFFFFF; color: #080611; font-weight: 700; font-size: 16px">{{p.price}}</p>
+<p style="margin: auto 0 0; padding: 14px 18px; border-radius: 16px; background: #FFFFFF; color: #080611; font-weight: 700; font-size: 16px"><span data-usd="15">$15</span> {{p.priceRest}}</p>
 </div>
 <ol style="flex: 1 1 520px; min-width: 0; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px">
 <sc-for list="{{p.steps}}" as="step" hint-placeholder-count="5">
@@ -174,7 +174,7 @@ For brands</p>
 <section style="padding: 0 clamp(16px, 1.7vw, 24px)">
 <div style="max-width: 1392px; margin: 0 auto; background: #00C4BC; border: 3px solid #080611; border-radius: 48px; padding: clamp(40px, 5.56vw, 80px) 32px; display: flex; flex-wrap: wrap; gap: 32px; align-items: center; justify-content: space-between; box-sizing: border-box">
 <div style="flex: 1 1 560px; min-width: 0">
-<h2 style="margin: 0; font-weight: 800; font-size: clamp(44px, 6vw, 88px); line-height: 0.9; letter-spacing: -0.045em">From $15 a campaign.</h2>
+<h2 style="margin: 0; font-weight: 800; font-size: clamp(44px, 6vw, 88px); line-height: 0.9; letter-spacing: -0.045em">From <span data-usd="15">$15</span> a campaign.</h2>
 <p style="margin: 16px 0 0; font-size: 19px; line-height: 1.5">Plus 10% of your campaign budget. No subscription.</p>
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 12px">
@@ -202,7 +202,7 @@ collab: {
 label: 'Collaboration Hub', color: '#5331E8', ink: '#FFFFFF',
 kicker: 'Pay for content', title: 'Collaboration Hub',
 body: 'Post a brief to the whole creator network, review who applies, and pick the creators that fit your brand.',
-price: '$15 per campaign + 10% of budget',
+priceRest: 'per campaign + 10% of budget',
 steps: [
 { n: 1, title: 'Sign up on Aktivate', body: 'Create your brand account in minutes.' },
 { n: 2, title: 'Create your campaign', body: 'Add details, deliverables, budget and timeline.' },
@@ -215,7 +215,7 @@ shop: {
 label: 'ShopLink', color: '#00C4BC', ink: '#080611',
 kicker: 'Pay on results', title: 'ShopLink',
 body: 'List your products once. Creators add them to their storefronts and sell to their followers. You only pay commission on real sales.',
-price: '$15 per product listed + commission you set',
+priceRest: 'per product listed + commission you set',
 steps: [
 { n: 1, title: 'Sign up on Aktivate', body: 'Create your brand account in minutes.' },
 { n: 2, title: 'List your products', body: 'Add pricing, photos and details.' },

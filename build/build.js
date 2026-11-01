@@ -8,7 +8,9 @@ const DC = require('./dc-lite.js');
 const [, , PAGES_DIR, OUT, ASSET_MAP] = process.argv;
 const assetMap = JSON.parse(fs.readFileSync(ASSET_MAP, 'utf8'));
 const SITE_URL = 'https://useaktivate.com';
-const APP_URL = 'https://console.useaktivate.com';
+const APP_URL = 'https://app.useaktivate.com';
+const SHOP_URL = 'https://shop.useaktivate.com';
+const SALES = 'mailto:sales@useaktivate.com';
 
 const ROUTES = {
   Main: '/', CreatorsCampaigns: '/creators/collaboration-hub/', CreatorsShopLink: '/creators/shoplink/',
@@ -35,17 +37,6 @@ const META = {
 const SWAPS = {
   Main: [
     [/<!-- CREATOR VOICES -->[\s\S]*?(?=<!-- REFER -->)/, ''],
-    ['[Payout timing — e.g. campaign fees after content is approved, shop commission after the order is confirmed.]',
-      'Campaign fees are released once your content is approved and live. Shop commission is paid once the order is confirmed.'],
-  ],
-  CreatorsCampaigns: [
-    ['[Payout timing — e.g. within X days of your content being approved and live.]',
-      'Once your content is approved and live, your fee is released to your Aktivate wallet.'],
-  ],
-  Pricing: [
-    ['[Price per credit] · no subscription', 'Pay as you go · no subscription'],
-    ['[Confirm local-currency pricing — e.g. campaign listing is ₦15,000 in Nigeria.]',
-      'Prices are shown in US dollars. In Nigeria a campaign listing is ₦15,000 — or ₦5,000 for Access Bank SME customers.'],
   ],
   About: [
     ['aria-label="Photo of Akinbola Asalu to be added"', 'aria-label="Akinbola Asalu"'],
@@ -67,14 +58,16 @@ function prep(name, src) {
     if (!(n in ROUTES)) throw new Error('unknown route ' + n);
     return ROUTES[n];
   });
-  src = src.replace(/href="#(signup|login)"/g, `href="${APP_URL}"`);
   // Links that need a real destination. Edit these in one place.
   const LINKS = {
-    refer: APP_URL, access: APP_URL, claim: APP_URL,
-    contact: 'mailto:akinbola@useaktivate.com', sales: 'mailto:akinbola@useaktivate.com',
-    book: 'mailto:akinbola@useaktivate.com?subject=Aktivate%20demo', careers: 'mailto:akinbola@useaktivate.com?subject=Customer%20Growth%20Associate',
+    signup: APP_URL, login: APP_URL, refer: APP_URL, access: APP_URL,
+    'shop-signup': SHOP_URL, claim: SHOP_URL,
+    contact: SALES, sales: SALES, book: SALES + '?subject=Aktivate%20demo', careers: SALES + '?subject=Customer%20Growth%20Associate',
+    blog: 'https://blog.useaktivate.com',
+    instagram: 'https://www.instagram.com/useaktivate', tiktok: 'https://www.tiktok.com/@useaktivate',
+    x: 'https://x.com/useaktivate', linkedin: 'https://www.linkedin.com/company/aktivate-inc/',
   };
-  src = src.replace(/href="#([a-z]+)"/g, (m, k) => (LINKS[k] ? `href="${LINKS[k]}"` : m));
+  src = src.replace(/href="#([a-z-]+)"/g, (m, k) => (LINKS[k] ? `href="${LINKS[k]}"` : m));
   src = src.replace(/\/_blob\/([0-9a-f]{32})/g, (m, id) => {
     if (!assetMap[id]) throw new Error('unmapped asset ' + id + ' in ' + name);
     return '/assets/' + assetMap[id].out;
@@ -137,11 +130,12 @@ for (const name of pages) {
   const [title, desc] = META[name];
   const url = SITE_URL + ROUTES[name];
   const styles = headStyles([root.helmet, comps.Nav.helmet, comps.Footer.helmet]);
-  const scripts = ship.length ? `
+  const scripts = `
+<script src="/assets/currency.js"></script>` + (ship.length ? `
 <script src="/assets/morphdom.min.js"></script>
 <script src="/assets/dc-lite.js"></script>
 <script>(function(){var D=window.DCLite,defs={};${ship.map(shipDef).join('\n')}
-new D.Page(defs).hydrate();})();</script>` : '';
+new D.Page(defs).hydrate();})();</script>` : '');
   const doc = `<!doctype html>
 <html lang="en">
 <head>
@@ -181,6 +175,7 @@ ${html}${scripts}
 for (const id in assetMap) fs.copyFileSync(assetMap[id].src, path.join(OUT, 'assets', assetMap[id].out));
 fs.copyFileSync(require.resolve('morphdom/dist/morphdom-umd.min.js'), path.join(OUT, 'assets/morphdom.min.js'));
 fs.copyFileSync(path.join(__dirname, 'dc-lite.js'), path.join(OUT, 'assets/dc-lite.js'));
+fs.copyFileSync(path.join(__dirname, 'currency.js'), path.join(OUT, 'assets/currency.js'));
 
 fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`);
 fs.writeFileSync(path.join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemap.map(u => `  <url><loc>${u}</loc></url>`).join('\n')}\n</urlset>\n`);
