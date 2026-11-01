@@ -35,9 +35,6 @@ const META = {
 
 /* -------- launch-safe content swaps (production only) -------- */
 const SWAPS = {
-  Main: [
-    [/<!-- CREATOR VOICES -->[\s\S]*?(?=<!-- REFER -->)/, ''],
-  ],
   About: [
     ['aria-label="Photo of Akinbola Asalu to be added"', 'aria-label="Akinbola Asalu"'],
     ['aria-label="Photo of Seun Longe to be added"', 'aria-label="Seun Longe"'],
