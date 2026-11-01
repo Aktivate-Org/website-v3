@@ -22,6 +22,7 @@
 .m-hide{}
 @media (max-width:640px){
 .m-hide{display:none!important}
+.m-nosticky{position:static!important}
 .m-full{width:100%!important;justify-content:center!important;box-sizing:border-box}
 .tl-year{width:auto!important}
 .tl-row{flex-direction:column!important;gap:6px!important}
@@ -101,33 +102,80 @@ img{max-width:100%}
 </section>
 
 
-<section style="padding: clamp(56px, 7.2vw, 104px) clamp(16px, 1.7vw, 24px)">
-<div style="max-width: 1280px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(28px, 4vw, 64px)">
-<div style="flex: 1 1 400px; min-width: 0">
-<p style="margin: 0 0 16px; font-weight: 700; color: #5331E8; text-transform: uppercase; letter-spacing: 0.08em; font-size: 14px">Our story</p>
-<h2 style="margin: 0; font-weight: 800; font-size: clamp(36px, 5vw, 72px); line-height: 0.95; letter-spacing: -0.04em">We started with a problem we lived.</h2>
+<section aria-labelledby="story-h" style="padding: clamp(56px, 7.2vw, 104px) clamp(16px, 1.7vw, 24px)">
+<div style="max-width: 1280px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(32px, 4.4vw, 64px); align-items: flex-start">
+<div class="m-nosticky" style="flex: 1 1 380px; min-width: 0; position: sticky; top: 24px">
+<p style="margin: 0 0 16px; font-weight: 700; color: #5331E8; text-transform: uppercase; letter-spacing: 0.08em; font-size: 14px">How we got here</p>
+<h2 id="story-h" style="margin: 0; font-weight: 800; font-size: clamp(36px, 5vw, 72px); line-height: 0.95; letter-spacing: -0.04em">Built from both sides of the deal.</h2>
 <img src="/assets/d-squiggle-purple.svg" alt="" aria-hidden="true" style="display: block; width: 220px; margin-top: 14px">
+<p style="margin: 22px 0 0; max-width: 460px; font-size: clamp(17px, 1.3vw, 19px); line-height: 1.6; color: #2A2638">We've worked with creators and we've run campaigns for brands. Both sides wanted the same thing — a simple, trusted way to work together and get paid. Aktivate is that place.</p>
 </div>
-<div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 18px; font-size: clamp(17px, 1.3vw, 19px); line-height: 1.6; color: #2A2638">
-<p style="margin: 0">In 2017, our founder Akinbola Asalu co-founded TAXI TV to help creators make money outside YouTube. Finding the right creators, managing them and getting them paid was harder than it should have been.</p>
-<p style="margin: 0">Years later at Bitmama, running a creator campaign showed the same gaps from the brand side: no easy way to discover creators, manage them, or prove what the money returned.</p>
-<p style="margin: 0">Aktivate is the platform we wished we'd had. Brands post campaigns and list products. Creators apply, create and sell. Everyone gets paid on time, from one place.</p>
+<ol style="flex: 1 1 520px; min-width: 0; list-style: none; margin: 0; padding: 0; position: relative; display: flex; flex-direction: column; gap: 14px">
+<li aria-hidden="true" style="position: absolute; left: 15px; top: 20px; bottom: 20px; width: 3px; border-radius: 3px; background: #C9C3F5"></li>
+<li style="position: relative; padding-left: 44px">
+<span aria-hidden="true" style="position: absolute; left: 6px; top: 26px; width: 20px; height: 20px; border-radius: 50%; background: #9EB3FF; border: 4px solid #ECEBF2; box-sizing: content-box"></span>
+<div style="background: #FFFFFF; color: #080611; border-radius: 26px; padding: clamp(20px, 2vw, 28px)">
+<span style="display: inline-block; padding: 6px 12px; border-radius: 999px; background: #9EB3FF; color: #080611; font-weight: 800; font-size: 13px; letter-spacing: 0.02em">The problem</span>
+<h3 style="margin: 14px 0 6px; font-weight: 800; font-size: clamp(21px, 1.8vw, 26px); line-height: 1.15; letter-spacing: -0.02em">Great creators, no paying work.</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: #4A4658">Creators with loyal audiences couldn't find brand deals, and brands couldn't find, manage or measure the creators their customers actually trust.</p>
 </div>
+</li>
+<li style="position: relative; padding-left: 44px">
+<span aria-hidden="true" style="position: absolute; left: 6px; top: 26px; width: 20px; height: 20px; border-radius: 50%; background: #5331E8; border: 4px solid #ECEBF2; box-sizing: content-box"></span>
+<div style="background: #FFFFFF; color: #080611; border-radius: 26px; padding: clamp(20px, 2vw, 28px)">
+<span style="display: inline-block; padding: 6px 12px; border-radius: 999px; background: #5331E8; color: #FFFFFF; font-weight: 800; font-size: 13px; letter-spacing: 0.02em">Launch</span>
+<h3 style="margin: 14px 0 6px; font-weight: 800; font-size: clamp(21px, 1.8vw, 26px); line-height: 1.15; letter-spacing: -0.02em">Aktivate goes live in Nigeria and Kenya.</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: #4A4658">A marketplace where brands post campaigns and verified nano and micro creators apply.</p>
 </div>
-</section>
-
-
-<section aria-labelledby="tl-h" style="background: #FFFFFF; padding: clamp(56px, 7.2vw, 104px) clamp(16px, 1.7vw, 24px); border-radius: clamp(32px, 3.3vw, 48px)">
-<div style="max-width: 1080px; margin: 0 auto">
-<h2 id="tl-h" style="margin: 0 0 clamp(28px, 3.3vw, 48px); font-weight: 800; font-size: clamp(36px, 5vw, 72px); line-height: 0.95; letter-spacing: -0.04em">How we got here</h2>
-<ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px">
-<li class="tl-row" style="display: flex; gap: 24px; align-items: flex-start; padding: 20px 22px; border-radius: 22px; background: #ECEBF2"><span class="tl-year" style="flex: none; width: 140px; font-weight: 800; font-size: 20px; color: #5331E8">2017</span><span style="flex: 1; min-width: 0; font-size: 17px; line-height: 1.5"><strong>TAXI TV.</strong> Our founder starts helping creators monetise outside YouTube.</span></li>
-<li class="tl-row" style="display: flex; gap: 24px; align-items: flex-start; padding: 20px 22px; border-radius: 22px; background: #ECEBF2"><span class="tl-year" style="flex: none; width: 140px; font-weight: 800; font-size: 20px; color: #5331E8">The spark</span><span style="flex: 1; min-width: 0; font-size: 17px; line-height: 1.5"><strong>Bitmama.</strong> A creator campaign exposes how broken discovery, management and measurement are.</span></li>
-<li class="tl-row" style="display: flex; gap: 24px; align-items: flex-start; padding: 20px 22px; border-radius: 22px; background: #ECEBF2"><span class="tl-year" style="flex: none; width: 140px; font-weight: 800; font-size: 20px; color: #5331E8">Launch</span><span style="flex: 1; min-width: 0; font-size: 17px; line-height: 1.5"><strong>Aktivate goes live</strong> in Nigeria and Kenya, then grows into Ghana and South Africa.</span></li>
-<li class="tl-row" style="display: flex; gap: 24px; align-items: flex-start; padding: 20px 22px; border-radius: 22px; background: #ECEBF2"><span class="tl-year" style="flex: none; width: 140px; font-weight: 800; font-size: 20px; color: #5331E8">We listened</span><span style="flex: 1; min-width: 0; font-size: 17px; line-height: 1.5"><strong>Subscriptions out, pay-per-campaign in.</strong> Businesses told us they'd rather pay for what they use, so we changed.</span></li>
-<li class="tl-row" style="display: flex; gap: 24px; align-items: flex-start; padding: 20px 22px; border-radius: 22px; background: #CDF4F2"><span class="tl-year" style="flex: none; width: 140px; font-weight: 800; font-size: 20px; color: #005B57">Mid-2026</span><span style="flex: 1; min-width: 0; font-size: 17px; line-height: 1.5"><strong>ShopLink launches</strong> with Sochitel and Paxo Beauty, giving creators storefronts that pay commission.</span></li>
-<li class="tl-row" style="display: flex; gap: 24px; align-items: flex-start; padding: 20px 22px; border-radius: 22px; background: #E4DEFF"><span class="tl-year" style="flex: none; width: 140px; font-weight: 800; font-size: 20px; color: #3A1FC2">Sept 2026</span><span style="flex: 1; min-width: 0; font-size: 17px; line-height: 1.5"><strong>Access Bank partnership</strong> opens creator marketing to thousands of SMEs at a discounted rate.</span></li>
-<li class="tl-row" style="display: flex; gap: 24px; align-items: flex-start; padding: 20px 22px; border-radius: 22px; background: #080611; color: #FFFFFF"><span class="tl-year" style="flex: none; width: 140px; font-weight: 800; font-size: 20px; color: #00C4BC">Today</span><span style="flex: 1; min-width: 0; font-size: 17px; line-height: 1.5"><strong>51,400+ creators, $3M+ paid out</strong> — and campaigns and shop sales now live in one Creator Hub.</span></li>
+</li>
+<li style="position: relative; padding-left: 44px">
+<span aria-hidden="true" style="position: absolute; left: 6px; top: 26px; width: 20px; height: 20px; border-radius: 50%; background: #00C4BC; border: 4px solid #ECEBF2; box-sizing: content-box"></span>
+<div style="background: #FFFFFF; color: #080611; border-radius: 26px; padding: clamp(20px, 2vw, 28px)">
+<span style="display: inline-block; padding: 6px 12px; border-radius: 999px; background: #00C4BC; color: #080611; font-weight: 800; font-size: 13px; letter-spacing: 0.02em">Going regional</span>
+<h3 style="margin: 14px 0 6px; font-weight: 800; font-size: clamp(21px, 1.8vw, 26px); line-height: 1.15; letter-spacing: -0.02em">Ghana and South Africa join.</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: #4A4658">Four markets, one creator network, and payouts that work locally.</p>
+</div>
+</li>
+<li style="position: relative; padding-left: 44px">
+<span aria-hidden="true" style="position: absolute; left: 6px; top: 26px; width: 20px; height: 20px; border-radius: 50%; background: #8F74F7; border: 4px solid #ECEBF2; box-sizing: content-box"></span>
+<div style="background: #FFFFFF; color: #080611; border-radius: 26px; padding: clamp(20px, 2vw, 28px)">
+<span style="display: inline-block; padding: 6px 12px; border-radius: 999px; background: #8F74F7; color: #080611; font-weight: 800; font-size: 13px; letter-spacing: 0.02em">We listened</span>
+<h3 style="margin: 14px 0 6px; font-weight: 800; font-size: clamp(21px, 1.8vw, 26px); line-height: 1.15; letter-spacing: -0.02em">Subscriptions out, pay-per-campaign in.</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: #4A4658">Businesses told us they'd rather pay for what they use. So we changed how we charge.</p>
+</div>
+</li>
+<li style="position: relative; padding-left: 44px">
+<span aria-hidden="true" style="position: absolute; left: 6px; top: 26px; width: 20px; height: 20px; border-radius: 50%; background: #00C4BC; border: 4px solid #ECEBF2; box-sizing: content-box"></span>
+<div style="background: #FFFFFF; color: #080611; border-radius: 26px; padding: clamp(20px, 2vw, 28px)">
+<span style="display: inline-block; padding: 6px 12px; border-radius: 999px; background: #00C4BC; color: #080611; font-weight: 800; font-size: 13px; letter-spacing: 0.02em">Mid-2026</span>
+<h3 style="margin: 14px 0 6px; font-weight: 800; font-size: clamp(21px, 1.8vw, 26px); line-height: 1.15; letter-spacing: -0.02em">ShopLink launches.</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: #4A4658">Creators get storefronts that pay commission on every sale, starting with Sochitel and Paxo Beauty.</p>
+</div>
+</li>
+<li style="position: relative; padding-left: 44px">
+<span aria-hidden="true" style="position: absolute; left: 6px; top: 26px; width: 20px; height: 20px; border-radius: 50%; background: #5331E8; border: 4px solid #ECEBF2; box-sizing: content-box"></span>
+<div style="background: #FFFFFF; color: #080611; border-radius: 26px; padding: clamp(20px, 2vw, 28px)">
+<span style="display: inline-block; padding: 6px 12px; border-radius: 999px; background: #5331E8; color: #FFFFFF; font-weight: 800; font-size: 13px; letter-spacing: 0.02em">Sept 2026</span>
+<h3 style="margin: 14px 0 6px; font-weight: 800; font-size: clamp(21px, 1.8vw, 26px); line-height: 1.15; letter-spacing: -0.02em">Access Bank partnership.</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: #4A4658">Creator marketing opens up to thousands of SMEs at a discounted rate.</p>
+</div>
+</li>
+<li style="position: relative; padding-left: 44px">
+<span aria-hidden="true" style="position: absolute; left: 6px; top: 26px; width: 20px; height: 20px; border-radius: 50%; background: #001FFF; border: 4px solid #ECEBF2; box-sizing: content-box"></span>
+<div style="background: #FFFFFF; color: #080611; border-radius: 26px; padding: clamp(20px, 2vw, 28px)">
+<span style="display: inline-block; padding: 6px 12px; border-radius: 999px; background: #001FFF; color: #FFFFFF; font-weight: 800; font-size: 13px; letter-spacing: 0.02em">For agencies</span>
+<h3 style="margin: 14px 0 6px; font-weight: 800; font-size: clamp(21px, 1.8vw, 26px); line-height: 1.15; letter-spacing: -0.02em">Aktivate Reports.</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: #4A4658">Agencies paste campaign links and get client-ready reports in minutes.</p>
+</div>
+</li>
+<li style="position: relative; padding-left: 44px">
+<span aria-hidden="true" style="position: absolute; left: 6px; top: 26px; width: 20px; height: 20px; border-radius: 50%; background: #00C4BC; border: 4px solid #ECEBF2; box-sizing: content-box"></span>
+<div style="background: #080611; color: #FFFFFF; border-radius: 26px; padding: clamp(20px, 2vw, 28px)">
+<span style="display: inline-block; padding: 6px 12px; border-radius: 999px; background: #00C4BC; color: #080611; font-weight: 800; font-size: 13px; letter-spacing: 0.02em">Today</span>
+<h3 style="margin: 14px 0 6px; font-weight: 800; font-size: clamp(21px, 1.8vw, 26px); line-height: 1.15; letter-spacing: -0.02em">51,400+ creators. $3M+ paid out.</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: #C9C6D6">Campaigns and shop sales now live together in one Creator Hub — and we're just getting started.</p>
+</div>
+</li>
 </ol>
 </div>
 </section>
@@ -141,32 +189,6 @@ img{max-width:100%}
 <div style="flex: 1 1 260px; background: #00C4BC; border-radius: 28px; padding: 28px"><p style="margin: 0; font-weight: 800; font-size: 26px; letter-spacing: -0.02em">Small is mighty.</p><p style="margin: 10px 0 0; font-size: 16px; line-height: 1.5">Nano and micro creators move people because people trust them.</p></div>
 <div style="flex: 1 1 260px; background: #FFFFFF; border-radius: 28px; padding: 28px"><p style="margin: 0; font-weight: 800; font-size: 26px; letter-spacing: -0.02em">Pay for what works.</p><p style="margin: 10px 0 0; font-size: 16px; line-height: 1.5; color: #4A4658">No retainers or lock-in. Businesses pay per campaign or per sale.</p></div>
 <div style="flex: 1 1 260px; background: #9EB3FF; border-radius: 28px; padding: 28px"><p style="margin: 0; font-weight: 800; font-size: 26px; letter-spacing: -0.02em">Made for Africa.</p><p style="margin: 10px 0 0; font-size: 16px; line-height: 1.5">Local markets, local payments, local creators.</p></div>
-</div>
-</div>
-</section>
-
-
-<section aria-labelledby="team-h" style="padding: 0 clamp(16px, 1.7vw, 24px) clamp(56px, 7.2vw, 104px)">
-<div style="max-width: 1280px; margin: 0 auto">
-<h2 id="team-h" style="margin: 0 0 clamp(28px, 2.8vw, 40px); font-weight: 800; font-size: clamp(36px, 5vw, 72px); line-height: 0.95; letter-spacing: -0.04em">The founders</h2>
-<div style="display: flex; flex-wrap: wrap; gap: 20px">
-<article style="flex: 1 1 340px; min-width: 0; background: #FFFFFF; border-radius: 32px; padding: 18px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center">
-<div role="img" aria-label="Akinbola Asalu" style="flex: none; width: 140px; height: 160px; border-radius: 24px; background: #5331E8; color: #FFFFFF; display: flex; align-items: center; justify-content: center; box-sizing: border-box; font-size: 44px; font-weight: 800; letter-spacing: -0.03em">AA</div>
-<div style="flex: 1 1 200px; min-width: 0">
-<h3 style="margin: 0; font-weight: 800; font-size: 26px; letter-spacing: -0.02em">Akinbola Asalu</h3>
-<p style="margin: 4px 0 12px; font-weight: 700; color: #5331E8">Founder &amp; CEO</p>
-<p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4658">Former product manager at Access Bank and Lami, COO at Bitmama, and co-founder of TAXI TV.</p>
-<a href="https://linkedin.com/in/akasalu" style="display: inline-block; margin-top: 12px; font-weight: 700; font-size: 14px">LinkedIn →</a>
-</div>
-</article>
-<article style="flex: 1 1 340px; min-width: 0; background: #FFFFFF; border-radius: 32px; padding: 18px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center">
-<div role="img" aria-label="Seun Longe" style="flex: none; width: 140px; height: 160px; border-radius: 24px; background: #00C4BC; color: #080611; display: flex; align-items: center; justify-content: center; box-sizing: border-box; font-size: 44px; font-weight: 800; letter-spacing: -0.03em">SL</div>
-<div style="flex: 1 1 200px; min-width: 0">
-<h3 style="margin: 0; font-weight: 800; font-size: 26px; letter-spacing: -0.02em">Seun Longe</h3>
-<p style="margin: 4px 0 12px; font-weight: 700; color: #5331E8">Co-founder &amp; CGO</p>
-<p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A4658">Five years working with content creators at agencies, on brands like Sterling Bank and Mentos.</p>
-</div>
-</article>
 </div>
 </div>
 </section>

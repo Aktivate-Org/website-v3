@@ -35,14 +35,6 @@ const META = {
 
 /* -------- launch-safe content swaps (production only) -------- */
 const SWAPS = {
-  About: [
-    ['aria-label="Photo of Akinbola Asalu to be added"', 'aria-label="Akinbola Asalu"'],
-    ['aria-label="Photo of Seun Longe to be added"', 'aria-label="Seun Longe"'],
-    [/align-items: flex-end; padding: 14px; box-sizing: border-box; font-size: 12px; font-weight: 700">\[Photo\]/,
-      'align-items: center; justify-content: center; box-sizing: border-box; font-size: 44px; font-weight: 800; letter-spacing: -0.03em">AA'],
-    [/align-items: flex-end; padding: 14px; box-sizing: border-box; font-size: 12px; font-weight: 700">\[Photo\]/,
-      'align-items: center; justify-content: center; box-sizing: border-box; font-size: 44px; font-weight: 800; letter-spacing: -0.03em">SL'],
-  ],
 };
 
 function prep(name, src) {
