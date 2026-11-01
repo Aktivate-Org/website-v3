@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Aktivate pricing</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Aileron';src:url(/_blob/1dcc8df908f342d82005588742675eaf) format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Aileron';src:url(/_blob/9d4e77af745a79b151726594036ac4b9) format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Aileron';src:url(/_blob/396c0902358439a39bc0a361fb210faf) format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'Aileron';src:url(/_blob/4d5ed464130550884e01b46cc282d21b) format('woff2');font-weight:800;font-display:swap}
+.m-hide{}
+@media (max-width:640px){
+.m-hide{display:none!important}
+.m-stack{flex-direction:column!important;align-items:stretch!important}
+.m-full{width:100%!important;justify-content:center!important;box-sizing:border-box}
+.m-collage{height:auto!important;padding-bottom:12px}
+.m-collage>.m-phone{position:relative!important;left:auto!important;top:auto!important;transform:rotate(2deg)!important;margin:0 auto}
+details summary{font-size:17px!important}
+}
+body{margin:0;background:#ECEBF2}
+a{color:#5331E8}a:hover{color:#001FFF}
+input[type=range]{accent-color:#00C4BC;width:100%;height:28px}
+</style>
+</helmet>
+<div style="font-family: 'Aileron', system-ui, sans-serif; color: #080611; background: #ECEBF2; overflow: hidden">
+
+<header style="background: #ECEBF2">
+<dc-import name="Nav" open="none" hint-size="100%,96px"></dc-import>
+</header>
+
+<!-- HERO -->
+<section style="padding: clamp(28px, 3.89vw, 56px) clamp(16px, 1.7vw, 24px) clamp(24px, 3.33vw, 48px); text-align: center">
+<div style="max-width: 1000px; margin: 0 auto">
+<p style="display: inline-block; margin: 0 0 22px; padding: 8px 16px; border-radius: 999px; background: #00C4BC; font-weight: 700; font-size: 14px">Pricing</p>
+<h1 style="margin: 0; font-weight: 800; font-size: clamp(52px, 7.6vw, 112px); line-height: 0.9; letter-spacing: -0.045em">Pay for what you use. <span style="color: #5331E8">Nothing more.</span></h1>
+<p style="margin: 24px auto 0; max-width: 620px; font-size: clamp(18px, 1.6vw, 21px); line-height: 1.5; color: #4A4658">No subscriptions, no retainers. Pay per campaign, per product or per report.</p>
+<div role="group" aria-label="Show pricing for" style="margin: 36px auto 0; display: inline-flex; gap: 6px; background: #FFFFFF; padding: 6px; border-radius: 999px">
+<sc-for list="{{tabs}}" as="tab" hint-placeholder-count="2">
+<sc-if value="{{tab.active}}" hint-placeholder-val="{{false}}">
+<button type="button" aria-pressed="true" onClick="{{tab.pick}}" style="min-height: 52px; padding: 0 28px; border: 0; border-radius: 999px; background: #080611; color: #FFFFFF; font: 800 16px 'Aileron', sans-serif; cursor: pointer">{{tab.label}}</button>
+</sc-if>
+<sc-if value="{{tab.inactive}}" hint-placeholder-val="{{true}}">
+<button type="button" aria-pressed="false" onClick="{{tab.pick}}" style="min-height: 52px; padding: 0 28px; border: 0; border-radius: 999px; background: transparent; color: #080611; font: 700 16px 'Aileron', sans-serif; cursor: pointer">{{tab.label}}</button>
+</sc-if>
+</sc-for>
+</div>
+</div>
+</section>
+
+<!-- BUSINESS PLANS -->
+<sc-if value="{{isBusiness}}" hint-placeholder-val="{{true}}">
+<section aria-label="Business pricing" style="padding: 0 clamp(16px, 1.7vw, 24px) clamp(44px, 6.11vw, 88px)">
+<div style="max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-wrap: wrap; gap: 20px">
+
+<article style="flex: 1 1 340px; min-width: 0; background: #5331E8; color: #FFFFFF; border-radius: 36px; padding: 36px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px"><span aria-hidden="true" style="width: 52px; height: 52px; border-radius: 16px; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#5331E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8-8-2z"></path></svg></span><span style="padding: 6px 12px; border-radius: 999px; background: #00C4BC; color: #080611; font-weight: 700; font-size: 13px">Most popular</span></div>
+<div><h2 style="margin: 0; font-weight: 800; font-size: 28px">Collaboration Hub</h2><p style="margin: 6px 0 0; color: #D9D4FF">Pay creators to make content</p></div>
+<p style="margin: 0; font-weight: 800; font-size: clamp(40px, 4.44vw, 64px); letter-spacing: -0.045em; line-height: 0.9">$15<span style="font-size: 18px; font-weight: 600; letter-spacing: 0"> / campaign</span></p>
+<p style="margin: -6px 0 0; font-weight: 700; color: #00C4BC">+ 10% of campaign budget</p>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 16px">
+<li>✓ Publish to 50,000+ verified creators</li>
+<li>✓ Review applicants, pick who fits</li>
+<li>✓ Briefs with deliverables &amp; timelines</li>
+<li>✓ Creator payouts handled for you</li>
+</ul>
+<a href="#signup" style="margin-top: auto; display: flex; align-items: center; justify-content: center; min-height: 56px; border-radius: 16px; background: #FFFFFF; color: #080611; text-decoration: none; font-weight: 800; font-size: 16px">Launch a campaign</a>
+</article>
+
+<article style="flex: 1 1 340px; min-width: 0; background: #FFFFFF; border-radius: 36px; padding: 36px; display: flex; flex-direction: column; gap: 18px">
+<span aria-hidden="true" style="width: 52px; height: 52px; border-radius: 16px; background: #00C4BC; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#080611" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1 13H7L6 7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg></span>
+<div><h2 style="margin: 0; font-weight: 800; font-size: 28px">ShopLink</h2><p style="margin: 6px 0 0; color: #4A4658">Pay creators on results</p></div>
+<p style="margin: 0; font-weight: 800; font-size: clamp(40px, 4.44vw, 64px); letter-spacing: -0.045em; line-height: 0.9">$15<span style="font-size: 18px; font-weight: 600; letter-spacing: 0"> / product</span></p>
+<p style="margin: -6px 0 0; font-weight: 700; color: #5331E8">+ commission you set, only on sales</p>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 16px">
+<li>✓ Creator commission 10–50%, or fixed per sale</li>
+<li>✓ Paystack checkout on creator storefronts</li>
+<li>✓ You fulfil orders, payouts are automatic</li>
+<li>✓ 8% Aktivate fee per sale</li>
+</ul>
+<a href="#signup" style="margin-top: auto; display: flex; align-items: center; justify-content: center; min-height: 56px; border-radius: 16px; background: #080611; color: #FFFFFF; text-decoration: none; font-weight: 800; font-size: 16px">List your products</a>
+</article>
+
+<article style="flex: 1 1 340px; min-width: 0; background: #FFFFFF; border-radius: 36px; padding: 36px; display: flex; flex-direction: column; gap: 18px">
+<span aria-hidden="true" style="width: 52px; height: 52px; border-radius: 16px; background: #001FFF; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"></path><path d="M4 19h16"></path><path d="M8 15l4-4 3 3 5-6"></path></svg></span>
+<div><h2 style="margin: 0; font-weight: 800; font-size: 28px">Aktivate Reports</h2><p style="margin: 6px 0 0; color: #4A4658">For agencies and brand teams</p></div>
+<p style="margin: 0; font-weight: 800; font-size: clamp(40px, 4.44vw, 64px); letter-spacing: -0.045em; line-height: 0.9">Credits</p>
+<p style="margin: -6px 0 0; font-weight: 700; color: #001FFF">[Price per credit] · no subscription</p>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 16px">
+<li>✓ Paste post links, get a full report</li>
+<li>✓ Public views, likes, comments, shares</li>
+<li>✓ Works for campaigns run anywhere</li>
+<li>✓ Each agency sees only its campaigns</li>
+</ul>
+<a href="Agencies.dc.html#reports" style="margin-top: auto; display: flex; align-items: center; justify-content: center; min-height: 56px; border-radius: 16px; background: #080611; color: #FFFFFF; text-decoration: none; font-weight: 800; font-size: 16px">Book a demo</a>
+</article>
+</div>
+
+<article style="background: #080611; color: #FFFFFF; border-radius: 36px; padding: 36px clamp(20px, 2.78vw, 40px); display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: space-between">
+<div style="flex: 1 1 520px; min-width: 0">
+<p style="margin: 0; font-weight: 700; color: #9EB3FF; font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em">Managed campaigns</p>
+<h2 style="margin: 8px 0 0; font-weight: 800; font-size: clamp(28px, 3vw, 40px); letter-spacing: -0.03em; line-height: 1.05">Want us to run it end to end?</h2>
+<p style="margin: 10px 0 0; color: #C9C6D6; font-size: 17px; line-height: 1.5">Influencer marketing, paid ads and billboards, planned and run by the Aktivate team.</p>
+</div>
+<a href="#sales" style="display: flex; align-items: center; min-height: 56px; padding: 0 26px; border-radius: 16px; background: #00C4BC; color: #080611; text-decoration: none; font-weight: 800; font-size: 16px">Talk to us</a>
+</article>
+</div>
+</section>
+
+<!-- CALCULATOR -->
+<section aria-labelledby="calc-h" style="padding: 0 clamp(16px, 1.7vw, 24px) clamp(44px, 6.11vw, 88px)">
+<div style="max-width: 1280px; margin: 0 auto; background: #00C4BC; border: 3px solid #080611; border-radius: 44px; padding: 48px clamp(24px, 4vw, 56px); display: flex; flex-wrap: wrap; gap: clamp(20px, 2.78vw, 40px); align-items: center; box-sizing: border-box">
+<div style="flex: 1 1 440px; min-width: 0">
+<p style="margin: 0 0 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 14px">Campaign cost calculator</p>
+<h2 id="calc-h" style="margin: 0 0 28px; font-weight: 800; font-size: clamp(36px, 4.4vw, 60px); line-height: 0.95; letter-spacing: -0.04em">What will my campaign cost?</h2>
+<label for="budget" style="display: flex; justify-content: space-between; font-weight: 800; font-size: 18px"><span>Creator budget</span><span>{{budgetLabel}}</span></label>
+<input id="budget" type="range" min="100" max="10000" step="100" value="{{budget}}" onChange="{{setBudget}}">
+<p style="margin: 8px 0 0; font-size: 14px; line-height: 1.5">What you'll pay creators in total. Use any amount — this is just a guide.</p>
+</div>
+<div style="flex: 1 1 340px; min-width: 0; background: #FFFFFF; border-radius: 30px; padding: 30px; display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #ECEBF2"><span>Creator budget</span><strong>{{budgetLabel}}</strong></div>
+<div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #ECEBF2"><span>Campaign listing</span><strong>$15</strong></div>
+<div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #ECEBF2"><span>Platform fee (10%)</span><strong>{{feeLabel}}</strong></div>
+<div style="display: flex; justify-content: space-between; align-items: baseline; padding: 16px 0 0"><span style="font-weight: 800; font-size: 18px">Total</span><span style="font-weight: 800; font-size: clamp(28px, 3.06vw, 44px); letter-spacing: -0.04em; color: #5331E8">{{totalLabel}}</span></div>
+</div>
+</div>
+</section>
+
+<!-- ACCESS BANK -->
+<section style="padding: 0 clamp(16px, 1.7vw, 24px) clamp(44px, 6.11vw, 88px)">
+<div style="max-width: 1280px; margin: 0 auto; background: #FFFFFF; border-radius: 32px; padding: 28px 32px; display: flex; flex-wrap: wrap; gap: 18px; align-items: center; justify-content: space-between">
+<p style="margin: 0; flex: 1 1 520px; font-size: 18px; line-height: 1.5"><strong>Access Bank SME customer?</strong> List campaigns for ₦5,000 instead of the standard ₦15,000.</p>
+<a href="SMEs.dc.html" style="font-weight: 700">How it works →</a>
+</div>
+</section>
+</sc-if>
+
+<!-- CREATOR PRICING -->
+<sc-if value="{{isCreator}}" hint-placeholder-val="{{false}}">
+<section aria-label="Creator pricing" style="padding: 0 clamp(16px, 1.7vw, 24px) clamp(44px, 6.11vw, 88px)">
+<div style="max-width: 1280px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 20px">
+<article style="flex: 2 1 520px; min-width: 0; background: #5331E8; color: #FFFFFF; border-radius: 40px; padding: clamp(24px, 3.33vw, 48px); display: flex; flex-direction: column; gap: 18px">
+<p style="margin: 0; font-weight: 700; color: #D9D4FF; font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em">For creators</p>
+<p style="margin: 0; font-weight: 800; font-size: clamp(72px, 9vw, 140px); letter-spacing: -0.05em; line-height: 0.85">Free.</p>
+<p style="margin: 0; font-size: 20px; line-height: 1.5; color: #ECEBF2">Joining, applying to campaigns and opening your ShopLink cost nothing. We only earn when you do.</p>
+<a href="#signup" style="margin-top: 12px; align-self: flex-start; display: flex; align-items: center; min-height: 60px; padding: 0 30px; border-radius: 16px; background: #00C4BC; color: #080611; text-decoration: none; font-weight: 800; font-size: 17px">Join Aktivate</a>
+</article>
+<div style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<div style="background: #FFFFFF; border-radius: 28px; padding: 26px"><p style="margin: 0; font-weight: 700; color: #5A566A">Campaign payouts</p><p style="margin: 6px 0 0; font-weight: 800; font-size: clamp(28px, 2.78vw, 40px); letter-spacing: -0.03em">5% fee</p><p style="margin: 6px 0 0; color: #4A4658">Taken when you get paid for a campaign.</p></div>
+<div style="background: #00C4BC; border-radius: 28px; padding: 26px"><p style="margin: 0; font-weight: 700">ShopLink sales</p><p style="margin: 6px 0 0; font-weight: 800; font-size: clamp(28px, 2.78vw, 40px); letter-spacing: -0.03em">10–50%</p><p style="margin: 6px 0 0">Commission on every sale, set by the brand.</p></div>
+<div style="background: #080611; color: #FFFFFF; border-radius: 28px; padding: 26px"><p style="margin: 0; font-weight: 700; color: #9EB3FF">Referrals</p><p style="margin: 6px 0 0; font-weight: 800; font-size: clamp(28px, 2.78vw, 40px); letter-spacing: -0.03em">+₦300</p><p style="margin: 6px 0 0; color: #C9C6D6">Per verified creator you refer.</p></div>
+</div>
+</div>
+</section>
+</sc-if>
+
+<!-- FAQ -->
+<section style="padding: 0 clamp(16px, 1.7vw, 24px) clamp(52px, 7.22vw, 104px)">
+<div style="max-width: 900px; margin: 0 auto">
+<h2 style="margin: 0 0 28px; font-weight: 800; font-size: clamp(36px, 4.4vw, 56px); letter-spacing: -0.035em">Pricing questions</h2>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<details open style="background: #FFFFFF; border-radius: 22px; padding: 22px 26px"><summary style="cursor: pointer; font-weight: 700; font-size: 20px">Can I pay in naira, shillings or cedis?</summary><p style="margin: 14px 0 0; font-size: 17px; line-height: 1.55; color: #4A4658">[Confirm local-currency pricing — e.g. campaign listing is ₦15,000 in Nigeria.]</p></details>
+<details style="background: #FFFFFF; border-radius: 22px; padding: 22px 26px"><summary style="cursor: pointer; font-weight: 700; font-size: 20px">Is there a monthly subscription?</summary><p style="margin: 14px 0 0; font-size: 17px; line-height: 1.55; color: #4A4658">No. You pay per campaign, per product listed, or per report credit. Nothing recurring.</p></details>
+<details style="background: #FFFFFF; border-radius: 22px; padding: 22px 26px"><summary style="cursor: pointer; font-weight: 700; font-size: 20px">What does the 10% campaign fee cover?</summary><p style="margin: 14px 0 0; font-size: 17px; line-height: 1.55; color: #4A4658">Access to the creator network, applications and selection, and handling creator payouts.</p></details>
+<details style="background: #FFFFFF; border-radius: 22px; padding: 22px 26px"><summary style="cursor: pointer; font-weight: 700; font-size: 20px">Can I use Collaboration Hub and ShopLink together?</summary><p style="margin: 14px 0 0; font-size: 17px; line-height: 1.55; color: #4A4658">Yes — many businesses run a campaign for buzz, then list products so the same creators keep selling.</p></details>
+</div>
+</div>
+</section>
+
+<div>
+<dc-import name="Footer" hint-size="100%,520px"></dc-import>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":4200}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { view: 'business', budget: 1000 };
+}
+renderVals() {
+var self = this;
+var s = this.state;
+function usd(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+var fee = s.budget * 0.10;
+var defs = [['business', 'For businesses'], ['creator', 'For creators']];
+return {
+tabs: defs.map(function (d) { return { label: d[1], active: s.view === d[0], inactive: s.view !== d[0], pick: function () { self.setState({ view: d[0] }); } }; }),
+isBusiness: s.view === 'business',
+isCreator: s.view === 'creator',
+budget: s.budget,
+budgetLabel: usd(s.budget),
+feeLabel: usd(fee),
+totalLabel: usd(s.budget + 15 + fee),
+setBudget: function (e) { self.setState({ budget: Number(e.target.value) }); }
+};
+}
+}
+</script>
+</body>
+</html>

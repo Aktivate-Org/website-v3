@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Aktivate navigation</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Aileron';src:url(/_blob/1dcc8df908f342d82005588742675eaf) format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Aileron';src:url(/_blob/9d4e77af745a79b151726594036ac4b9) format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Aileron';src:url(/_blob/396c0902358439a39bc0a361fb210faf) format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'Aileron';src:url(/_blob/4d5ed464130550884e01b46cc282d21b) format('woff2');font-weight:800;font-display:swap}
+body{margin:0}
+</style>
+</helmet>
+<div style="position: relative; z-index: 40; padding: 14px clamp(12px, 2vw, 24px); font-family: 'Aileron', system-ui, sans-serif; color: #080611">
+
+<!-- ============ DESKTOP ============ -->
+<sc-if value="{{desktop}}" hint-placeholder-val="{{true}}">
+<nav aria-label="Main" style="max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #FFFFFF; border-radius: 999px; padding: 10px 10px 10px 24px; box-shadow: 0 6px 24px rgba(8,6,17,0.10)">
+<a href="Main.dc.html" aria-label="Aktivate home" style="display: flex; align-items: center; height: 44px">
+<img src="/_blob/0321ccbea6cd6e4a6cc6ab0858b8b63a" alt="aktivate" style="height: 30px; width: auto; display: block">
+</a>
+<div style="display: flex; gap: 4px; align-items: center; font-size: 15px; font-weight: 600">
+<button type="button" aria-expanded="{{creatorsOpen}}" onClick="{{toggleCreators}}" style="display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 16px; border: 0; border-radius: 999px; background: {{creatorsBg}}; color: #080611; font: 600 15px 'Aileron', sans-serif; cursor: pointer">Creators
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></button>
+<button type="button" aria-expanded="{{businessOpen}}" onClick="{{toggleBusiness}}" style="display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 16px; border: 0; border-radius: 999px; background: {{businessBg}}; color: #080611; font: 600 15px 'Aileron', sans-serif; cursor: pointer">Businesses
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></button>
+<a href="Pricing.dc.html" style="display: flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 999px; color: #080611; text-decoration: none">Pricing</a>
+<a href="About.dc.html" style="display: flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 999px; color: #080611; text-decoration: none">About</a>
+<a href="#blog" style="display: flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 999px; color: #080611; text-decoration: none">Blog</a>
+</div>
+<div style="display: flex; gap: 8px; align-items: center">
+<a href="#login" style="display: flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #ECEBF2; color: #080611; text-decoration: none; font-weight: 700; font-size: 15px">Log in</a>
+<a href="#signup" style="display: flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 999px; background: #5331E8; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 15px">Get started</a>
+</div>
+</nav>
+
+<sc-if value="{{creatorsOpen}}" hint-placeholder-val="{{false}}">
+<div role="region" aria-label="Creators menu" style="position: absolute; top: 92px; left: 50%; transform: translateX(-50%); width: min(820px, calc(100% - 32px)); background: #FFFFFF; border-radius: 28px; box-shadow: 0 24px 60px rgba(8,6,17,0.22); padding: 14px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 14px">
+<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 4px; padding: 8px">
+<p style="margin: 4px 12px 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #5A566A">Ways to earn</p>
+<sc-for list="{{creatorItems}}" as="it" hint-placeholder-count="3">
+<a href="{{it.href}}" style="display: flex; gap: 16px; align-items: flex-start; padding: 14px; border-radius: 18px; text-decoration: none; color: #080611">
+<span aria-hidden="true" style="flex: none; width: 52px; height: 52px; border-radius: 16px; background: {{it.bg}}; display: flex; align-items: center; justify-content: center"><img src="{{it.icon}}" alt="" style="width: 26px; height: 26px"></span>
+<span style="flex: 1; min-width: 0"><span style="display: block; font-weight: 800; font-size: 17px">{{it.title}}</span><span style="display: block; margin-top: 4px; font-size: 14px; line-height: 1.4; color: #5A566A">{{it.desc}}</span></span>
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5331E8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 4px"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+</a>
+</sc-for>
+</div>
+<div style="flex: 1 1 260px; min-width: 0; background: #5331E8; color: #FFFFFF; border-radius: 22px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #D9D4FF">Refer &amp; earn</p>
+<p style="margin: 0; font-weight: 800; font-size: 28px; line-height: 1.05; letter-spacing: -0.03em">₦300 for every creator you bring in</p>
+<p style="margin: 0; font-size: 14px; line-height: 1.45; color: #ECEBF2">Paid when they get verified with 1,000+ followers.</p>
+<a href="#refer" style="margin-top: auto; align-self: flex-start; display: flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #00C4BC; color: #080611; text-decoration: none; font-weight: 700; font-size: 14px">Get my invite link</a>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{businessOpen}}" hint-placeholder-val="{{false}}">
+<div role="region" aria-label="Businesses menu" style="position: absolute; top: 92px; left: 50%; transform: translateX(-50%); width: min(980px, calc(100% - 32px)); background: #FFFFFF; border-radius: 28px; box-shadow: 0 24px 60px rgba(8,6,17,0.22); padding: 14px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 14px">
+<div style="flex: 2 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 4px; padding: 8px">
+<p style="margin: 4px 12px 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #5A566A">Built for</p>
+<sc-for list="{{businessItems}}" as="it" hint-placeholder-count="3">
+<a href="{{it.href}}" style="display: flex; gap: 16px; align-items: flex-start; padding: 14px; border-radius: 18px; text-decoration: none; color: #080611">
+<span aria-hidden="true" style="flex: none; width: 52px; height: 52px; border-radius: 16px; background: {{it.bg}}; display: flex; align-items: center; justify-content: center"><img src="{{it.icon}}" alt="" style="width: 26px; height: 26px"></span>
+<span style="flex: 1; min-width: 0"><span style="display: block; font-weight: 800; font-size: 17px">{{it.title}}</span><span style="display: block; margin-top: 4px; font-size: 14px; line-height: 1.4; color: #5A566A">{{it.desc}}</span>
+<span style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px"><sc-for list="{{it.chips}}" as="c" hint-placeholder-count="2"><span style="padding: 4px 10px; border-radius: 999px; background: {{c.bg}}; color: {{c.ink}}; font-size: 12px; font-weight: 700">{{c.label}}</span></sc-for></span></span>
+</a>
+</sc-for>
+</div>
+<div style="flex: 1 1 260px; min-width: 0; background: #080611; color: #FFFFFF; border-radius: 22px; padding: 24px; display: flex; flex-direction: column; gap: 6px">
+<p style="margin: 0 0 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #9EB3FF">Products</p>
+<a href="Brands.dc.html#collab" style="display: flex; justify-content: space-between; align-items: center; min-height: 44px; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 16px; border-bottom: 1px solid #2A2638">Collaboration Hub <span aria-hidden="true" style="color: #9EB3FF">→</span></a>
+<a href="SMEs.dc.html#shoplink" style="display: flex; justify-content: space-between; align-items: center; min-height: 44px; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 16px; border-bottom: 1px solid #2A2638">ShopLink <span aria-hidden="true" style="color: #9EB3FF">→</span></a>
+<a href="Agencies.dc.html#reports" style="display: flex; justify-content: space-between; align-items: center; min-height: 44px; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 16px; border-bottom: 1px solid #2A2638">Aktivate Reports <span aria-hidden="true" style="color: #9EB3FF">→</span></a>
+<a href="Pricing.dc.html" style="margin-top: auto; align-self: flex-start; display: flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #00C4BC; color: #080611; text-decoration: none; font-weight: 700; font-size: 14px">See pricing</a>
+</div>
+</div>
+</sc-if>
+</sc-if>
+
+<!-- ============ MOBILE ============ -->
+<sc-if value="{{mobile}}" hint-placeholder-val="{{false}}">
+<nav aria-label="Main" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #FFFFFF; border-radius: 999px; padding: 8px 8px 8px 18px; box-shadow: 0 6px 24px rgba(8,6,17,0.10)">
+<a href="Main.dc.html" aria-label="Aktivate home" style="display: flex; align-items: center; height: 44px">
+<img src="/_blob/0321ccbea6cd6e4a6cc6ab0858b8b63a" alt="aktivate" style="height: 24px; width: auto; display: block">
+</a>
+<div style="display: flex; gap: 6px; align-items: center">
+<a href="#signup" style="display: flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 999px; background: #5331E8; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 14px">Join free</a>
+<button type="button" aria-expanded="{{sheetOpen}}" aria-label="{{burgerLabel}}" onClick="{{toggleSheet}}" style="width: 44px; height: 44px; border: 0; border-radius: 50%; background: #080611; cursor: pointer; display: flex; align-items: center; justify-content: center">
+<sc-if value="{{sheetClosed}}" hint-placeholder-val="{{true}}"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"></path></svg></sc-if>
+<sc-if value="{{sheetOpen}}" hint-placeholder-val="{{false}}"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></sc-if>
+</button>
+</div>
+</nav>
+
+<sc-if value="{{sheetOpen}}" hint-placeholder-val="{{false}}">
+<div role="region" aria-label="Menu" style="position: absolute; top: 80px; left: 12px; right: 12px; background: #FFFFFF; border-radius: 28px; box-shadow: 0 24px 60px rgba(8,6,17,0.28); padding: 10px; max-height: calc(100vh - 100px); overflow-y: auto; display: flex; flex-direction: column; gap: 6px">
+<p style="margin: 10px 12px 2px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #5A566A">For creators</p>
+<sc-for list="{{creatorItems}}" as="it" hint-placeholder-count="3">
+<a href="{{it.href}}" style="display: flex; gap: 14px; align-items: center; padding: 10px; border-radius: 18px; text-decoration: none; color: #080611; background: #F5F4FA">
+<span aria-hidden="true" style="flex: none; width: 46px; height: 46px; border-radius: 14px; background: {{it.bg}}; display: flex; align-items: center; justify-content: center"><img src="{{it.icon}}" alt="" style="width: 22px; height: 22px"></span>
+<span style="flex: 1; min-width: 0"><span style="display: block; font-weight: 800; font-size: 16px">{{it.title}}</span><span style="display: block; margin-top: 2px; font-size: 13px; line-height: 1.35; color: #5A566A">{{it.short}}</span></span>
+</a>
+</sc-for>
+<p style="margin: 14px 12px 2px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #5A566A">For businesses</p>
+<sc-for list="{{businessItems}}" as="it" hint-placeholder-count="3">
+<a href="{{it.href}}" style="display: flex; gap: 14px; align-items: center; padding: 10px; border-radius: 18px; text-decoration: none; color: #080611; background: #F5F4FA">
+<span aria-hidden="true" style="flex: none; width: 46px; height: 46px; border-radius: 14px; background: {{it.bg}}; display: flex; align-items: center; justify-content: center"><img src="{{it.icon}}" alt="" style="width: 22px; height: 22px"></span>
+<span style="flex: 1; min-width: 0"><span style="display: block; font-weight: 800; font-size: 16px">{{it.title}}</span><span style="display: block; margin-top: 2px; font-size: 13px; line-height: 1.35; color: #5A566A">{{it.short}}</span></span>
+</a>
+</sc-for>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin-top: 8px">
+<a href="Pricing.dc.html" style="display: flex; align-items: center; justify-content: center; min-height: 52px; border-radius: 16px; background: #ECEBF2; color: #080611; text-decoration: none; font-weight: 700">Pricing</a>
+<a href="About.dc.html" style="display: flex; align-items: center; justify-content: center; min-height: 52px; border-radius: 16px; background: #ECEBF2; color: #080611; text-decoration: none; font-weight: 700">About</a>
+<a href="#login" style="display: flex; align-items: center; justify-content: center; min-height: 52px; border-radius: 16px; border: 2px solid #080611; box-sizing: border-box; color: #080611; text-decoration: none; font-weight: 700">Log in</a>
+<a href="#signup" style="display: flex; align-items: center; justify-content: center; min-height: 52px; border-radius: 16px; background: #5331E8; color: #FFFFFF; text-decoration: none; font-weight: 700">Get started</a>
+</div>
+</div>
+</sc-if>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"open":{"editor":"enum","options":["none","creators","business"],"default":"creators"},"$preview":{"width":1440,"height":620}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+var w = 1440;
+try { w = window.innerWidth || 1440; } catch (e) {}
+this.state = { menu: null, w: w, sheet: false };
+this.onResize = this.onResize.bind(this);
+}
+onResize() {
+try { this.setState({ w: window.innerWidth }); } catch (e) {}
+}
+componentDidMount() {
+try { window.addEventListener('resize', this.onResize); this.onResize(); } catch (e) {}
+}
+componentWillUnmount() {
+try { window.removeEventListener('resize', this.onResize); } catch (e) {}
+}
+renderVals() {
+var self = this;
+var mobile = this.state.w < 900;
+var menu = this.state.menu === null ? (this.props.open ?? 'creators') : this.state.menu;
+function toggle(name) { return function () { self.setState({ menu: menu === name ? 'none' : name }); }; }
+var PL = { bg: '#E4DEFF', ink: '#3A1FC2' }, TL = { bg: '#CDF4F2', ink: '#005B57' }, BL = { bg: '#DCE4FF', ink: '#0019C2' };
+var creatorItems = [
+{ href: 'CreatorsCampaigns.dc.html', bg: '#5331E8', icon: '/_blob/5b980093d1db7cec7c94c2eda5d7ad4e', title: 'Collaboration Hub', desc: 'Apply to paid brand campaigns and get paid when your content goes live.', short: 'Get paid to post for brands' },
+{ href: 'CreatorsShopLink.dc.html', bg: '#00C4BC', icon: '/_blob/877fbb618b6ff3d458cc6020eda569d5', title: 'ShopLink', desc: 'Your own storefront link. Earn 10–50% commission on every sale.', short: 'Earn commission on every sale' },
+{ href: 'Hub.dc.html', bg: '#9EB3FF', icon: '/_blob/fc46e362cf9b5f42457cc2d7b5d6db72', title: 'Creator Hub', desc: 'One dashboard and one wallet for campaigns and shop sales.', short: 'One wallet for everything' }
+];
+var businessItems = [
+{ href: 'Brands.dc.html', bg: '#001FFF', icon: '/_blob/4ef7cd91bd5ebf92fc18932b12e8741d', title: 'Brands', desc: 'Launch creator campaigns at scale and turn creators into a sales channel.', short: 'Campaigns + ShopLink', chips: [Object.assign({ label: 'Collaboration Hub' }, PL), Object.assign({ label: 'ShopLink' }, TL)] },
+{ href: 'SMEs.dc.html', bg: '#00C4BC', icon: '/_blob/06dc11c4ddd7e76940afc3761f8b866b', title: 'SMEs', desc: 'Get creators selling your products. Pay commission only when you make a sale.', short: 'ShopLink + Collaboration Hub', chips: [Object.assign({ label: 'ShopLink' }, TL), Object.assign({ label: 'Collaboration Hub' }, PL)] },
+{ href: 'Agencies.dc.html', bg: '#080611', icon: '/_blob/12d35a9c3ae1c57e544f74f2bce46973', title: 'Agencies', desc: 'Source creators for every client and send reports they’ll actually read.', short: 'Collaboration Hub + Reports', chips: [Object.assign({ label: 'Collaboration Hub' }, PL), Object.assign({ label: 'Aktivate Reports' }, BL)] }
+];
+return {
+desktop: !mobile,
+mobile: mobile,
+creatorsOpen: menu === 'creators',
+businessOpen: menu === 'business',
+creatorsBg: menu === 'creators' ? '#ECEBF2' : 'transparent',
+businessBg: menu === 'business' ? '#ECEBF2' : 'transparent',
+toggleCreators: toggle('creators'),
+toggleBusiness: toggle('business'),
+sheetOpen: this.state.sheet,
+sheetClosed: !this.state.sheet,
+burgerLabel: this.state.sheet ? 'Close menu' : 'Open menu',
+toggleSheet: function () { self.setState({ sheet: !self.state.sheet }); },
+creatorItems: creatorItems,
+businessItems: businessItems
+};
+}
+}
+</script>
+</body>
+</html>

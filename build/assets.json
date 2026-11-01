@@ -1,0 +1,190 @@
+{
+ "1dcc8df908f342d82005588742675eaf": {
+  "src": "src/assets/aileron-400.woff2",
+  "out": "aileron-400.woff2"
+ },
+ "9d4e77af745a79b151726594036ac4b9": {
+  "src": "src/assets/aileron-600.woff2",
+  "out": "aileron-600.woff2"
+ },
+ "396c0902358439a39bc0a361fb210faf": {
+  "src": "src/assets/aileron-700.woff2",
+  "out": "aileron-700.woff2"
+ },
+ "4d5ed464130550884e01b46cc282d21b": {
+  "src": "src/assets/aileron-800.woff2",
+  "out": "aileron-800.woff2"
+ },
+ "0321ccbea6cd6e4a6cc6ab0858b8b63a": {
+  "src": "src/assets/logo.png",
+  "out": "logo.png"
+ },
+ "3a107b69f04bc0a4f12d25d6279f5045": {
+  "src": "src/assets/logo-on-dark.png",
+  "out": "logo-on-dark.png"
+ },
+ "c19e3daf95b735c3d5abb6315b9e5a65": {
+  "src": "src/assets/logo-white.png",
+  "out": "logo-white.png"
+ },
+ "59f15a1a6a53776f9ac69e76b09f560d": {
+  "src": "src/assets/logomark.png",
+  "out": "logomark.png"
+ },
+ "b50302b72427ac94961362a40106b3d6": {
+  "src": "src/assets/av-ada.svg",
+  "out": "av-ada.svg"
+ },
+ "70f4487444a65110e0251d77ab7207c6": {
+  "src": "src/assets/av-amaka.svg",
+  "out": "av-amaka.svg"
+ },
+ "9d63b44c7a25489f4b3f54ce8f6a1a9e": {
+  "src": "src/assets/av-dami.svg",
+  "out": "av-dami.svg"
+ },
+ "0ad73875b64d9d21582f2b0652835af4": {
+  "src": "src/assets/av-kemi.svg",
+  "out": "av-kemi.svg"
+ },
+ "071fd2702337991ac1c7247515c64d88": {
+  "src": "src/assets/av-kwame.svg",
+  "out": "av-kwame.svg"
+ },
+ "0f56aebbb1a4d88ea44383788adf4891": {
+  "src": "src/assets/av-thabo.svg",
+  "out": "av-thabo.svg"
+ },
+ "eef8e17a2dc42d79deeb70afb0a97130": {
+  "src": "src/assets/av-tolu.svg",
+  "out": "av-tolu.svg"
+ },
+ "45fc821705e6949eda6c938e071d1c2e": {
+  "src": "src/assets/av-wanjiru.svg",
+  "out": "av-wanjiru.svg"
+ },
+ "20338a310ed248de796da6b3a43d2398": {
+  "src": "src/assets/av-zaynab.svg",
+  "out": "av-zaynab.svg"
+ },
+ "f80e788de2c8cadc745b3d53a128fa69": {
+  "src": "src/assets/d-arrow-dark.svg",
+  "out": "d-arrow-dark.svg"
+ },
+ "278ab7173f325e931e87a2274af9f3ca": {
+  "src": "src/assets/d-arrow.svg",
+  "out": "d-arrow.svg"
+ },
+ "36ad3c2128464a67ecf91dafd13b5fe4": {
+  "src": "src/assets/d-burst.svg",
+  "out": "d-burst.svg"
+ },
+ "a761d1520de02ea21506d84e3491e710": {
+  "src": "src/assets/d-coin.svg",
+  "out": "d-coin.svg"
+ },
+ "6d8efb2a02c4bdfac991e958d271276e": {
+  "src": "src/assets/d-heart.svg",
+  "out": "d-heart.svg"
+ },
+ "e86cf26c43cb6e7b533b4f725c4c1e95": {
+  "src": "src/assets/d-sparkle-teal.svg",
+  "out": "d-sparkle-teal.svg"
+ },
+ "c0a6662dba2ab1da9605c6a7d108b0f4": {
+  "src": "src/assets/d-sparkle.svg",
+  "out": "d-sparkle.svg"
+ },
+ "8aac12ba51e35a887c584607537ddc30": {
+  "src": "src/assets/d-squiggle-purple.svg",
+  "out": "d-squiggle-purple.svg"
+ },
+ "ac9ffa2f8fa6da9190c0a2a0b4dfd493": {
+  "src": "src/assets/d-squiggle.svg",
+  "out": "d-squiggle.svg"
+ },
+ "b052785cd7dfa8305f37d16bee492e46": {
+  "src": "src/assets/p-bag.svg",
+  "out": "p-bag.svg"
+ },
+ "a36784c34370ccb88e2f9c57aa83d0b7": {
+  "src": "src/assets/p-bottle.svg",
+  "out": "p-bottle.svg"
+ },
+ "a56f69e58f4d062a88574d5101e167d0": {
+  "src": "src/assets/p-brunch.svg",
+  "out": "p-brunch.svg"
+ },
+ "90fb5a3460611444463e56b596b75b8a": {
+  "src": "src/assets/p-butter.svg",
+  "out": "p-butter.svg"
+ },
+ "e9877bc08147dff91e332387524b4b6c": {
+  "src": "src/assets/p-earbuds.svg",
+  "out": "p-earbuds.svg"
+ },
+ "52cec2b3194f5a74656384b6232b415d": {
+  "src": "src/assets/p-lipkit.svg",
+  "out": "p-lipkit.svg"
+ },
+ "fccbcbdd63b28c457321553fa3bebb79": {
+  "src": "src/assets/p-pass.svg",
+  "out": "p-pass.svg"
+ },
+ "5fa1f3576c71c5bc302a93ba52710e53": {
+  "src": "src/assets/p-serum.svg",
+  "out": "p-serum.svg"
+ },
+ "fab7ffb666bdedda883321419136cf42": {
+  "src": "src/assets/p-sneaker.svg",
+  "out": "p-sneaker.svg"
+ },
+ "f84848673179e09b05d9d4b4652a9afa": {
+  "src": "src/assets/p-tote.svg",
+  "out": "p-tote.svg"
+ },
+ "5b980093d1db7cec7c94c2eda5d7ad4e": {
+  "src": "src/assets/i-collab.svg",
+  "out": "i-collab.svg"
+ },
+ "877fbb618b6ff3d458cc6020eda569d5": {
+  "src": "src/assets/i-shop.svg",
+  "out": "i-shop.svg"
+ },
+ "fc46e362cf9b5f42457cc2d7b5d6db72": {
+  "src": "src/assets/i-hub.svg",
+  "out": "i-hub.svg"
+ },
+ "4ef7cd91bd5ebf92fc18932b12e8741d": {
+  "src": "src/assets/i-brands.svg",
+  "out": "i-brands.svg"
+ },
+ "06dc11c4ddd7e76940afc3761f8b866b": {
+  "src": "src/assets/i-smes.svg",
+  "out": "i-smes.svg"
+ },
+ "12d35a9c3ae1c57e544f74f2bce46973": {
+  "src": "src/assets/i-agency.svg",
+  "out": "i-agency.svg"
+ },
+ "532f73fe67b34a57f6b6b18203082e00": {
+  "src": "src/assets/backer-jobtech.png",
+  "out": "backer-jobtech.png"
+ },
+ "4d7a5d9eb05fe26f781452b544edb888": {
+  "src": "src/assets/backer-baobab.png",
+  "out": "backer-baobab.png"
+ },
+ "a01945265019aad4099f40ddf37f9e38": {
+  "src": "src/assets/backer-aries.png",
+  "out": "backer-aries.png"
+ },
+ "favicon": {
+  "src": "src/assets/favicon.png",
+  "out": "favicon.png"
+ },
+ "og": {
+  "src": "src/assets/og.png",
+  "out": "og.png"
+ }
+}

@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: aktivate-website
+    runtime: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./site
+    headers:
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=604800

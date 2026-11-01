@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Creator Hub</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Aileron';src:url(/_blob/1dcc8df908f342d82005588742675eaf) format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Aileron';src:url(/_blob/9d4e77af745a79b151726594036ac4b9) format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Aileron';src:url(/_blob/396c0902358439a39bc0a361fb210faf) format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'Aileron';src:url(/_blob/4d5ed464130550884e01b46cc282d21b) format('woff2');font-weight:800;font-display:swap}
+.m-hide{}
+@media (max-width:640px){
+.m-hide{display:none!important}
+.m-stack{flex-direction:column!important;align-items:stretch!important}
+.m-full{width:100%!important;justify-content:center!important;box-sizing:border-box}
+.m-collage{height:auto!important;padding-bottom:12px}
+.m-collage>.m-phone{position:relative!important;left:auto!important;top:auto!important;transform:rotate(2deg)!important;margin:0 auto}
+details summary{font-size:17px!important}
+}
+@media (max-width:760px){
+.hub-side{padding:12px 12px 8px!important;gap:10px!important}
+.hub-side .hub-logo{padding:4px 6px 0!important}
+.hub-nav{flex-direction:row!important;overflow-x:auto;gap:6px!important;padding-bottom:6px;scrollbar-width:none}
+.hub-nav a{flex:none;white-space:nowrap;padding:10px 14px!important}
+}
+body{margin:0;background:#ECEBF2}
+a{color:#5331E8}a:hover{color:#001FFF}
+button{font-family:'Aileron',sans-serif}
+</style>
+</helmet>
+<div style="font-family: 'Aileron', system-ui, sans-serif; color: #080611; background: #ECEBF2; min-height: 1000px; display: flex; flex-wrap: wrap; gap: 0">
+
+<!-- SIDEBAR -->
+<aside class="hub-side" style="flex: 1 1 240px; max-width: 100%; background: #080611; color: #FFFFFF; padding: 24px 18px; box-sizing: border-box; display: flex; flex-direction: column; gap: 6px">
+<div class="hub-logo" style="padding: 4px 8px 22px">
+<img src="/_blob/3a107b69f04bc0a4f12d25d6279f5045" alt="aktivate" style="height: 30px; width: auto; display: block">
+</div>
+<nav class="hub-nav" aria-label="Hub" style="display: flex; flex-direction: column; gap: 4px">
+<a href="#home" style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; background: #5331E8; color: #FFFFFF; text-decoration: none; font-weight: 700">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>For you</a>
+<a href="#campaigns" style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; color: #D9D4FF; text-decoration: none; font-weight: 500">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8-8-2z"></path></svg>My campaigns</a>
+<a href="#shop" style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; color: #D9D4FF; text-decoration: none; font-weight: 500">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1 13H7L6 7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg>My shop</a>
+<a href="#wallet" style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; color: #D9D4FF; text-decoration: none; font-weight: 500">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="3"></rect><path d="M16 13h2"></path><path d="M3 10h18"></path></svg>Wallet</a>
+<a href="#refer" style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; color: #D9D4FF; text-decoration: none; font-weight: 500">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"></circle><path d="M3 20c0-3 3-5 6-5s6 2 6 5"></path><path d="M17 8v6M14 11h6"></path></svg>Refer &amp; earn</a>
+<a href="#settings" style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; color: #D9D4FF; text-decoration: none; font-weight: 500">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"></path></svg>Settings</a>
+</nav>
+<div class="m-hide" style="margin-top: auto; padding: 18px; border-radius: 18px; background: #00C4BC; color: #080611">
+<p style="margin: 0; font-weight: 800; font-family: 'Aileron', sans-serif; font-size: 20px; line-height: 1.1">Earn ₦300 per creator you refer</p>
+<a href="#refer" style="display: inline-block; margin-top: 12px; padding: 10px 14px; border-radius: 999px; background: #080611; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 14px">Share invite</a>
+</div>
+</aside>
+
+<!-- MAIN -->
+<main style="flex: 999 1 640px; min-width: 0; padding: 28px clamp(16px, 3vw, 40px) 48px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 28px; align-content: flex-start">
+
+<header style="flex: 1 1 100%; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px">
+<div>
+<p style="margin: 0; display: inline-block; padding: 4px 10px; border-radius: 999px; background: #FFFFFF; font-size: 12px; font-weight: 700; color: #4A4658">Sample data</p>
+<h1 style="margin: 8px 0 0; font-family: 'Aileron', sans-serif; font-weight: 800; font-size: clamp(32px, 3.6vw, 48px); line-height: 1; letter-spacing: -0.035em">Hey Tolu, ready to earn?<img src="/_blob/c0a6662dba2ab1da9605c6a7d108b0f4" alt="" aria-hidden="true" style="display: inline-block; width: 0.6em; height: 0.6em; vertical-align: top; margin-left: 0.08em"></h1>
+</div>
+<div style="display: flex; gap: 10px; align-items: center">
+<label for="hub-search" style="display: flex; align-items: center; gap: 8px; background: #FFFFFF; border-radius: 14px; padding: 0 14px; min-height: 48px; min-width: 0; flex: 1 1 220px">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4A4658" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+<input id="hub-search" type="search" placeholder="Search brands, products" style="border: 0; outline: none; font: 500 15px 'Aileron', sans-serif; background: transparent; flex: 1; min-width: 0">
+</label>
+<button type="button" aria-label="Notifications" style="width: 48px; height: 48px; border: 0; border-radius: 14px; background: #FFFFFF; cursor: pointer; display: flex; align-items: center; justify-content: center">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#080611" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"></path><path d="M10 21h4"></path></svg>
+</button>
+</div>
+</header>
+
+<!-- FEED -->
+<section aria-labelledby="feed-h" style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+<h2 id="feed-h" style="margin: 0; font-family: 'Aileron', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.02em">Opportunities for you</h2>
+<div role="group" aria-label="Filter opportunities" style="display: flex; gap: 6px; background: #FFFFFF; padding: 5px; border-radius: 999px">
+<sc-for list="{{tabs}}" as="tab" hint-placeholder-count="3">
+<sc-if value="{{tab.active}}" hint-placeholder-val="{{false}}">
+<button type="button" aria-pressed="true" onClick="{{tab.pick}}" style="min-height: 40px; padding: 0 16px; border: 0; border-radius: 999px; background: #080611; color: #FFFFFF; font-weight: 700; font-size: 14px; cursor: pointer">{{tab.label}}</button>
+</sc-if>
+<sc-if value="{{tab.inactive}}" hint-placeholder-val="{{true}}">
+<button type="button" aria-pressed="false" onClick="{{tab.pick}}" style="min-height: 40px; padding: 0 16px; border: 0; border-radius: 999px; background: transparent; color: #080611; font-weight: 700; font-size: 14px; cursor: pointer">{{tab.label}}</button>
+</sc-if>
+</sc-for>
+</div>
+</div>
+
+<sc-for list="{{items}}" as="item" hint-placeholder-count="5">
+<article style="background: #FFFFFF; border-radius: 24px; padding: 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px">
+<div aria-hidden="true" style="width: 64px; height: 64px; border-radius: 18px; background: {{item.color}}; color: {{item.ink}}; display: flex; align-items: center; justify-content: center; font-family: 'Aileron', sans-serif; font-weight: 800; font-size: 20px; flex: none">{{item.mono}}</div>
+<div style="flex: 1 1 220px; min-width: 0">
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+<sc-if value="{{item.isCampaign}}" hint-placeholder-val="{{true}}">
+<span style="padding: 4px 10px; border-radius: 999px; background: #E4DEFF; color: #3A1FC2; font-size: 12px; font-weight: 700">Campaign</span>
+</sc-if>
+<sc-if value="{{item.isProduct}}" hint-placeholder-val="{{false}}">
+<span style="padding: 4px 10px; border-radius: 999px; background: #CDF4F2; color: #005B57; font-size: 12px; font-weight: 700">Product</span>
+</sc-if>
+<span style="font-size: 13px; color: #4A4658; font-weight: 500">{{item.brand}}</span>
+</div>
+<p style="margin: 6px 0 2px; font-weight: 700; font-size: 18px">{{item.title}}</p>
+<p style="margin: 0; font-size: 14px; color: #4A4658">{{item.detail}}</p>
+</div>
+<div style="text-align: right; min-width: 120px">
+<p style="margin: 0; font-family: 'Aileron', sans-serif; font-weight: 800; font-size: 22px">{{item.payout}}</p>
+<p style="margin: 2px 0 0; font-size: 12px; color: #4A4658">{{item.payoutNote}}</p>
+</div>
+<sc-if value="{{item.open}}" hint-placeholder-val="{{true}}">
+<button type="button" onClick="{{item.act}}" style="min-height: 46px; padding: 0 20px; border: 0; border-radius: 14px; background: {{item.btn}}; color: {{item.btnInk}}; font-weight: 700; font-size: 15px; cursor: pointer">{{item.cta}}</button>
+</sc-if>
+<sc-if value="{{item.done}}" hint-placeholder-val="{{false}}">
+<button type="button" onClick="{{item.act}}" style="min-height: 46px; padding: 0 20px; border: 2px solid #080611; border-radius: 14px; background: #FFFFFF; color: #080611; font-weight: 700; font-size: 15px; cursor: pointer">✓ {{item.doneLabel}}</button>
+</sc-if>
+</article>
+</sc-for>
+</section>
+
+<!-- RIGHT RAIL -->
+<aside style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+
+<section aria-labelledby="wallet-h" style="background: #5331E8; color: #FFFFFF; border-radius: 26px; padding: 22px">
+<h2 id="wallet-h" style="margin: 0; font-size: 14px; font-weight: 700; color: #D9D4FF">Wallet balance</h2>
+<p style="margin: 6px 0 18px; font-family: 'Aileron', sans-serif; font-weight: 800; font-size: clamp(28px, 3.06vw, 44px); letter-spacing: -0.03em; line-height: 1">₦184,500</p>
+<div style="display: flex; gap: 10px">
+<div style="flex: 1; background: #FFFFFF; color: #080611; border-radius: 16px; padding: 12px"><p style="margin: 0; font-size: 12px; font-weight: 700; color: #4A4658">Campaigns</p><p style="margin: 4px 0 0; font-weight: 800; font-size: 18px">₦140,000</p></div>
+<div style="flex: 1; background: #00C4BC; color: #080611; border-radius: 16px; padding: 12px"><p style="margin: 0; font-size: 12px; font-weight: 700">Shop sales</p><p style="margin: 4px 0 0; font-weight: 800; font-size: 18px">₦44,500</p></div>
+</div>
+<button type="button" style="margin-top: 14px; width: 100%; min-height: 48px; border: 0; border-radius: 14px; background: #080611; color: #FFFFFF; font-weight: 700; font-size: 15px; cursor: pointer">Withdraw</button>
+</section>
+
+<section aria-labelledby="link-h" style="background: #FFFFFF; border-radius: 26px; padding: 22px">
+<h2 id="link-h" style="margin: 0 0 12px; font-family: 'Aileron', sans-serif; font-weight: 800; font-size: 20px">Your link</h2>
+<div style="display: flex; align-items: center; gap: 8px; background: #ECEBF2; border-radius: 14px; padding: 6px 6px 6px 14px">
+<span style="flex: 1; min-width: 0; font-weight: 700; font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">useaktivate.com/tolu</span>
+<button type="button" onClick="{{copy}}" style="min-height: 40px; padding: 0 14px; border: 0; border-radius: 10px; background: #080611; color: #FFFFFF; font-weight: 700; font-size: 13px; cursor: pointer">{{copyLabel}}</button>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 14px; text-align: center">
+<div style="padding: 10px 4px; border-radius: 12px; background: #ECEBF2"><p style="margin: 0; font-weight: 800; font-size: 18px">2.1K</p><p style="margin: 2px 0 0; font-size: 12px; color: #4A4658">Visits</p></div>
+<div style="padding: 10px 4px; border-radius: 12px; background: #ECEBF2"><p style="margin: 0; font-weight: 800; font-size: 18px">312</p><p style="margin: 2px 0 0; font-size: 12px; color: #4A4658">Clicks</p></div>
+<div style="padding: 10px 4px; border-radius: 12px; background: #ECEBF2"><p style="margin: 0; font-weight: 800; font-size: 18px">{{shopCount}}</p><p style="margin: 2px 0 0; font-size: 12px; color: #4A4658">In shop</p></div>
+</div>
+<a href="Storefront.dc.html" style="display: block; margin-top: 12px; text-align: center; padding: 12px; border-radius: 14px; background: #9EB3FF; color: #080611; text-decoration: none; font-weight: 700; font-size: 14px">Preview my page →</a>
+</section>
+
+<section aria-labelledby="due-h" style="background: #FFFFFF; border-radius: 26px; padding: 22px">
+<h2 id="due-h" style="margin: 0 0 12px; font-family: 'Aileron', sans-serif; font-weight: 800; font-size: 20px">Due soon</h2>
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px">
+<li style="display: flex; gap: 12px; align-items: center"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #5331E8; flex: none"></span><span style="flex: 1; font-size: 14px"><strong>Burger King</strong> · Reel draft</span><span style="font-size: 13px; font-weight: 700; color: #5331E8">Tomorrow</span></li>
+<li style="display: flex; gap: 12px; align-items: center"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #00C4BC; flex: none"></span><span style="flex: 1; font-size: 14px"><strong>Kuda</strong> · Go live</span><span style="font-size: 13px; font-weight: 700; color: #4A4658">Fri</span></li>
+</ul>
+</section>
+</aside>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { filter: 'all', done: { p2: true }, copied: false };
+}
+renderVals() {
+var self = this;
+var s = this.state;
+var all = [
+{ id: 'c1', kind: 'campaign', brand: 'Adidas', mono: 'AD', color: '#080611', ink: '#FFFFFF', title: 'Matchday fit check', detail: '1 Reel · Sports & fashion · Lagos', payout: '₦80,000', payoutNote: 'per creator' },
+{ id: 'p1', kind: 'product', brand: 'Paxo Beauty', mono: 'PX', color: '#8F74F7', ink: '#080611', title: 'Everyday lip kit', detail: 'Beauty · Ships nationwide', payout: '20%', payoutNote: 'commission per sale' },
+{ id: 'c2', kind: 'campaign', brand: 'Access Bank', mono: 'AB', color: '#5331E8', ink: '#FFFFFF', title: 'Grow your SME with us', detail: '1 Reel + 3 Stories · Finance · Nigeria', payout: '₦60,000', payoutNote: 'per creator' },
+{ id: 'p2', kind: 'product', brand: 'Sochitel', mono: 'OF', color: '#00C4BC', ink: '#080611', title: 'OneFootball Weekly Pass', detail: 'Sports · Digital voucher', payout: '₦500', payoutNote: 'fixed per sale' },
+{ id: 'c3', kind: 'campaign', brand: 'Airtel', mono: 'AT', color: '#9EB3FF', ink: '#080611', title: 'Data drop dance challenge', detail: '2 TikToks · Comedy & lifestyle · Ghana', payout: '₵1,200', payoutNote: 'per creator' },
+{ id: 'p3', kind: 'product', brand: 'Ofada Spot', mono: 'FD', color: '#ECEBF2', ink: '#080611', title: 'Weekend brunch for two', detail: 'Food · Lagos · Voucher', payout: '₦2,000', payoutNote: 'fixed per order' }
+];
+var list = all.filter(function (x) { return s.filter === 'all' || x.kind === s.filter; });
+var items = list.map(function (x) {
+var isC = x.kind === 'campaign';
+var done = !!s.done[x.id];
+return Object.assign({}, x, {
+isCampaign: isC, isProduct: !isC,
+open: !done, done: done,
+cta: isC ? 'Apply' : 'Add to shop',
+doneLabel: isC ? 'Applied' : 'In your shop',
+btn: isC ? '#5331E8' : '#00C4BC',
+btnInk: isC ? '#FFFFFF' : '#080611',
+act: function () {
+var d = Object.assign({}, self.state.done);
+d[x.id] = !d[x.id];
+self.setState({ done: d });
+}
+});
+});
+var defs = [['all', 'All'], ['campaign', 'Campaigns'], ['product', 'Products']];
+var tabs = defs.map(function (d) {
+return { label: d[1], active: s.filter === d[0], inactive: s.filter !== d[0], pick: function () { self.setState({ filter: d[0] }); } };
+});
+var shopCount = all.filter(function (x) { return x.kind === 'product' && s.done[x.id]; }).length + 4;
+return {
+tabs: tabs,
+items: items,
+shopCount: shopCount,
+copyLabel: s.copied ? 'Copied' : 'Copy',
+copy: function () { self.setState({ copied: true }); }
+};
+}
+}
+</script>
+</body>
+</html>
