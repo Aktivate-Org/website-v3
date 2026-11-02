@@ -186,5 +186,13 @@
  "og": {
   "src": "src/assets/og.png",
   "out": "og.png"
+ },
+ "afe6a5ba2e354a08bdc9fd4eb644a170": {
+  "src": "src/assets/access-bank.png",
+  "out": "partner-access-bank.png"
+ },
+ "51ad68bcbff98571a5e7bf2ce74fcd1d": {
+  "src": "src/assets/sochitel.png",
+  "out": "partner-sochitel.png"
  }
 }
