@@ -194,5 +194,9 @@
  "51ad68bcbff98571a5e7bf2ce74fcd1d": {
   "src": "src/assets/sochitel.png",
   "out": "partner-sochitel.png"
+ },
+ "aa7f1fb23936e3134a63407a7759f4d5": {
+  "src": "src/assets/i-gauge.svg",
+  "out": "i-gauge.svg"
  }
 }
