@@ -4,6 +4,35 @@ services:
     runtime: static
     buildCommand: npm install && npm run build
     staticPublishPath: ./site
+    # ShopLink pages that used to live on useaktivate.com: send them to the ShopLink app
+    routes:
+      - type: redirect
+        source: /@*
+        destination: https://shop.useaktivate.com/@*
+      - type: redirect
+        source: /order/*
+        destination: https://shop.useaktivate.com/order/*
+      - type: redirect
+        source: /download/*
+        destination: https://shop.useaktivate.com/download/*
+      - type: redirect
+        source: /pay/*
+        destination: https://shop.useaktivate.com/pay/*
+      - type: redirect
+        source: /checkout/*
+        destination: https://shop.useaktivate.com/checkout/*
+      - type: redirect
+        source: /listing-fee/*
+        destination: https://shop.useaktivate.com/listing-fee/*
+      - type: redirect
+        source: /find-order
+        destination: https://shop.useaktivate.com/find-order
+      - type: redirect
+        source: /unsubscribe
+        destination: https://shop.useaktivate.com/unsubscribe
+      - type: redirect
+        source: /img/*
+        destination: https://shop.useaktivate.com/img/*
     headers:
       - path: /assets/*
         name: Cache-Control
