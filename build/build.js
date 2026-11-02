@@ -16,7 +16,7 @@ const GTM_ID = 'GTM-TCDHRD3S';
 const ROUTES = {
   Main: '/', CreatorsCampaigns: '/creators/collaboration-hub/', CreatorsShopLink: '/creators/shoplink/',
   Brands: '/brands/', SMEs: '/smes/', Agencies: '/agencies/', Pricing: '/pricing/', About: '/about/',
-  Storefront: '/example-shop/', Hub: APP_URL, EngagementCalculator: '/tools/engagement-rate-calculator/',
+  Storefront: '/example-shop/', Hub: APP_URL, EngagementCalculator: '/tools/engagement-rate-calculator/', Privacy: '/privacy/',
 };
 const META = {
   Main: ['Aktivate — Get paid to create', 'Land paid brand campaigns and run your own shop from one link. Built for creators in Nigeria, Kenya, Ghana and South Africa.'],
@@ -32,6 +32,7 @@ const META = {
   ],
   About: ['About Aktivate', 'We’re building the payday for Africa’s creators. 51,400+ creators, $3M+ paid out.'],
   EngagementCalculator: ['Free engagement rate calculator for Instagram & TikTok — Aktivate', 'Check any Instagram or TikTok handle and see its engagement rate, average likes and comments, and how it compares to creators the same size. Free, no sign-up.'],
+  Privacy: ['Privacy Policy — Aktivate', 'How Aktivate collects, uses and protects personal data, in line with the Nigeria Data Protection Act 2023.'],
   Storefront: ['Example creator shop — Aktivate', 'See what a creator’s ShopLink storefront looks like.'],
 };
 
@@ -90,7 +91,7 @@ function load(name) {
 }
 
 const comps = { Nav: load('Nav'), Footer: load('Footer') };
-const pages = ['Main', 'CreatorsCampaigns', 'CreatorsShopLink', 'EngagementCalculator', 'Brands', 'SMEs', 'Agencies', 'Pricing', 'About', 'Storefront'];
+const pages = ['Main', 'CreatorsCampaigns', 'CreatorsShopLink', 'EngagementCalculator', 'Brands', 'SMEs', 'Agencies', 'Pricing', 'About', 'Privacy', 'Storefront'];
 
 function headStyles(list) {
   const seen = new Set(); let out = '';
