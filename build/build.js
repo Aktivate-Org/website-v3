@@ -125,7 +125,8 @@ for (const name of pages) {
   const styles = headStyles([root.helmet, comps.Nav.helmet, comps.Footer.helmet]);
   const scripts = `
 <script src="/assets/currency.js"></script>
-<script src="/assets/consent.js" defer></script>` + (ship.length ? `
+<script src="/assets/consent.js" defer></script>` + (name === 'EngagementCalculator' ? '' : `
+<script src="/assets/er-popup.js" defer></script>`) + (ship.length ? `
 <script src="/assets/morphdom.min.js"></script>
 <script src="/assets/dc-lite.js"></script>
 <script>(function(){var D=window.DCLite,defs={};${ship.map(shipDef).join('\n')}
@@ -186,6 +187,7 @@ fs.copyFileSync(require.resolve('morphdom/dist/morphdom-umd.min.js'), path.join(
 fs.copyFileSync(path.join(__dirname, 'dc-lite.js'), path.join(OUT, 'assets/dc-lite.js'));
 fs.copyFileSync(path.join(__dirname, 'currency.js'), path.join(OUT, 'assets/currency.js'));
 fs.copyFileSync(path.join(__dirname, 'consent.js'), path.join(OUT, 'assets/consent.js'));
+fs.copyFileSync(path.join(__dirname, 'er-popup.js'), path.join(OUT, 'assets/er-popup.js'));
 
 fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`);
 fs.writeFileSync(path.join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemap.map(u => `  <url><loc>${u}</loc></url>`).join('\n')}\n</urlset>\n`);
