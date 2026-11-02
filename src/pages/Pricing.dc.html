@@ -104,15 +104,16 @@ input[type=range]{accent-color:#00C4BC;width:100%;height:28px}
 <article style="flex: 1 1 340px; min-width: 0; background: #FFFFFF; border-radius: 36px; padding: 36px; display: flex; flex-direction: column; gap: 18px">
 <span aria-hidden="true" style="width: 52px; height: 52px; border-radius: 16px; background: #001FFF; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"></path><path d="M4 19h16"></path><path d="M8 15l4-4 3 3 5-6"></path></svg></span>
 <div><h2 style="margin: 0; font-weight: 800; font-size: 28px">Aktivate Reports</h2><p style="margin: 6px 0 0; color: #4A4658">For agencies and brand teams</p></div>
-<p style="margin: 0; font-weight: 800; font-size: clamp(40px, 4.44vw, 64px); letter-spacing: -0.045em; line-height: 0.9">Credits</p>
-<p style="margin: -6px 0 0; font-weight: 700; color: #001FFF">Pay as you go · no subscription</p>
+<p style="margin: 0; font-weight: 800; font-size: clamp(40px, 4.44vw, 64px); letter-spacing: -0.045em; line-height: 0.9">{{reportsPrice}}<span style="font-size: 18px; font-weight: 600; letter-spacing: 0"> / 50 credits</span></p>
+<p style="margin: -6px 0 0; font-weight: 700; color: #001FFF">Valid for 30 days · no subscription</p>
 <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 16px">
+<li>✓ 1 credit = 1 creator post tracked</li>
 <li>✓ Paste post links, get a full report</li>
 <li>✓ Public views, likes, comments, shares</li>
 <li>✓ Works for campaigns run anywhere</li>
 <li>✓ Each agency sees only its campaigns</li>
 </ul>
-<a href="Agencies.dc.html#reports" style="margin-top: auto; display: flex; align-items: center; justify-content: center; min-height: 56px; border-radius: 16px; background: #080611; color: #FFFFFF; text-decoration: none; font-weight: 800; font-size: 16px">Book a demo</a>
+<a href="#book" style="margin-top: auto; display: flex; align-items: center; justify-content: center; min-height: 56px; border-radius: 16px; background: #080611; color: #FFFFFF; text-decoration: none; font-weight: 800; font-size: 16px">Book a demo</a>
 </article>
 </div>
 
@@ -180,6 +181,7 @@ input[type=range]{accent-color:#00C4BC;width:100%;height:28px}
 <h2 style="margin: 0 0 28px; font-weight: 800; font-size: clamp(36px, 4.4vw, 56px); letter-spacing: -0.035em">Pricing questions</h2>
 <div style="display: flex; flex-direction: column; gap: 12px">
 <details open style="background: #FFFFFF; border-radius: 22px; padding: 22px 26px"><summary style="cursor: pointer; font-weight: 700; font-size: 20px">Can I pay in naira, shillings or cedis?</summary><p style="margin: 14px 0 0; font-size: 17px; line-height: 1.55; color: #4A4658">Yes. Prices show in naira, cedis or shillings based on where you are, and you can switch currency at the top of this page.</p></details>
+<details style="background: #FFFFFF; border-radius: 22px; padding: 22px 26px"><summary style="cursor: pointer; font-weight: 700; font-size: 20px">How do Aktivate Reports credits work?</summary><p style="margin: 14px 0 0; font-size: 17px; line-height: 1.55; color: #4A4658">One credit tracks one creator post. A pack of 50 credits costs ₦35,000 (or the local equivalent) and is valid for 30 days.</p></details>
 <details style="background: #FFFFFF; border-radius: 22px; padding: 22px 26px"><summary style="cursor: pointer; font-weight: 700; font-size: 20px">Is there a monthly subscription?</summary><p style="margin: 14px 0 0; font-size: 17px; line-height: 1.55; color: #4A4658">No. You pay per campaign, per product listed, or per report credit. Nothing recurring.</p></details>
 <details style="background: #FFFFFF; border-radius: 22px; padding: 22px 26px"><summary style="cursor: pointer; font-weight: 700; font-size: 20px">What does the 10% campaign fee cover?</summary><p style="margin: 14px 0 0; font-size: 17px; line-height: 1.55; color: #4A4658">Access to the creator network, applications and selection, and handling creator payouts.</p></details>
 <details style="background: #FFFFFF; border-radius: 22px; padding: 22px 26px"><summary style="cursor: pointer; font-weight: 700; font-size: 20px">Can I use Collaboration Hub and ShopLink together?</summary><p style="margin: 14px 0 0; font-size: 17px; line-height: 1.55; color: #4A4658">Yes — many businesses run a campaign for buzz, then list products so the same creators keep selling.</p></details>
@@ -213,10 +215,10 @@ renderVals() {
 var self = this;
 var s = this.state;
 var FX = (typeof window !== 'undefined' && window.AKT_FX) || {
-USD: { sym: '$', rate: 1, listing: 15, round: 1 },
-NGN: { sym: '₦', rate: 1359, listing: 20500, round: 100 },
-GHS: { sym: 'GH₵', rate: 11.62, listing: 175, round: 1 },
-KES: { sym: 'KSh ', rate: 130, listing: 1950, round: 10 }
+USD: { sym: '$', rate: 1, listing: 15, reports: 26, round: 1 },
+NGN: { sym: '₦', rate: 1359, listing: 20500, reports: 35000, round: 100 },
+GHS: { sym: 'GH₵', rate: 11.62, listing: 175, reports: 300, round: 1 },
+KES: { sym: 'KSh ', rate: 130, listing: 1950, reports: 3350, round: 10 }
 };
 var f = FX[s.cur] || FX.USD;
 function money(n) { var v = Math.round(n / f.round) * f.round; return f.sym + v.toLocaleString('en-US'); }
@@ -236,6 +238,7 @@ isBusiness: s.view === 'business',
 isCreator: s.view === 'creator',
 budget: s.budget,
 listing: f.sym + f.listing.toLocaleString('en-US'),
+reportsPrice: f.sym + (f.reports || 26).toLocaleString('en-US'),
 budgetLabel: money(budgetL),
 feeLabel: money(fee),
 totalLabel: money(budgetL + fee + f.listing),

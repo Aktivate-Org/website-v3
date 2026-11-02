@@ -51,7 +51,7 @@ function prep(name, src) {
   // Links that need a real destination. Edit these in one place.
   const LINKS = {
     signup: APP_URL, login: APP_URL, refer: APP_URL, access: APP_URL,
-    'shop-signup': SHOP_URL, claim: SHOP_URL,
+    'shop-signup': SHOP_URL, claim: SHOP_URL, 'reports-app': 'https://reports.useaktivate.com',
     contact: SALES, sales: SALES, book: SALES + '?subject=Aktivate%20demo', careers: SALES + '?subject=Customer%20Growth%20Associate',
     blog: 'https://blog.useaktivate.com',
     instagram: 'https://www.instagram.com/useaktivate', tiktok: 'https://www.tiktok.com/@useaktivate',
