@@ -58,7 +58,7 @@ function prep(name, src) {
     contact: SALES, sales: SALES, book: SALES + '?subject=Aktivate%20demo', careers: SALES + '?subject=Customer%20Growth%20Associate',
     blog: 'https://blog.useaktivate.com',
     instagram: 'https://www.instagram.com/useaktivate', tiktok: 'https://www.tiktok.com/@useaktivate',
-    x: 'https://x.com/useaktivate', linkedin: 'https://www.linkedin.com/company/aktivate-inc/',
+    x: 'https://x.com/useaktivate', whatsapp: 'https://chat.whatsapp.com/KyOL3vkMOtLFESGUqSpsqY', linkedin: 'https://www.linkedin.com/company/aktivate-inc/',
   };
   src = src.replace(/href="#([a-z-]+)"/g, (m, k) => (LINKS[k] ? `href="${LINKS[k]}"` : m));
   src = src.replace(/\/_blob\/([0-9a-f]{32})/g, (m, id) => {
