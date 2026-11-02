@@ -124,7 +124,8 @@ for (const name of pages) {
   const url = SITE_URL + ROUTES[name];
   const styles = headStyles([root.helmet, comps.Nav.helmet, comps.Footer.helmet]);
   const scripts = `
-<script src="/assets/currency.js"></script>` + (ship.length ? `
+<script src="/assets/currency.js"></script>
+<script src="/assets/consent.js" defer></script>` + (ship.length ? `
 <script src="/assets/morphdom.min.js"></script>
 <script src="/assets/dc-lite.js"></script>
 <script>(function(){var D=window.DCLite,defs={};${ship.map(shipDef).join('\n')}
@@ -133,6 +134,11 @@ new D.Page(defs).hydrate();})();</script>` : '');
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<!-- Consent Mode v2 defaults (must run before GTM) -->
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',functionality_storage:'granted',security_storage:'granted',wait_for_update:500});
+gtag('set','ads_data_redaction',true);
+(function(){try{var c=JSON.parse(localStorage.getItem('akt-consent'));if(c&&c.v===1&&Date.now()-c.ts<31536e6){var m=c.marketing?'granted':'denied';gtag('consent','update',{analytics_storage:c.analytics?'granted':'denied',ad_storage:m,ad_user_data:m,ad_personalization:m});}}catch(e){}})();</script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -179,6 +185,7 @@ for (const id in assetMap) fs.copyFileSync(assetMap[id].src, path.join(OUT, 'ass
 fs.copyFileSync(require.resolve('morphdom/dist/morphdom-umd.min.js'), path.join(OUT, 'assets/morphdom.min.js'));
 fs.copyFileSync(path.join(__dirname, 'dc-lite.js'), path.join(OUT, 'assets/dc-lite.js'));
 fs.copyFileSync(path.join(__dirname, 'currency.js'), path.join(OUT, 'assets/currency.js'));
+fs.copyFileSync(path.join(__dirname, 'consent.js'), path.join(OUT, 'assets/consent.js'));
 
 fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`);
 fs.writeFileSync(path.join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemap.map(u => `  <url><loc>${u}</loc></url>`).join('\n')}\n</urlset>\n`);
