@@ -60,6 +60,12 @@ function prep(name, src) {
     instagram: 'https://www.instagram.com/useaktivate', tiktok: 'https://www.tiktok.com/@useaktivate',
     x: 'https://x.com/useaktivate', whatsapp: 'https://chat.whatsapp.com/KyOL3vkMOtLFESGUqSpsqY', linkedin: 'https://www.linkedin.com/company/aktivate-inc/',
   };
+  // These leave the site, so they open in a new tab and the visitor keeps their place on useaktivate.com.
+  const NEW_TAB = new Set(['blog', 'instagram', 'tiktok', 'x', 'whatsapp', 'linkedin']);
+  src = src.replace(/<a\b[^>]*>/g, (tag) => tag.replace(/href="#([a-z-]+)"/, (m, k) => {
+    if (!LINKS[k]) return m;
+    return `href="${LINKS[k]}"` + (NEW_TAB.has(k) && !/\btarget=/.test(tag) ? ' target="_blank" rel="noopener"' : '');
+  }));
   src = src.replace(/href="#([a-z-]+)"/g, (m, k) => (LINKS[k] ? `href="${LINKS[k]}"` : m));
   src = src.replace(/\/_blob\/([0-9a-f]{32})/g, (m, id) => {
     if (!assetMap[id]) throw new Error('unmapped asset ' + id + ' in ' + name);
