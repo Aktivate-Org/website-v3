@@ -14,34 +14,44 @@ const { marked } = require('marked');
 const PUBLICATION_ID = '69dcbf84a84fa622cf19f129';
 const OLD_HOST = 'blog.useaktivate.com';
 const GQL = 'https://gql.hashnode.com';
-// Hidden-from-listing posts that still need a page (they get traffic from search and old links).
-const ALSO_FETCH = ['the-best-influencer-marketing-platforms-in-nigeria-and-kenya-2026'];
+const SNAPSHOT = path.join(__dirname, 'blog-snapshot.json');
 
 /* ---------------- data ---------------- */
 const FIELDS_FULL = `id slug title subtitle brief publishedAt updatedAt readTimeInMinutes canonicalUrl
   coverImage { url } tags { name slug } author { name } content { markdown }
-  seo { title description } ogMetaData { image } preferences { isDelisted }`;
+  seo { title description } ogMetaData { image }`;
 const FIELDS_SAFE = `id slug title subtitle brief publishedAt readTimeInMinutes tags { name slug } author { name } content { markdown }`;
 
 async function gql(query, variables) {
   let lastErr;
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
-      const res = await fetch(GQL, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ query, variables }) });
-      const json = await res.json();
+      const res = await fetch(GQL, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          accept: 'application/graphql-response+json, application/json',
+          'user-agent': 'Mozilla/5.0 (compatible; AktivateSiteBuild/1.0; +https://useaktivate.com)',
+        },
+        body: JSON.stringify({ query, variables }),
+      });
+      const text = await res.text();
+      let json;
+      try { json = JSON.parse(text); }
+      catch { throw new Error(`Hashnode API answered HTTP ${res.status} (${res.headers.get('content-type') || 'no content-type'}), not JSON: ${text.replace(/\s+/g, ' ').slice(0, 300)}`); }
       if (json.errors) { const e = new Error(json.errors.map(x => x.message).join('; ')); e.gql = true; throw e; }
       return json.data;
     } catch (e) {
       lastErr = e;
       if (e.gql) throw e;
-      await new Promise(r => setTimeout(r, 1500 * (attempt + 1)));
+      console.warn(`blog: Hashnode request failed (attempt ${attempt + 1}/3): ${e.message}`);
+      await new Promise(r => setTimeout(r, 2000 * (attempt + 1)));
     }
   }
   throw lastErr;
 }
 
-async function fetchPosts() {
-  if (process.env.BLOG_FIXTURE) return JSON.parse(fs.readFileSync(process.env.BLOG_FIXTURE, 'utf8'));
+async function fetchLive() {
   async function all(fields) {
     const out = []; let after = null;
     do {
@@ -52,12 +62,6 @@ async function fetchPosts() {
       out.push(...p.edges.map(e => e.node));
       after = p.pageInfo.hasNextPage ? p.pageInfo.endCursor : null;
     } while (after);
-    // Hidden (delisted) posts may be left out of the list; fetch these by slug so their pages and old links keep working.
-    for (const slug of ALSO_FETCH) {
-      if (out.some(p => p.slug === slug)) continue;
-      const d = await gql(`query($id: ObjectId, $slug: String!) { publication(id: $id) { post(slug: $slug) { ${fields} } } }`, { id: PUBLICATION_ID, slug });
-      if (d.publication?.post) out.push(d.publication.post);
-    }
     return out;
   }
   try { return await all(FIELDS_FULL); }
@@ -65,6 +69,22 @@ async function fetchPosts() {
     if (!e.gql) throw e;
     console.warn('blog: full query rejected (' + e.message + '), retrying with core fields');
     return all(FIELDS_SAFE);
+  }
+}
+
+/* Live posts from Hashnode when it answers; otherwise the saved copy in build/blog-snapshot.json,
+   so a Hashnode outage or block never stops the website from deploying. */
+async function fetchPosts() {
+  if (process.env.BLOG_FIXTURE) return JSON.parse(fs.readFileSync(process.env.BLOG_FIXTURE, 'utf8'));
+  try {
+    const posts = await fetchLive();
+    if (!posts.length) throw new Error('Hashnode returned no posts');
+    console.log(`blog: using ${posts.length} live posts from Hashnode`);
+    return posts;
+  } catch (e) {
+    const snap = JSON.parse(fs.readFileSync(SNAPSHOT, 'utf8'));
+    console.warn(`blog: WARNING - could not load posts from Hashnode (${e.message}). Using the saved copy from ${snap.savedAt} (${snap.posts.length} posts); new or edited posts will not appear until Hashnode is reachable.`);
+    return snap.posts;
   }
 }
 
@@ -383,7 +403,7 @@ async function build(ctx) {
     .map(p => ({ ...p, cat: category(p), excerpt: String(p.subtitle || p.seo?.description || p.brief || '').replace(/\s+/g, ' ').trim().slice(0, 220) }))
     .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
   if (!posts.length) throw new Error('Hashnode returned no posts; refusing to publish an empty blog');
-  const listed = posts.filter(p => !p.preferences?.isDelisted);
+  const listed = posts;
   const urls = [];
   const head = (extra) => CSS + extra;
 
@@ -419,7 +439,7 @@ async function build(ctx) {
     const dir = path.join(OUT, 'blog', p.slug);
     fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(path.join(dir, 'index.html'), doc);
-    if (!p.preferences?.isDelisted && canonical === url) urls.push(url);
+    if (canonical === url) urls.push(url);
   }
   console.log(`built /blog/ with ${posts.length} posts (${listed.length} listed)`);
   return urls;
