@@ -1,6 +1,12 @@
 {
   "name": "aktivate-website",
   "private": true,
-  "scripts": { "build": "node build/build.js src/pages site build/assets.json" },
-  "dependencies": { "htmlparser2": "^9.1.0", "morphdom": "^2.7.4" }
+  "scripts": {
+    "build": "node build/build.js src/pages site build/assets.json"
+  },
+  "dependencies": {
+    "htmlparser2": "^9.1.0",
+    "marked": "18.0.14",
+    "morphdom": "^2.7.4"
+  }
 }
