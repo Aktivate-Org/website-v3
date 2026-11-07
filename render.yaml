@@ -37,3 +37,28 @@ services:
       - path: /assets/*
         name: Cache-Control
         value: public, max-age=604800
+
+  # Old blog address (blog.useaktivate.com, previously served by Hashnode).
+  # Every old post URL is permanently redirected to the same slug under useaktivate.com/blog/.
+  # Point the blog.useaktivate.com DNS record at this service once the new /blog/ is live.
+  - type: web
+    name: aktivate-blog-redirect
+    runtime: static
+    buildCommand: echo "redirect only"
+    staticPublishPath: ./redirects/blog-subdomain
+    routes:
+      - type: redirect
+        source: /rss.xml
+        destination: https://useaktivate.com/blog/rss.xml
+      - type: redirect
+        source: /sitemap.xml
+        destination: https://useaktivate.com/sitemap.xml
+      - type: redirect
+        source: /tag/*
+        destination: https://useaktivate.com/blog/
+      - type: redirect
+        source: /newsletter
+        destination: https://useaktivate.com/blog/
+      - type: redirect
+        source: /*
+        destination: https://useaktivate.com/blog/*

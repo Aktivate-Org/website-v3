@@ -56,12 +56,12 @@ function prep(name, src) {
     signup: APP_URL, login: APP_URL, refer: APP_URL, access: APP_URL,
     'shop-signup': SHOP_URL, claim: SHOP_URL, 'reports-app': 'https://reports.useaktivate.com',
     contact: SALES, sales: SALES, book: SALES + '?subject=Aktivate%20demo', careers: SALES + '?subject=Customer%20Growth%20Associate',
-    blog: 'https://blog.useaktivate.com',
+    blog: '/blog/',
     instagram: 'https://www.instagram.com/useaktivate', tiktok: 'https://www.tiktok.com/@useaktivate',
     x: 'https://x.com/useaktivate', whatsapp: 'https://chat.whatsapp.com/KyOL3vkMOtLFESGUqSpsqY', linkedin: 'https://www.linkedin.com/company/aktivate-inc/',
   };
   // These leave the site, so they open in a new tab and the visitor keeps their place on useaktivate.com.
-  const NEW_TAB = new Set(['blog', 'instagram', 'tiktok', 'x', 'whatsapp', 'linkedin']);
+  const NEW_TAB = new Set(['instagram', 'tiktok', 'x', 'whatsapp', 'linkedin']);
   src = src.replace(/<a\b[^>]*>/g, (tag) => tag.replace(/href="#([a-z-]+)"/, (m, k) => {
     if (!LINKS[k]) return m;
     return `href="${LINKS[k]}"` + (NEW_TAB.has(k) && !/\btarget=/.test(tag) ? ' target="_blank" rel="noopener"' : '');
@@ -129,15 +129,28 @@ for (const name of pages) {
   const [title, desc] = META[name];
   const url = SITE_URL + ROUTES[name];
   const styles = headStyles([root.helmet, comps.Nav.helmet, comps.Footer.helmet]);
-  const scripts = `
+  const doc = shell({ title, desc, url, styles, body: html, scripts: pageScripts(ship, name !== 'EngagementCalculator') });
+  const dir = name === 'Main' ? OUT : path.join(OUT, ROUTES[name]);
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, 'index.html'), doc);
+  if (name !== 'Storefront') sitemap.push(url);
+  console.log('built', ROUTES[name], (doc.length / 1024).toFixed(0) + 'KB', ship.map(c => c.name).join(','));
+}
+
+function pageScripts(ship, erPopup) {
+  return `
 <script src="/assets/currency.js"></script>
-<script src="/assets/consent.js" defer></script>` + (name === 'EngagementCalculator' ? '' : `
-<script src="/assets/er-popup.js" defer></script>`) + (ship.length ? `
+<script src="/assets/consent.js" defer></script>` + (erPopup ? `
+<script src="/assets/er-popup.js" defer></script>` : '') + (ship.length ? `
 <script src="/assets/morphdom.min.js"></script>
 <script src="/assets/dc-lite.js"></script>
 <script>(function(){var D=window.DCLite,defs={};${ship.map(shipDef).join('\n')}
 new D.Page(defs).hydrate();})();</script>` : '');
-  const doc = `<!doctype html>
+}
+
+/* The full HTML document every page shares: consent defaults, GTM, meta tags, fonts. */
+function shell({ title, desc, url, styles, body, scripts, ogType = 'website', ogImage = SITE_URL + '/assets/og.png', extraHead = '' }) {
+  return `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -157,15 +170,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <title>${title}</title>
 <meta name="description" content="${desc}">
 <link rel="canonical" href="${url}">
-<meta property="og:type" content="website">
+<meta property="og:type" content="${ogType}">
 <meta property="og:title" content="${title}">
 <meta property="og:description" content="${desc}">
 <meta property="og:url" content="${url}">
-<meta property="og:image" content="${SITE_URL}/assets/og.png">
+<meta property="og:image" content="${ogImage}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="preload" href="/assets/aileron-800.woff2" as="font" type="font/woff2" crossorigin>
-${styles}<style>
+${extraHead}${styles}<style>
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 img{max-width:100%}
@@ -176,15 +189,10 @@ img{max-width:100%}
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-${html}${scripts}
+${body}${scripts}
 </body>
 </html>
 `;
-  const dir = name === 'Main' ? OUT : path.join(OUT, ROUTES[name]);
-  fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(path.join(dir, 'index.html'), doc);
-  if (name !== 'Storefront') sitemap.push(url);
-  console.log('built', ROUTES[name], (doc.length / 1024).toFixed(0) + 'KB', ship.map(c => c.name).join(','));
 }
 
 /* assets */
@@ -195,6 +203,21 @@ fs.copyFileSync(path.join(__dirname, 'currency.js'), path.join(OUT, 'assets/curr
 fs.copyFileSync(path.join(__dirname, 'consent.js'), path.join(OUT, 'assets/consent.js'));
 fs.copyFileSync(path.join(__dirname, 'er-popup.js'), path.join(OUT, 'assets/er-popup.js'));
 
-fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`);
-fs.writeFileSync(path.join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemap.map(u => `  <url><loc>${u}</loc></url>`).join('\n')}\n</urlset>\n`);
-console.log('done');
+/* blog: posts come from Hashnode at build time (see build/blog.js) */
+const chrome = new DC.Page({ Nav: comps.Nav, Footer: comps.Footer });
+require('./blog.js').build({
+  OUT, SITE_URL, APP_URL, shell,
+  styles: headStyles([comps.Nav.helmet, comps.Footer.helmet]),
+  nav: chrome.renderInst('Nav', { open: 'none' }, 'blog/Nav#0'),
+  footer: chrome.renderInst('Footer', {}, 'blog/Footer#0'),
+  scripts: pageScripts([comps.Nav], true),
+}).then((blogUrls) => {
+  sitemap.push(...blogUrls);
+  fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`);
+  fs.writeFileSync(path.join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemap.map(u => `  <url><loc>${u}</loc></url>`).join('\n')}\n</urlset>\n`);
+  console.log('done');
+}).catch((e) => {
+  // Fail the build so Render keeps the current live site instead of shipping one without a blog.
+  console.error('blog build failed:', e);
+  process.exit(1);
+});
