@@ -56,7 +56,7 @@ function prep(name, src) {
     signup: APP_URL, login: APP_URL, refer: APP_URL, access: APP_URL,
     'shop-signup': SHOP_URL, claim: SHOP_URL, 'reports-app': 'https://reports.useaktivate.com',
     contact: SALES, sales: SALES, book: SALES + '?subject=Aktivate%20demo', careers: SALES + '?subject=Customer%20Growth%20Associate',
-    blog: '/blog/',
+    blog: '/blog/', alternatives: '/alternatives/',
     instagram: 'https://www.instagram.com/useaktivate', tiktok: 'https://www.tiktok.com/@useaktivate',
     x: 'https://x.com/useaktivate', whatsapp: 'https://chat.whatsapp.com/KyOL3vkMOtLFESGUqSpsqY', linkedin: 'https://www.linkedin.com/company/aktivate-inc/',
   };
@@ -213,6 +213,13 @@ require('./blog.js').build({
   scripts: pageScripts([comps.Nav], true),
 }).then((blogUrls) => {
   sitemap.push(...blogUrls);
+  sitemap.push(...require('./compare.js').build({
+    OUT, SITE_URL, shell,
+    styles: headStyles([comps.Nav.helmet, comps.Footer.helmet]),
+    nav: chrome.renderInst('Nav', { open: 'none' }, 'alt/Nav#0'),
+    footer: chrome.renderInst('Footer', {}, 'alt/Footer#0'),
+    scripts: pageScripts([comps.Nav], true),
+  }));
   fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`);
   fs.writeFileSync(path.join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemap.map(u => `  <url><loc>${u}</loc></url>`).join('\n')}\n</urlset>\n`);
   console.log('done');
