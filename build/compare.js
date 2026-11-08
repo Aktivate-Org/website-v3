@@ -30,7 +30,7 @@ const SHOPLINK = {
 const PAGES = [
   {
     slug: 'shopmy', name: 'ShopMy', short: 'ShopMy',
-    title: 'ShopMy Alternative for African Creators — ShopLink by Aktivate',
+    title: 'The Best ShopMy Alternative for African Creators — ShopLink vs ShopMy',
     desc: 'Looking for an African ShopMy? ShopLink gives creators in Nigeria, Kenya, Ghana and South Africa a shoppable store, products followers can actually buy, and commission 7 days after each sale.',
     h1: ['The ShopMy alternative', 'built for Africa.'],
     lede: 'ShopMy is built around US retailers, Stripe or PayPal payouts, and commissions that can take months to clear. ShopLink gives African creators a real store, local products and fast payouts.',
@@ -45,6 +45,16 @@ const PAGES = [
       'Commission': 'Set by the retailer, typically 10–30%; you keep 82% on the standard model',
       'Who can join': 'Apply and wait for review (typically 1,000+ followers)',
     },
+    features: [
+      ['Free for creators', 'Y', 'Y'],
+      ['Open to every creator, no application', 'Y', 'N'],
+      ['Products from African brands that deliver locally', 'Y', 'N'],
+      ['Followers pay by card, transfer or USSD in local currency', 'Y', 'N'],
+      ['Paid without needing Stripe or PayPal', 'Y', 'N'],
+      ['Commission paid 7 days after each sale', 'Y', '30–120 days'],
+      ['Sale made on your own store, not a retailer’s site', 'Y', 'N'],
+      ['Products from US and European retailers', 'N', 'Y'],
+    ],
     reasons: [
       ['Products your followers can buy', 'A follower in Lagos who taps a US retailer link often hits dollar prices, no delivery or heavy customs. ShopLink is stocked by African brands that deliver locally.'],
       ['Paid where you live', 'No Stripe or PayPal needed. Commission lands in your Aktivate wallet and goes to your local bank account.'],
@@ -64,10 +74,10 @@ const PAGES = [
   },
   {
     slug: 'ltk', name: 'LTK (LIKEtoKNOW.it)', short: 'LTK',
-    title: 'LTK Alternative for African Creators — ShopLink by Aktivate',
+    title: 'The Best LTK Alternative for African Creators — ShopLink vs LTK',
     desc: 'LTK (LIKEtoKNOW.it) is invite-only and pays through PayPal once retailers clear commission. ShopLink is open to every African creator, with local brands and commission 7 days after each sale.',
     h1: ['The LTK alternative', 'African creators can actually join.'],
-    lede: 'LTK is invite-only, built around global retailers and paid through PayPal with a $100 minimum. ShopLink is free to open, stocked with African brands, and pays 7 days after each sale.',
+    lede: 'LTK is invite-only, built around global retailers, and pays monthly through PayPal with a $100 minimum. ShopLink is free to open, stocked with African brands, and pays 7 days after each sale.',
     answer: 'The closest LTK alternative for African creators is <b>ShopLink by Aktivate</b>. Any creator can open a free store, add products from African brands, share one link and earn 10–50% commission per sale, paid 7 days after the purchase.',
     them: {
       'Built for': 'Creators shopping global retailers',
@@ -79,9 +89,19 @@ const PAGES = [
       'Commission': 'Varies by brand, typically 5–20%',
       'Who can join': 'Invite-only; applicants are vetted',
     },
+    features: [
+      ['Free for creators', 'Y', 'Y'],
+      ['Open to every creator, no invite', 'Y', 'N'],
+      ['Products from African brands that deliver locally', 'Y', 'N'],
+      ['Followers pay by card, transfer or USSD in local currency', 'Y', 'N'],
+      ['Paid without needing PayPal', 'Y', 'Some regions'],
+      ['Commission paid 7 days after each sale', 'Y', 'Monthly'],
+      ['Sale made on your own store, not a retailer’s site', 'Y', 'N'],
+      ['Products from US and European retailers', 'N', 'Y'],
+    ],
     reasons: [
       ['Open to every creator', 'No invite or vetting queue. Sign up with your Aktivate account and your store is ready the same day.'],
-      ['No $100 minimum', 'Small creators get paid too. Commission lands in your wallet 7 days after each purchase.'],
+      ['Paid in a week, not a month', 'LTK pays monthly once retailers clear commission. ShopLink commission lands in your wallet 7 days after each purchase.'],
       ['Higher commission', 'Brands on ShopLink set 10–50% per product to attract creators, and you see your cut before you add anything.'],
       ['Built for local shoppers', 'Naira and local prices, local delivery, and a checkout that takes card, transfer and USSD.'],
     ],
@@ -90,7 +110,6 @@ const PAGES = [
       ['Is LTK available in Nigeria?', 'LTK is invite-only and vets applicants. It pays through PayPal, with direct deposit only in some regions, and most of its retailers are outside Africa. Check LTK’s own help pages for whether you can join and get paid where you live.'],
       ['What is the best LTK alternative in Africa?', 'ShopLink by Aktivate is built for creators in Nigeria, Kenya, Ghana and South Africa: a free storefront, African brands that deliver locally, and commission paid 7 days after each sale.'],
       ['Do I need an invite to join ShopLink?', 'No. Any creator can open a ShopLink store for free. Some brands choose to approve or invite the creators who sell their products.'],
-      ['Is there a minimum payout on ShopLink?', 'There is no $100 minimum like LTK’s. Commission lands in your Aktivate wallet 7 days after each purchase.'],
       ['How much commission can I earn on ShopLink?', 'Brands set the commission per product, from 10% to 50% of the price, or a fixed amount per sale.'],
     ],
     related: [['ShopLink vs ShopMy vs LTK: the full comparison', '/blog/shoplink-vs-shopmy-vs-ltk/'], ['The ShopMy alternative for Africa', '/alternatives/shopmy/'], ['How to make money as a creator in Nigeria', '/blog/how-to-make-money-as-a-content-creator-in-nigeria/'], ['What is ShopLink?', '/blog/what-is-shoplink/']],
@@ -127,6 +146,18 @@ body{margin:0;background:#ECEBF2}
 .cp-sticker{position:absolute;width:84px;right:-26px;top:-26px;transform:rotate(14deg)}
 .cp-paid{position:absolute;left:-30px;bottom:34px;background:#fff;color:#080611;border-radius:18px;padding:12px 14px;box-shadow:0 20px 40px rgba(8,6,17,.25);transform:rotate(-4deg);font-size:13px;line-height:1.3}
 .cp-paid b{display:block;font-size:18px;color:#001FFF}
+/* feature grid */
+.cp-grid{background:#fff;border-radius:28px;padding:8px clamp(8px,1.5vw,16px)}
+.cp-grow{display:grid;grid-template-columns:minmax(0,1fr) 140px 140px;align-items:center;gap:10px;padding:14px clamp(8px,1.5vw,16px);border-top:1px solid #ECEBF2;font-size:16px;font-weight:600;line-height:1.35}
+.cp-grow>span:not(:first-child){display:flex;justify-content:center;align-items:center;text-align:center}
+.cp-ghead{border-top:0;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#5A566A}
+.cp-ghead .cp-gus{color:#001FFF;gap:8px;font-size:15px;text-transform:none;letter-spacing:0}
+.cp-ghead .cp-gus img{width:22px;height:22px}
+.cp-ghead span:last-child{font-size:15px;text-transform:none;letter-spacing:0;color:#080611}
+.cp-y,.cp-n{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.cp-y{background:#00C4BC;color:#080611}.cp-n{background:#ECEBF2;color:#8A8698}
+.cp-t{font-size:13px;font-weight:700;color:#5A566A}
+@media (max-width:560px){.cp-grow{grid-template-columns:minmax(0,1fr) 72px 72px;font-size:14px}.cp-ghead .cp-gus img{display:none}}
 /* sections */
 .cp-answer{margin-top:clamp(-36px,-3vw,-24px);position:relative;background:#fff;border-radius:28px;padding:clamp(22px,3vw,36px);display:grid;grid-template-columns:auto 1fr;gap:18px;box-shadow:0 24px 50px rgba(8,6,17,.12)}
 .cp-answer i{width:48px;height:48px;border-radius:14px;background:#CDF4F2;color:#005B57;display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:800;font-size:22px}
@@ -206,6 +237,15 @@ function table(rows, themName) {
 <p class="cp-note">${esc(themName)} details are from its public help pages and independent reviews, checked ${FACTS_CHECKED}. They can change, so check ${esc(themName)} directly before deciding.</p>`;
 }
 
+const MARK = { Y: '<span class="cp-y" aria-label="Yes">' + CHECK + '</span>', N: '<span class="cp-n" aria-label="No"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>' };
+const mark = (v) => MARK[v] || `<span class="cp-t">${esc(v)}</span>`;
+function featureGrid(rows, short) {
+  return `<div class="cp-grid" role="table" aria-label="ShopLink vs ${esc(short)} features">
+<div class="cp-grow cp-ghead" role="row"><span role="columnheader">Feature</span><span role="columnheader" class="cp-gus"><img src="/assets/logomark.png" alt="">ShopLink</span><span role="columnheader">${esc(short)}</span></div>
+${rows.map(([f, a, b]) => `<div class="cp-grow" role="row"><span role="rowheader">${esc(f)}</span><span role="cell" class="cp-gus">${mark(a)}</span><span role="cell">${mark(b)}</span></div>`).join('\n')}
+</div>`;
+}
+
 function faqHtml(faq) {
   return `<div class="cp-faq">${faq.map(([q, a], i) => `<details${i === 0 ? ' open' : ''}><summary>${esc(q)}</summary><p>${a}</p></details>`).join('')}</div>`;
 }
@@ -224,7 +264,9 @@ ${crumbs([['Home', '/'], ['Alternatives', '/alternatives/'], [p.short]])}
 <div class="cp-wrap">
 <section class="cp-answer"><i aria-hidden="true">?</i><div><h2>Is there an African ${esc(p.short)}?</h2><p>${p.answer}</p></div></section>
 
-<section class="cp-sec" id="compare"><p class="cp-eyebrow">Side by side</p><h2 class="cp-h">ShopLink vs ${esc(p.short)}</h2>${table(p.them, p.short)}</section>
+<section class="cp-sec" id="compare"><p class="cp-eyebrow">ShopLink vs ${esc(p.short)}</p><h2 class="cp-h">The best ${esc(p.short)} alternative for African creators</h2>${featureGrid(p.features, p.short)}</section>
+
+<section class="cp-sec"><p class="cp-eyebrow">In detail</p><h2 class="cp-h">How ShopLink and ${esc(p.short)} compare</h2>${table(p.them, p.short)}</section>
 
 <section class="cp-sec"><p class="cp-eyebrow">Why creators switch</p><h2 class="cp-h">Why African creators choose ShopLink over ${esc(p.short)}</h2>
 <div class="cp-cards">${p.reasons.map(([h, t]) => `<div class="cp-card"><span>${CHECK}</span><h3>${h}</h3><p>${t}</p></div>`).join('')}</div></section>
@@ -265,8 +307,8 @@ ${crumbs([['Home', '/'], ['Alternatives']])}
 <div class="cp-wrap">
 <section class="cp-answer"><i aria-hidden="true">?</i><div><h2>What is the best ShopMy alternative in Africa?</h2><p>${PAGES[0].answer}</p></div></section>
 
-<section class="cp-sec"><p class="cp-eyebrow">Compare</p><h2 class="cp-h">Pick the platform you’re comparing</h2>
-<div class="cp-hub">${PAGES.map(p => `<a href="/alternatives/${p.slug}/"><small>${esc(p.short)} alternative</small><b>ShopLink vs ${esc(p.name)}</b><p>${esc(strip(p.lede))}</p><span>See the comparison ${ARROW}</span></a>`).join('')}</div></section>
+<section class="cp-sec"><p class="cp-eyebrow">Compare</p><h2 class="cp-h">Alternatives to the creator platforms you know</h2>
+<div class="cp-hub">${PAGES.map(p => `<a href="/alternatives/${p.slug}/"><small>${esc(p.short)} alternative</small><b>The best ${esc(p.short)} alternative</b><p>${esc(strip(p.lede))}</p><span>See the comparison ${ARROW}</span></a>`).join('')}</div></section>
 
 <section class="cp-sec" id="compare"><p class="cp-eyebrow">At a glance</p><h2 class="cp-h">ShopLink vs ShopMy vs LTK</h2>
 <div class="cp-table"><table><thead><tr><th scope="col"></th><th scope="col" class="cp-us">ShopLink</th>${PAGES.map(p => `<th scope="col">${esc(p.short)}</th>`).join('')}</tr></thead>
