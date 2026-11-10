@@ -53,13 +53,19 @@
 
   var el = null;
   function build() {
-    var c = read() || { analytics: false, marketing: false };
+    // Europe (EEA, UK, Switzerland) starts with analytics off; elsewhere it starts on. The tag's own
+    // region defaults decide what's sent; the time zone here only picks the matching wording and tick box.
+    var tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+    var europe = /^Europe\//.test(tz) || /^Atlantic\/(Reykjavik|Canary|Madeira|Azores|Faroe)/.test(tz);
+    var c = read() || { analytics: !europe, marketing: false };
     var s = document.createElement('style'); s.textContent = css; document.head.appendChild(s);
     el = document.createElement('div');
     el.id = 'akt-cc'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-labelledby', 'akt-cc-t'); el.setAttribute('aria-live', 'polite');
     el.innerHTML =
       '<h2 id="akt-cc-t">We use cookies 🍪</h2>' +
-      '<p>We use essential cookies to make our site work. With your OK, we also use analytics cookies to see how the site is used, and marketing cookies to measure our ads. Read our <a href="/privacy/#cookies">Privacy Policy</a>.</p>' +
+      (europe
+        ? '<p>We use essential cookies to make our site work. With your OK, we also use analytics cookies to see how the site is used, and marketing cookies to measure our ads. Read our <a href="/privacy/#cookies">Privacy Policy</a>.</p>'
+        : '<p>We use essential cookies to make our site work and analytics cookies to see how the site is used. You can turn analytics off. With your OK, we also use marketing cookies to measure our ads. Read our <a href="/privacy/#cookies">Privacy Policy</a>.</p>') +
       '<div class="o">' +
       '<label><input type="checkbox" checked disabled><span><b>Essential</b>Sign-in, checkout and your currency choice. Always on.</span></label>' +
       '<label><input type="checkbox" id="akt-cc-a"' + (c.analytics ? ' checked' : '') + '><span><b>Analytics</b>Google Analytics, so we can see which pages help people.</span></label>' +

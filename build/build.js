@@ -158,9 +158,11 @@ function shell({ title, desc, url, styles, body, scripts, ogType = 'website', og
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Consent Mode v2 defaults (must run before GTM) -->
+<!-- Consent Mode v2 defaults (must run before GTM): everything off in the EEA, UK and Switzerland until
+     the visitor accepts; elsewhere analytics starts on (visitors can turn it off), ads stay off until accepted -->
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',functionality_storage:'granted',security_storage:'granted',wait_for_update:500});
+gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',functionality_storage:'granted',security_storage:'granted',wait_for_update:500,region:['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH']});
+gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'granted',functionality_storage:'granted',security_storage:'granted',wait_for_update:500});
 gtag('set','ads_data_redaction',true);
 (function(){try{var c=JSON.parse(localStorage.getItem('akt-consent'));if(c&&c.v===1&&Date.now()-c.ts<31536e6){var m=c.marketing?'granted':'denied';gtag('consent','update',{analytics_storage:c.analytics?'granted':'denied',ad_storage:m,ad_user_data:m,ad_personalization:m});}}catch(e){}})();</script>
 <!-- Google Analytics 4 (follows the consent state above: cookieless pings until a visitor accepts) -->

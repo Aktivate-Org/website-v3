@@ -27,4 +27,4 @@ Static site for useaktivate.com, built from the page designs in `src/pages`.
 
 - Google Analytics 4 (`G-97WXZ4BH1S`, the same property as shop.useaktivate.com) is loaded directly on every page, after the Consent Mode defaults, so it is measured even if the GTM container has no GA4 tag. Override with `GA_MEASUREMENT_ID` at build time.
 - If the GTM container (`GTM-TCDHRD3S`) also has a Google tag for `G-97WXZ4BH1S`, pause it there or page views are counted twice.
-- Analytics is `denied` until a visitor accepts cookies; GA then only receives cookieless pings, which reports show only after Google's modelling thresholds are met.
+- Consent defaults by region: in the EEA, UK and Switzerland analytics and ads are `denied` until the visitor accepts; everywhere else analytics starts `granted` (the banner says so and "Reject all" or the Analytics switch turns it off) and ads stay `denied` until accepted. Google applies the region list from the visitor's IP; the banner picks its wording from the browser time zone.
