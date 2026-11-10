@@ -12,6 +12,8 @@ Static site for useaktivate.com, built from the page designs in `src/pages`.
 
 - Posts are written and published in Hashnode (headless mode). `build/blog.js` fetches them from the Hashnode API at build time and renders `/blog/`, `/blog/<slug>/` and `/blog/rss.xml` in the site's design.
 - New or edited posts appear after a rebuild. A Hashnode webhook (post published / updated / deleted) calls the Render deploy hook, so this happens automatically.
+- Hashnode's API is at `https://gql-beta.hashnode.com` (moved in 2026; the old `gql.hashnode.com` redirects to an announcement page) and needs the publication on Hashnode Pro. Optional: `HASHNODE_TOKEN` on Render (and as a GitHub secret) with a Personal Access Token from Hashnode → Settings → Developer; `HASHNODE_GQL` overrides the address if it moves again.
+- If Hashnode can't be reached the build uses `build/blog-snapshot.json`, so keep it fresh when the API is down.
 - Scheduled posts go live on Hashnode without a webhook, so they aren't built yet. Two things cover that:
   - `/blog/_live/` (built every time) is served by a rewrite in `render.yaml` for any `/blog/<slug>/` that has no page yet. It loads the post from Hashnode in the browser, so readers never see "Not found".
   - The `Blog sync` GitHub workflow checks every 30 minutes for posts still on that fallback and calls the Render deploy hook. It needs the repository secret `RENDER_DEPLOY_HOOK` (Render → aktivate-website → Settings → Deploy Hook). You can also run it by hand from the Actions tab.

@@ -13,7 +13,10 @@ const { marked } = require('marked');
 
 const PUBLICATION_ID = '69dcbf84a84fa622cf19f129';
 const OLD_HOST = 'blog.useaktivate.com';
-const GQL = 'https://gql.hashnode.com';
+// Hashnode moved its API in 2026: gql.hashnode.com now answers with a redirect to an announcement page,
+// and every request needs the publication to be on Hashnode Pro. HASHNODE_TOKEN (a Personal Access Token
+// from Hashnode → Settings → Developer) is optional for reading but sent when set.
+const GQL = process.env.HASHNODE_GQL || 'https://gql-beta.hashnode.com';
 const SNAPSHOT = path.join(__dirname, 'blog-snapshot.json');
 
 /* ---------------- data ---------------- */
@@ -32,9 +35,13 @@ async function gql(query, variables) {
           'content-type': 'application/json',
           accept: 'application/graphql-response+json, application/json',
           'user-agent': 'Mozilla/5.0 (compatible; AktivateSiteBuild/1.0; +https://useaktivate.com)',
+          ...(process.env.HASHNODE_TOKEN ? { authorization: process.env.HASHNODE_TOKEN.trim() } : {}),
         },
         body: JSON.stringify({ query, variables }),
+        redirect: 'manual', // a redirect here means the API moved again: say so instead of parsing a web page
       });
+      if (res.status >= 300 && res.status < 400) throw new Error(`Hashnode API at ${GQL} redirected (HTTP ${res.status}) to ${res.headers.get('location') || '?'}. The API address may have changed: set HASHNODE_GQL to the "GraphQL API endpoint" shown in Hashnode's dashboard.`);
+      if (res.status === 401 || res.status === 403) throw new Error(`Hashnode API refused the request (HTTP ${res.status}). Check the publication is on Hashnode Pro, and set HASHNODE_TOKEN on Render if it asks for one.`);
       const text = await res.text();
       let json;
       try { json = JSON.parse(text); }
@@ -405,7 +412,7 @@ function notFound(){document.title='Article not found — Aktivate Blog';$('.bl-
 $('.bl-prose').innerHTML='<p><a href="/blog/">See all articles</a></p>';var f=$('.bl-foot');if(f)f.remove();show()}
 if(!slug||slug.indexOf('/')>-1||slug==='_live')return notFound();
 var Q='query($id:ObjectId,$slug:String!){publication(id:$id){post(slug:$slug){slug title subtitle brief publishedAt readTimeInMinutes author{name} coverImage{url} tags{name slug} content{html} seo{title description}}}}';
-fetch('https://gql.hashnode.com',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({query:Q,variables:{id:PUB,slug:slug}})})
+fetch(${JSON.stringify(GQL)},{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({query:Q,variables:{id:PUB,slug:slug}})})
 .then(function(r){return r.json()}).then(function(d){var p=d&&d.data&&d.data.publication&&d.data.publication.post;if(!p)return notFound();
 var url=SITE+'/blog/'+p.slug+'/',c=cat(p),pc=CATS[c];
 document.title=(p.seo&&p.seo.title||p.title)+' — Aktivate Blog';
@@ -422,7 +429,7 @@ $('.bl-prose').innerHTML=p.content&&p.content.html||('<p>'+esc(p.brief||'')+'</p
 var tg=$('.bl-tags');if(tg)tg.innerHTML=(p.tags||[]).filter(function(t){return['for-brands','for-creators','case-study','news'].indexOf(t.slug)<0}).slice(0,5).map(function(t){return'<span>'+esc(t.name)+'</span>'}).join('');
 root.querySelectorAll('.bl-share a').forEach(function(a){a.href=a.href.replace(encodeURIComponent(SITE+'/blog/_live/'),encodeURIComponent(url)).replace(/text=%C2%A0/,'text='+encodeURIComponent(p.title))});
 root.querySelectorAll('.bl-more .bl-card, .bl-more a').forEach(function(a){if(a.getAttribute&&a.getAttribute('href')==='/blog/'+p.slug+'/')(a.closest('.bl-card')||a).remove()});
-show()}).catch(notFound);
+show()}).catch(function(){document.title='Aktivate Blog';$('.bl-post-hero h1').textContent='This article will be here in a few minutes';var sb=$('.bl-sub');if(sb)sb.textContent='It has just been published and the page is being prepared.';var by=$('.bl-byline');if(by)by.remove();var pl=$('.bl-post-hero .bl-pill');if(pl)pl.remove();$('.bl-prose').innerHTML='<p><a href="/blog/">See all articles</a> in the meantime.</p>';var f=$('.bl-foot');if(f)f.remove();show()});
 })();</script>`;
 }
 
