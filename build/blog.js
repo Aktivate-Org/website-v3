@@ -389,6 +389,43 @@ ${ctx.footer}
 </div>${SHARE_JS}`;
 }
 
+/* Fills the /blog/_live/ page from Hashnode for the slug in the address bar. */
+function liveScript(SITE_URL) {
+  const cats = Object.fromEntries(Object.entries(CATS).map(([k, v]) => [k, { label: v.label, pill: v.pill }]));
+  return `<script data-live-post>(function(){
+var PUB=${JSON.stringify(PUBLICATION_ID)},SITE=${JSON.stringify(SITE_URL)},CATS=${JSON.stringify(cats)},CTA=${JSON.stringify(CTA)};
+var root=document.querySelector('.bl');if(!root)return;root.style.opacity='0';root.style.transition='opacity .25s';
+var slug=decodeURIComponent(location.pathname.replace(/^\\/blog\\//,'').replace(/\\/+$/,''));
+function $(s){return root.querySelector(s)}
+function cat(p){var t=(p.tags||[]).map(function(x){return x.slug});if(t.indexOf('for-brands')>-1)return'brands';if(t.indexOf('for-creators')>-1)return'creators';if(t.indexOf('case-study')>-1)return'case';if(t.indexOf('news')>-1)return'news';var h=p.title||'';
+if(/^how aktivate|what we learned running|^how .+ used an? |^how creator marketing/i.test(h))return'case';if(/\\bpartners? with\\b/i.test(h))return'news';if(/make money|get paid|your profile|shoplink|as a creator|creators? can earn/i.test(h))return'creators';return'brands'}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function show(){root.style.opacity='1'}
+function notFound(){document.title='Article not found — Aktivate Blog';$('.bl-post-hero h1').textContent='We couldn’t find that article';var sb=$('.bl-sub');if(sb)sb.textContent='It may have been moved or unpublished.';var by=$('.bl-byline');if(by)by.remove();var pl=$('.bl-post-hero .bl-pill');if(pl)pl.remove();
+$('.bl-prose').innerHTML='<p><a href="/blog/">See all articles</a></p>';var f=$('.bl-foot');if(f)f.remove();show()}
+if(!slug||slug.indexOf('/')>-1||slug==='_live')return notFound();
+var Q='query($id:ObjectId,$slug:String!){publication(id:$id){post(slug:$slug){slug title subtitle brief publishedAt readTimeInMinutes author{name} coverImage{url} tags{name slug} content{html} seo{title description}}}}';
+fetch('https://gql.hashnode.com',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({query:Q,variables:{id:PUB,slug:slug}})})
+.then(function(r){return r.json()}).then(function(d){var p=d&&d.data&&d.data.publication&&d.data.publication.post;if(!p)return notFound();
+var url=SITE+'/blog/'+p.slug+'/',c=cat(p),pc=CATS[c];
+document.title=(p.seo&&p.seo.title||p.title)+' — Aktivate Blog';
+var can=document.querySelector('link[rel=canonical]');if(can)can.href=url;
+var md=document.querySelector('meta[name=description]');if(md)md.content=(p.seo&&p.seo.description)||p.subtitle||p.brief||'';
+$('.bl-post-hero h1').textContent=p.title;
+var sb=$('.bl-sub');if(sb){if(p.subtitle)sb.textContent=p.subtitle;else sb.remove()}
+var pl=$('.bl-post-hero .bl-pill');if(pl&&pc){pl.textContent=pc.label;pl.style.background=pc.pill[0];pl.style.color=pc.pill[1]}
+var by=$('.bl-byline span');if(by)by.innerHTML='<b>'+esc(p.author&&p.author.name||'Aktivate')+'</b>'+new Date(p.publishedAt).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'Africa/Lagos'})+' · '+(p.readTimeInMinutes||3)+' min read';
+if(p.coverImage&&p.coverImage.url){var lay=$('.bl-layout');var cv=document.createElement('div');cv.className='bl-cover';cv.innerHTML='<div class="bl-art"><img src="'+esc(p.coverImage.url)+'" alt=""></div>';lay.parentNode.insertBefore(cv,lay);lay.classList.remove('bl-no-cover')}
+if(c==='creators'){var k=CTA.creators,sc=$('.bl-side-cta');if(sc){sc.style.background='#5331E8';var e=sc.querySelector('.bl-eyebrow');if(e){e.textContent=k.eyebrow;e.style.color='#D9D4FF'}sc.querySelector('h3').textContent=k.title;sc.querySelector('p:not(.bl-eyebrow)').textContent=k.body;var ba=sc.querySelector('a');ba.href=k.href;ba.className='bl-btn bl-btn--white';ba.firstChild.nodeValue=k.label+' '}
+var ec=$('.bl-end-cta');if(ec){ec.querySelector('h2').innerHTML='Ready to start <span>earning?</span>';ec.querySelector('p').textContent=k.body;var ea=ec.querySelector('a');ea.href=k.href;ea.firstChild.nodeValue=k.label+' '}}
+$('.bl-prose').innerHTML=p.content&&p.content.html||('<p>'+esc(p.brief||'')+'</p>');
+var tg=$('.bl-tags');if(tg)tg.innerHTML=(p.tags||[]).filter(function(t){return['for-brands','for-creators','case-study','news'].indexOf(t.slug)<0}).slice(0,5).map(function(t){return'<span>'+esc(t.name)+'</span>'}).join('');
+root.querySelectorAll('.bl-share a').forEach(function(a){a.href=a.href.replace(encodeURIComponent(SITE+'/blog/_live/'),encodeURIComponent(url)).replace(/text=%C2%A0/,'text='+encodeURIComponent(p.title))});
+root.querySelectorAll('.bl-more .bl-card, .bl-more a').forEach(function(a){if(a.getAttribute&&a.getAttribute('href')==='/blog/'+p.slug+'/')(a.closest('.bl-card')||a).remove()});
+show()}).catch(notFound);
+})();</script>`;
+}
+
 function rss(posts, SITE_URL) {
   const items = posts.slice(0, 30).map(p => `<item><title>${esc(p.title)}</title><link>${SITE_URL}/blog/${p.slug}/</link><guid isPermaLink="true">${SITE_URL}/blog/${p.slug}/</guid><pubDate>${new Date(p.publishedAt).toUTCString()}</pubDate><description>${esc(p.excerpt)}</description></item>`).join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>Aktivate Blog</title><link>${SITE_URL}/blog/</link><description>Creator marketing guides, playbooks and results for African brands and creators.</description><language>en</language>\n${items}\n</channel></rss>\n`;
@@ -441,6 +478,19 @@ async function build(ctx) {
     fs.writeFileSync(path.join(dir, 'index.html'), doc);
     if (canonical === url) urls.push(url);
   }
+  // /blog/_live/: the page Render serves (via the rewrite in render.yaml) for any /blog/<slug>/ that wasn't
+  // built yet, e.g. a post Hashnode published on a schedule after the last deploy. It loads the post straight
+  // from Hashnode in the browser, so readers never see "Not found". The blog-sync GitHub workflow spots these
+  // and rebuilds the site, which replaces it with the normal page.
+  const ph = { slug: '_live', title: ' ', subtitle: ' ', publishedAt: new Date().toISOString(), cat: 'brands', content: { markdown: '' }, tags: [], author: { name: 'Aktivate' }, readTimeInMinutes: 3 };
+  const live = shell({
+    title: 'Aktivate Blog', desc: 'Creator marketing guides, playbooks and results for African brands and creators.',
+    url: SITE_URL + '/blog/', styles, scripts, ogType: 'article',
+    body: postPage(ph, listed.slice(0, 3), ctx) + liveScript(SITE_URL),
+    extraHead: head(''),
+  });
+  fs.mkdirSync(path.join(OUT, 'blog', '_live'), { recursive: true });
+  fs.writeFileSync(path.join(OUT, 'blog', '_live', 'index.html'), live);
   console.log(`built /blog/ with ${posts.length} posts (${listed.length} listed)`);
   return urls;
 }

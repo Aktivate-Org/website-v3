@@ -33,6 +33,12 @@ services:
       - type: redirect
         source: /img/*
         destination: https://shop.useaktivate.com/img/*
+      # A blog post that went live on Hashnode after the last deploy (e.g. a scheduled post) has no page yet.
+      # Render only applies this when no file exists at the address, so built posts are untouched; the
+      # fallback page loads the post from Hashnode in the browser until the blog-sync workflow rebuilds the site.
+      - type: rewrite
+        source: /blog/*
+        destination: /blog/_live/index.html
     headers:
       - path: /assets/*
         name: Cache-Control

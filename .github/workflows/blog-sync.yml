@@ -1,0 +1,39 @@
+# Rebuilds the website when Hashnode has published a post the site hasn't built yet.
+# Scheduled posts go live on Hashnode without a deploy, so this checks every 30 minutes.
+#
+# Setup (once): Render → aktivate-website → Settings → Deploy Hook → copy the URL, then
+# GitHub → this repo → Settings → Secrets and variables → Actions → New repository secret
+# named RENDER_DEPLOY_HOOK with that URL.
+name: Blog sync
+
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Find posts the site hasn't built yet, and rebuild if there are any
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          set -euo pipefail
+          SITE=https://useaktivate.com
+          QUERY='{"query":"query { publication(id: \"69dcbf84a84fa622cf19f129\") { posts(first: 20) { edges { node { slug publishedAt } } } } }"}'
+          slugs=$(curl -sS --max-time 30 -H 'Content-Type: application/json' -d "$QUERY" https://gql.hashnode.com \
+            | jq -r '.data.publication.posts.edges[].node.slug')
+          if [ -z "$slugs" ]; then echo "Hashnode returned no posts; nothing to check."; exit 0; fi
+          missing=""
+          for s in $slugs; do
+            page=$(curl -sS --max-time 20 -L "$SITE/blog/$s/" || true)
+            # unbuilt posts are served by the fallback page, which carries data-live-post
+            if [ -z "$page" ] || echo "$page" | grep -q 'data-live-post'; then missing="$missing $s"; fi
+          done
+          if [ -z "$missing" ]; then echo "All recent posts are built."; exit 0; fi
+          echo "Not built yet:$missing"
+          if [ -z "${RENDER_DEPLOY_HOOK:-}" ]; then echo "::warning::Add the RENDER_DEPLOY_HOOK secret so this can rebuild the site."; exit 0; fi
+          curl -sS --max-time 30 -X POST "$RENDER_DEPLOY_HOOK" > /dev/null
+          echo "Rebuild started on Render."
