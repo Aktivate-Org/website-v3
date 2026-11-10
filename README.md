@@ -22,3 +22,9 @@ Static site for useaktivate.com, built from the page designs in `src/pages`.
 - Posts without a cover image get an illustration collage made from the site's own artwork.
 - Test locally without network access: `BLOG_FIXTURE=path/to/posts.json npm run build` (same shape as the Hashnode API's post nodes).
 - The old blog.useaktivate.com address is served by the `aktivate-blog-redirect` service in `render.yaml`, which redirects every old post URL to `/blog/<slug>/`.
+
+## Analytics
+
+- Google Analytics 4 (`G-97WXZ4BH1S`, the same property as shop.useaktivate.com) is loaded directly on every page, after the Consent Mode defaults, so it is measured even if the GTM container has no GA4 tag. Override with `GA_MEASUREMENT_ID` at build time.
+- If the GTM container (`GTM-TCDHRD3S`) also has a Google tag for `G-97WXZ4BH1S`, pause it there or page views are counted twice.
+- Analytics is `denied` until a visitor accepts cookies; GA then only receives cookieless pings, which reports show only after Google's modelling thresholds are met.

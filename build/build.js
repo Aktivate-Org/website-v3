@@ -12,6 +12,10 @@ const APP_URL = 'https://app.useaktivate.com';
 const SHOP_URL = 'https://shop.useaktivate.com';
 const SALES = 'mailto:sales@useaktivate.com';
 const GTM_ID = 'GTM-TCDHRD3S';
+// GA4 property the old useaktivate.com (and shop.useaktivate.com) report to. Loaded directly so the site is
+// measured even if the GTM container has no GA4 tag. If the container also has a Google tag for this ID,
+// pause it there, or every page view is counted twice.
+const GA_ID = process.env.GA_MEASUREMENT_ID || 'G-97WXZ4BH1S';
 
 const ROUTES = {
   Main: '/', CreatorsCampaigns: '/creators/collaboration-hub/', CreatorsShopLink: '/creators/shoplink/',
@@ -159,6 +163,9 @@ function shell({ title, desc, url, styles, body, scripts, ogType = 'website', og
 gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',functionality_storage:'granted',security_storage:'granted',wait_for_update:500});
 gtag('set','ads_data_redaction',true);
 (function(){try{var c=JSON.parse(localStorage.getItem('akt-consent'));if(c&&c.v===1&&Date.now()-c.ts<31536e6){var m=c.marketing?'granted':'denied';gtag('consent','update',{analytics_storage:c.analytics?'granted':'denied',ad_storage:m,ad_user_data:m,ad_personalization:m});}}catch(e){}})();</script>
+<!-- Google Analytics 4 (follows the consent state above: cookieless pings until a visitor accepts) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script>
+<script>gtag('js',new Date());gtag('config','${GA_ID}');</script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
