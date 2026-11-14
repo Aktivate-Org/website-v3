@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Influencer rate calculator</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'Aileron';src:url(/_blob/1dcc8df908f342d82005588742675eaf) format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Aileron';src:url(/_blob/9d4e77af745a79b151726594036ac4b9) format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Aileron';src:url(/_blob/396c0902358439a39bc0a361fb210faf) format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'Aileron';src:url(/_blob/4d5ed464130550884e01b46cc282d21b) format('woff2');font-weight:800;font-display:swap}
+@media (max-width:640px){
+.m-hide{display:none!important}
+.m-full{width:100%!important;justify-content:center!important;box-sizing:border-box}
+details summary{font-size:17px!important}
+}
+body{margin:0;background:#ECEBF2}
+a{color:#5331E8}a:hover{color:#001FFF}
+.rc-chip{min-height:42px;padding:0 14px;border:2px solid #ECEBF2;border-radius:999px;background:#FFFFFF;color:#080611;font:700 14px 'Aileron',sans-serif;cursor:pointer}
+.rc-chip[aria-pressed="true"]{background:#080611;border-color:#080611;color:#FFFFFF}
+.rc-chip:focus-visible,.rc-seg button:focus-visible{outline:3px solid #5331E8;outline-offset:2px}
+.rc-seg{display:flex;gap:6px;background:#ECEBF2;padding:5px;border-radius:999px}
+.rc-seg button{flex:1;min-height:46px;border:0;border-radius:999px;background:transparent;color:#080611;font:700 15px 'Aileron',sans-serif;cursor:pointer}
+.rc-seg button[aria-pressed="true"]{background:#080611;color:#FFFFFF;font-weight:800}
+.rc-label{display:block;margin:0 0 8px;font-weight:700;font-size:15px}
+.rc-range{width:100%;accent-color:#5331E8;height:28px}
+.rc-num{width:100%;box-sizing:border-box;min-height:52px;border:0;border-radius:14px;background:#ECEBF2;padding:0 14px;font:800 18px 'Aileron',sans-serif;color:#080611;outline:none}
+.rc-num:focus{box-shadow:0 0 0 3px #5331E8}
+.rc-check{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:14px;background:#F5F4FA;cursor:pointer;font-size:14px;line-height:1.35}
+.rc-check input{width:20px;height:20px;margin:0;accent-color:#5331E8;flex:none}
+@keyframes rc-pop{from{transform:scale(.97);opacity:.4}to{transform:scale(1);opacity:1}}
+.rc-pop{animation:rc-pop .25s ease-out both}
+@media (prefers-reduced-motion:reduce){.rc-pop{animation:none}}
+</style>
+</helmet>
+<div style="font-family: 'Aileron', system-ui, sans-serif; color: #080611; background: #ECEBF2; overflow: hidden">
+
+<header style="background: #080611">
+<dc-import name="Nav" open="none" hint-size="100%,96px"></dc-import>
+</header>
+
+<!-- HERO + TOOL -->
+<section style="background: #080611; color: #FFFFFF; padding: clamp(28px, 3.3vw, 48px) clamp(16px, 1.7vw, 24px) clamp(56px, 7.2vw, 104px)">
+<div style="max-width: 1280px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(32px, 4.4vw, 64px); align-items: flex-start">
+<div style="flex: 1 1 420px; min-width: 0">
+<p style="display: inline-flex; align-items: center; gap: 8px; margin: 0 0 22px; padding: 8px 14px; border-radius: 999px; background: #FFD23F; color: #080611; font-weight: 800; font-size: 14px">Free tool · nano &amp; micro creators</p>
+<h1 style="margin: 0; font-weight: 800; font-size: clamp(46px, 6.6vw, 96px); line-height: 0.9; letter-spacing: -0.045em">How much should <span style="color: #00C4BC">you charge?</span><img src="/_blob/c0a6662dba2ab1da9605c6a7d108b0f4" alt="" aria-hidden="true" style="display: inline-block; width: 0.5em; height: 0.5em; vertical-align: top; margin-left: 0.08em"></h1>
+<p style="margin: clamp(20px, 2vw, 28px) 0 0; max-width: 520px; font-size: clamp(18px, 1.6vw, 21px); line-height: 1.5; color: #C9C6D6">Get a fair price range for a sponsored post, in your own currency. Built for creators with 1,000 to 50,000 followers in Nigeria, Kenya, South Africa, the Philippines and Brazil.</p>
+<ul class="m-hide" style="margin: 28px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 10px">
+<li style="padding: 10px 14px; border-radius: 999px; background: #1C1830; font-weight: 600; font-size: 14px">₦ · KSh · R · ₱ · R$</li>
+<li style="padding: 10px 14px; border-radius: 999px; background: #1C1830; font-weight: 600; font-size: 14px">Instagram, TikTok, YouTube, X, Facebook</li>
+<li style="padding: 10px 14px; border-radius: 999px; background: #1C1830; font-weight: 600; font-size: 14px">Copy your rate card</li>
+</ul>
+<div style="margin-top: 28px; padding: 18px 20px; border-radius: 22px; background: #1C1830; max-width: 520px">
+<p style="margin: 0; font-weight: 800; font-size: 15px; color: #FFD23F">Don’t know your engagement rate?</p>
+<p style="margin: 6px 0 0; font-size: 15px; line-height: 1.5; color: #C9C6D6">It moves your price. <a href="EngagementCalculator.dc.html" style="color: #00C4BC; font-weight: 700">Check it free in 30 seconds</a>, then come back.</p>
+</div>
+</div>
+
+<div style="flex: 1 1 500px; min-width: 0; background: #FFFFFF; color: #080611; border-radius: 32px; padding: clamp(20px, 2.4vw, 32px); box-shadow: 0 30px 70px rgba(83,49,232,0.3); display: flex; flex-direction: column; gap: 18px">
+
+<div class="rc-seg" role="group" aria-label="I am">
+<sc-for list="{{modes}}" as="m" hint-placeholder-count="2"><button type="button" aria-pressed="{{m.on}}" onClick="{{m.pick}}">{{m.label}}</button></sc-for>
+</div>
+
+<div>
+<span class="rc-label">Country</span>
+<div role="group" aria-label="Country" style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{countries}}" as="c" hint-placeholder-count="5"><button type="button" class="rc-chip" aria-pressed="{{c.on}}" onClick="{{c.pick}}">{{c.flag}} {{c.label}}</button></sc-for>
+</div>
+</div>
+
+<div>
+<span class="rc-label">Platform</span>
+<div role="group" aria-label="Platform" style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{platforms}}" as="p" hint-placeholder-count="5"><button type="button" class="rc-chip" aria-pressed="{{p.on}}" onClick="{{p.pick}}">{{p.label}}</button></sc-for>
+</div>
+</div>
+
+<div>
+<label class="rc-label" for="rc-followers">{{followersLabel}}</label>
+<div style="display: flex; gap: 10px; align-items: center">
+<input id="rc-followers" class="rc-num" type="number" inputmode="numeric" min="1000" max="50000" step="100" value="{{followers}}" onChange="{{setFollowers}}" style="flex: 0 0 150px">
+<span style="padding: 6px 12px; border-radius: 999px; background: {{tierBg}}; color: {{tierInk}}; font-weight: 800; font-size: 13px; white-space: nowrap">{{tierLabel}}</span>
+</div>
+<input class="rc-range" type="range" min="0" max="1000" step="1" value="{{sliderPos}}" onChange="{{setSlider}}" aria-label="Followers slider" style="margin-top: 10px">
+<div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: #5A566A"><span>1K</span><span>10K</span><span>50K</span></div>
+<sc-if value="{{followerNote}}" hint-placeholder-val="{{false}}"><p style="margin: 8px 0 0; font-size: 13px; line-height: 1.45; color: #5A566A">{{followerNote}}</p></sc-if>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 14px">
+<sc-if value="{{isCreator}}" hint-placeholder-val="{{true}}">
+<div style="flex: 1 1 180px; min-width: 0">
+<label class="rc-label" for="rc-er">Engagement rate <span style="font-weight: 600; color: #5A566A">(optional)</span></label>
+<div style="position: relative"><input id="rc-er" class="rc-num" type="number" inputmode="decimal" min="0" max="50" step="0.1" placeholder="{{erPlaceholder}}" value="{{er}}" onChange="{{setEr}}"><span aria-hidden="true" style="position: absolute; right: 14px; top: 15px; font-weight: 800; color: #5A566A">%</span></div>
+</div>
+</sc-if>
+<div style="flex: 1 1 180px; min-width: 0">
+<label class="rc-label" for="rc-niche">Niche</label>
+<select id="rc-niche" class="rc-num" onChange="{{setNiche}}" style="font-size: 16px; appearance: auto">
+<sc-for list="{{niches}}" as="n" hint-placeholder-count="6"><option value="{{n.key}}" selected="{{n.on}}">{{n.label}}</option></sc-for>
+</select>
+</div>
+</div>
+
+<sc-if value="{{isBrand}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-wrap: wrap; gap: 14px">
+<div style="flex: 1 1 180px; min-width: 0">
+<label class="rc-label" for="rc-creators">How many creators?</label>
+<input id="rc-creators" class="rc-num" type="number" inputmode="numeric" min="1" max="500" step="1" value="{{creators}}" onChange="{{setCreators}}">
+</div>
+<div style="flex: 1 1 180px; min-width: 0">
+<label class="rc-label" for="rc-format">Each creator posts</label>
+<select id="rc-format" class="rc-num" onChange="{{setFormat}}" style="font-size: 16px; appearance: auto">
+<sc-for list="{{formats}}" as="f" hint-placeholder-count="3"><option value="{{f.key}}" selected="{{f.on}}">1 × {{f.label}}</option></sc-for>
+</select>
+</div>
+</div>
+</sc-if>
+
+<details style="border-radius: 16px; background: #F5F4FA; padding: 14px 16px">
+<summary style="cursor: pointer; font-weight: 700; font-size: 15px">Extras {{extrasCount}}</summary>
+<div style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px">
+<sc-for list="{{extras}}" as="x" hint-placeholder-count="4">
+<label class="rc-check" style="background: #FFFFFF"><input type="checkbox" checked="{{x.on}}" onChange="{{x.toggle}}"><span><b>{{x.label}}</b> <span style="color: #5A566A">+{{x.pct}}%</span><br><span style="color: #5A566A">{{x.desc}}</span></span></label>
+</sc-for>
+</div>
+</details>
+
+<!-- result: creator -->
+<sc-if value="{{isCreator}}" hint-placeholder-val="{{true}}">
+<div class="rc-pop" aria-live="polite" style="background: #00C4BC; border-radius: 24px; padding: 22px">
+<p style="margin: 0; font-weight: 700; font-size: 14px">Charge for one {{mainFormat}}</p>
+<p style="margin: 4px 0 0; font-weight: 800; font-size: clamp(30px, 3.4vw, 46px); line-height: 1.05; letter-spacing: -0.035em">{{mainRange}}</p>
+<p style="margin: 10px 0 0; font-size: 15px; line-height: 1.45; font-weight: 600">{{mainNote}}</p>
+</div>
+<div>
+<p style="margin: 0 0 8px; font-weight: 800; font-size: 16px">Your {{platformLabel}} rate card</p>
+<div style="border-radius: 18px; border: 2px solid #ECEBF2; overflow: hidden">
+<sc-for list="{{card}}" as="row" hint-placeholder-count="3">
+<div style="display: flex; justify-content: space-between; gap: 12px; padding: 13px 16px; border-top: 1px solid #ECEBF2; font-size: 15px"><span style="font-weight: 600">{{row.label}}</span><span style="font-weight: 800; white-space: nowrap">{{row.range}}</span></div>
+</sc-for>
+<div style="display: flex; justify-content: space-between; gap: 12px; padding: 13px 16px; border-top: 1px solid #ECEBF2; font-size: 15px; background: #F5F4FA"><span style="font-weight: 600">Bundle of 3 {{bundleLabel}} <span style="color: #5A566A">(10% off)</span></span><span style="font-weight: 800; white-space: nowrap">{{bundleRange}}</span></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px">
+<button type="button" class="m-full" onClick="{{copyCard}}" style="min-height: 48px; padding: 0 18px; border: 2px solid #080611; border-radius: 14px; background: #FFFFFF; font: 800 15px 'Aileron', sans-serif; cursor: pointer">{{copyLabel}}</button>
+<a class="m-full" href="#signup" style="display: flex; align-items: center; min-height: 48px; padding: 0 18px; border-radius: 14px; background: #5331E8; color: #FFFFFF; text-decoration: none; font-weight: 800; font-size: 15px">Get paid campaigns at this rate</a>
+</div>
+</div>
+</sc-if>
+
+<!-- result: brand -->
+<sc-if value="{{isBrand}}" hint-placeholder-val="{{false}}">
+<div class="rc-pop" aria-live="polite" style="background: #9EB3FF; border-radius: 24px; padding: 22px">
+<p style="margin: 0; font-weight: 700; font-size: 14px">Budget for {{creatorsLabel}}</p>
+<p style="margin: 4px 0 0; font-weight: 800; font-size: clamp(30px, 3.4vw, 46px); line-height: 1.05; letter-spacing: -0.035em">{{budgetRange}}</p>
+<p style="margin: 10px 0 0; font-size: 15px; line-height: 1.45; font-weight: 600">About {{perCreator}} per creator. {{brandNote}}</p>
+</div>
+<div style="background: #080611; color: #FFFFFF; border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-weight: 800; font-size: 20px; line-height: 1.2">Post it once. Verified creators apply.</p>
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #C9C6D6">Set this budget on the Collaboration Hub, pick from creators who apply, and only pay for content that goes live.</p>
+<a class="m-full" href="#signup" style="align-self: flex-start; display: flex; align-items: center; min-height: 48px; padding: 0 18px; border-radius: 14px; background: #00C4BC; color: #080611; text-decoration: none; font-weight: 800; font-size: 15px">Start a campaign</a>
+</div>
+</sc-if>
+
+<p style="margin: 0; font-size: 12px; line-height: 1.5; color: #5A566A">Estimates from published rate guides for each country, adjusted for platform, format, engagement and niche. Real quotes vary. Use this as a starting point, not a fixed price.</p>
+</div>
+</div>
+</section>
+
+<!-- HOW -->
+<section style="padding: clamp(56px, 7.2vw, 104px) clamp(16px, 1.7vw, 24px)">
+<div style="max-width: 1280px; margin: 0 auto">
+<h2 style="margin: 0 0 clamp(24px, 2.8vw, 40px); font-weight: 800; font-size: clamp(36px, 5vw, 72px); line-height: 0.95; letter-spacing: -0.04em">What moves your price</h2>
+<ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 16px">
+<li style="flex: 1 1 260px; background: #FFFFFF; border-radius: 28px; padding: 26px"><p aria-hidden="true" style="margin: 0; font-weight: 800; font-size: 56px; line-height: 0.8; color: #5331E8">1</p><h3 style="margin: 18px 0 8px; font-weight: 800; font-size: 22px">Followers and country</h3><p style="margin: 0; font-size: 16px; line-height: 1.5; color: #4A4658">We start from what creators your size are paid for a feed post in your country, in your currency.</p></li>
+<li style="flex: 1 1 260px; background: #FFFFFF; border-radius: 28px; padding: 26px"><p aria-hidden="true" style="margin: 0; font-weight: 800; font-size: 56px; line-height: 0.8; color: #00C4BC">2</p><h3 style="margin: 18px 0 8px; font-weight: 800; font-size: 22px">Format and platform</h3><p style="margin: 0; font-size: 16px; line-height: 1.5; color: #4A4658">Video takes more work and gets more reach, so a Reel or TikTok costs more than a Story or a post on X.</p></li>
+<li style="flex: 1 1 260px; background: #080611; color: #FFFFFF; border-radius: 28px; padding: 26px"><p aria-hidden="true" style="margin: 0; font-weight: 800; font-size: 56px; line-height: 0.8; color: #FFD23F">3</p><h3 style="margin: 18px 0 8px; font-weight: 800; font-size: 22px">Engagement, niche, extras</h3><p style="margin: 0; font-size: 16px; line-height: 1.5; color: #C9C6D6">An engaged audience, a niche brands pay more for (tech, finance), or ad rights and exclusivity all push the price up.</p></li>
+</ol>
+</div>
+</section>
+
+<!-- TABLE -->
+<section aria-labelledby="rt-h" style="padding: 0 clamp(16px, 1.7vw, 24px) clamp(56px, 7.2vw, 104px)">
+<div style="max-width: 1080px; margin: 0 auto; background: #FFFFFF; border-radius: clamp(28px, 3vw, 40px); padding: clamp(22px, 3vw, 44px)">
+<h2 id="rt-h" style="margin: 0 0 8px; font-weight: 800; font-size: clamp(30px, 3.6vw, 48px); letter-spacing: -0.035em">Nano and micro rates by country</h2>
+<p style="margin: 0 0 22px; color: #4A4658; font-size: 16px">One Instagram feed post, average engagement, general niche.</p>
+<div style="overflow-x: auto">
+<table style="width: 100%; min-width: 560px; border-collapse: collapse; font-size: 16px">
+<thead><tr style="text-align: left; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #5A566A"><th style="padding: 12px 10px">Country</th><th style="padding: 12px 10px">1K followers</th><th style="padding: 12px 10px">10K followers</th><th style="padding: 12px 10px">50K followers</th></tr></thead>
+<tbody>
+<sc-for list="{{table}}" as="t" hint-placeholder-count="5">
+<tr style="border-top: 1px solid #ECEBF2"><td style="padding: 14px 10px; font-weight: 800; white-space: nowrap">{{t.flag}} {{t.label}}</td><td style="padding: 14px 10px; white-space: nowrap">{{t.a}}</td><td style="padding: 14px 10px; white-space: nowrap">{{t.b}}</td><td style="padding: 14px 10px; white-space: nowrap">{{t.c}}</td></tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+<p style="margin: 18px 0 0; font-size: 13px; line-height: 1.55; color: #5A566A">Nano = 1,000–10,000 followers. Micro = 10,000–50,000. Ranges are built from published guides, including the <a href="https://www.bizcommunity.com/article/the-price-of-south-african-influence-255657a" rel="noopener" target="_blank">2024 South African Influencer Benchmark Report</a>, Philippine and Brazilian rate guides, and Nigerian and Kenyan agency price lists, then rounded.</p>
+</div>
+</section>
+
+<!-- FAQ -->
+<section style="padding: 0 clamp(16px, 1.7vw, 24px) clamp(56px, 7.2vw, 104px)">
+<div style="max-width: 900px; margin: 0 auto">
+<h2 style="margin: 0 0 28px; font-weight: 800; font-size: clamp(36px, 4.4vw, 56px); letter-spacing: -0.035em">Questions</h2>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<details open style="background: #FFFFFF; border-radius: 22px; padding: 22px 26px"><summary style="cursor: pointer; font-weight: 700; font-size: 20px">How much should a nano influencer charge in Nigeria?</summary><p style="margin: 14px 0 0; font-size: 17px; line-height: 1.55; color: #4A4658">For one Instagram feed post, roughly ₦8,000–₦15,000 at 1,000 followers and ₦40,000–₦80,000 at 10,000 followers. Reels and TikToks sit higher, Stories lower. Strong engagement or a niche like tech or finance can add more.</p></details>
+<details style="background: #FFFFFF; border-radius: 22px; padding: 22px 26px"><summary style="cursor: pointer; font-weight: 700; font-size: 20px">What about micro influencers?</summary><p style="margin: 14px 0 0; font-size: 17px; line-height: 1.55; color: #4A4658">Between 10,000 and 50,000 followers, prices climb quickly: around ₦40,000–₦80,000 at 10K and ₦150,000–₦300,000 at 50K in Nigeria. Pick your country above to see your own currency.</p></details>
+<details style="background: #FFFFFF; border-radius: 22px; padding: 22px 26px"><summary style="cursor: pointer; font-weight: 700; font-size: 20px">Should I charge more for TikTok or Reels?</summary><p style="margin: 14px 0 0; font-size: 17px; line-height: 1.55; color: #4A4658">Usually yes. Short video takes longer to make and reaches more people who don’t follow you yet, so it’s typically priced 30–50% above a static post.</p></details>
+<details style="background: #FFFFFF; border-radius: 22px; padding: 22px 26px"><summary style="cursor: pointer; font-weight: 700; font-size: 20px">What are usage rights?</summary><p style="margin: 14px 0 0; font-size: 17px; line-height: 1.55; color: #4A4658">Permission for the brand to run your content as a paid ad or on its own pages. It’s extra value for them, so add it to your price (we use +30% for 30 days).</p></details>
+<details style="background: #FFFFFF; border-radius: 22px; padding: 22px 26px"><summary style="cursor: pointer; font-weight: 700; font-size: 20px">I have under 1,000 followers. Can I still earn?</summary><p style="margin: 14px 0 0; font-size: 17px; line-height: 1.55; color: #4A4658">Brands rarely pay cash below 1,000 followers, but you can still earn commission by recommending products with <a href="CreatorsShopLink.dc.html">ShopLink</a> while you grow.</p></details>
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section style="padding: 0 clamp(16px, 1.7vw, 24px)">
+<div style="max-width: 1392px; margin: 0 auto; background: #00C4BC; border: 3px solid #080611; border-radius: clamp(32px, 3.3vw, 48px); padding: clamp(48px, 6.1vw, 88px) clamp(20px, 2.2vw, 32px); text-align: center; box-sizing: border-box">
+<h2 style="margin: 0 auto; max-width: 900px; font-weight: 800; font-size: clamp(40px, 6.4vw, 92px); line-height: 0.9; letter-spacing: -0.045em">Know your rate. Now get booked.</h2>
+<div style="margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center">
+<a class="m-full" href="#signup" style="display: flex; align-items: center; min-height: 60px; padding: 0 30px; border-radius: 16px; background: #080611; color: #FFFFFF; text-decoration: none; font-weight: 800; font-size: 17px">Join Aktivate free</a>
+<a class="m-full" href="CreatorsCampaigns.dc.html" style="display: flex; align-items: center; min-height: 60px; padding: 0 28px; border-radius: 16px; background: #FFFFFF; color: #080611; text-decoration: none; font-weight: 700; font-size: 17px">See paid campaigns →</a>
+</div>
+</div>
+</section>
+
+<div style="margin-top: 72px">
+<dc-import name="Footer" hint-size="100%,520px"></dc-import>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":4200}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { mode: 'creator', country: 'NG', platform: 'instagram', fText: '8000', er: '', niche: 'general', format: 'reel', creators: 10, extras: {}, copied: false };
+}
+componentDidMount() {
+var c = 'NG';
+try {
+var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+if (tz === 'Africa/Nairobi') c = 'KE';
+else if (tz === 'Africa/Johannesburg') c = 'ZA';
+else if (tz === 'Asia/Manila') c = 'PH';
+else if (/^America\/(Sao_Paulo|Bahia|Fortaleza|Recife|Belem|Manaus|Maceio|Cuiaba|Campo_Grande|Araguaina|Porto_Velho|Boa_Vista|Rio_Branco|Santarem|Noronha)$/.test(tz)) c = 'BR';
+var q = new URLSearchParams(window.location.search);
+if (this.data().C[String(q.get('country') || '').toUpperCase()]) c = String(q.get('country')).toUpperCase();
+if (q.get('mode') === 'brand') this.setState({ mode: 'brand' });
+} catch (e) {}
+if (c !== this.state.country) this.setState({ country: c });
+}
+data() {
+// One Instagram feed post at average engagement, general niche: [low, high] at 1K, 10K and 50K followers.
+var C = {
+NG: { label: 'Nigeria', flag: '🇳🇬', sym: '₦', a: [8000, 15000], b: [40000, 80000], c: [150000, 300000] },
+KE: { label: 'Kenya', flag: '🇰🇪', sym: 'KSh ', a: [1500, 3000], b: [8000, 18000], c: [30000, 70000] },
+ZA: { label: 'South Africa', flag: '🇿🇦', sym: 'R', a: [600, 1200], b: [2000, 3500], c: [6000, 12000] },
+PH: { label: 'Philippines', flag: '🇵🇭', sym: '₱', a: [1000, 2000], b: [4000, 8000], c: [15000, 30000] },
+BR: { label: 'Brazil', flag: '🇧🇷', sym: 'R$', a: [100, 200], b: [300, 600], c: [900, 1800] }
+};
+var P = {
+instagram: { label: 'Instagram', unit: 'followers', def: 'reel', er: [3.5, 2.5], f: [['story', 'Story (3 frames)', 0.55], ['post', 'Feed post', 1], ['carousel', 'Carousel', 1.15], ['reel', 'Reel', 1.45]] },
+tiktok: { label: 'TikTok', unit: 'followers', def: 'video', er: [8, 6], f: [['photo', 'Photo carousel', 1], ['video', 'TikTok video', 1.35], ['live', '30-min live mention', 1.6]] },
+youtube: { label: 'YouTube', unit: 'subscribers', def: 'short', er: [4, 3], f: [['short', 'YouTube Short', 1.2], ['mention', '60-sec mention in a video', 2], ['dedicated', 'Dedicated video', 3.5]] },
+x: { label: 'X', unit: 'followers', def: 'post', er: [2, 1.5], f: [['post', 'Post', 0.4], ['thread', 'Thread', 0.65], ['video', 'Video post', 0.8]] },
+facebook: { label: 'Facebook', unit: 'followers', def: 'reel', er: [2.5, 1.8], f: [['post', 'Post', 0.7], ['reel', 'Reel', 1], ['live', '30-min live mention', 1.3]] }
+};
+var N = [['general', 'Lifestyle & comedy', 1], ['fashion', 'Fashion & beauty', 1.1], ['food', 'Food & travel', 1], ['fitness', 'Health & fitness', 1.1], ['tech', 'Tech, finance & business', 1.3], ['gaming', 'Gaming & sport', 1], ['parenting', 'Family & parenting', 1.05]];
+var X = [['ads', 'Ad rights for 30 days', 30, 'The brand can run your content as a paid ad.'], ['excl', 'Exclusivity for 30 days', 20, 'No posts for competing brands for a month.'], ['link', 'Link in bio for 7 days', 10, 'Their link stays in your bio for a week.'], ['raw', 'Raw footage', 15, 'You send the unedited clips too.']];
+return { C: C, P: P, N: N, X: X };
+}
+base(country, followers) {
+var c = this.data().C[country];
+var f = Math.max(1000, Math.min(50000, followers));
+var lerp = function (x0, x1, y0, y1) { var t = (Math.log(f) - Math.log(x0)) / (Math.log(x1) - Math.log(x0)); return Math.exp(Math.log(y0) + t * (Math.log(y1) - Math.log(y0))); };
+var lo = f <= 10000 ? lerp(1000, 10000, c.a[0], c.b[0]) : lerp(10000, 50000, c.b[0], c.c[0]);
+var hi = f <= 10000 ? lerp(1000, 10000, c.a[1], c.b[1]) : lerp(10000, 50000, c.b[1], c.c[1]);
+return [lo, hi];
+}
+renderVals() {
+var self = this, s = this.state, D = this.data();
+var c = D.C[s.country], p = D.P[s.platform];
+var raw = parseInt(String(s.fText).replace(/[^0-9]/g, ''), 10) || 0;
+var followers = Math.max(1000, Math.min(50000, raw || 1000));
+var nano = followers < 10000;
+// engagement: compare with the usual rate for this size on this platform
+var bench = p.er[nano ? 0 : 1], er = s.mode === 'creator' ? parseFloat(s.er) : 0, erF = 1, erNote = '';
+if (er > 0) {
+erF = Math.max(0.75, Math.min(1.35, Math.sqrt(er / bench)));
+erNote = erF > 1.02 ? 'Your engagement is above the usual ' + bench + '% for your size, so you can aim higher.' : erF < 0.98 ? 'Your engagement is below the usual ' + bench + '% for your size, so start lower and grow it.' : 'Your engagement is right where it should be for your size.';
+}
+var nicheF = 1;
+D.N.forEach(function (n) { if (n[0] === s.niche) nicheF = n[2]; });
+var extraPct = 0, extraCount = 0;
+D.X.forEach(function (x) { if (s.extras[x[0]]) { extraPct += x[2]; extraCount++; } });
+var b = this.base(s.country, followers);
+var mult = erF * nicheF * (1 + extraPct / 100);
+var step = function (v) {
+var r = { NG: v < 20000 ? 500 : v < 200000 ? 1000 : 5000, KE: v < 10000 ? 100 : 500, ZA: v < 2000 ? 50 : 100, PH: v < 5000 ? 100 : 500, BR: v < 1000 ? 10 : 50 }[s.country];
+return Math.max(r, Math.round(v / r) * r);
+};
+var money = function (v) { return c.sym + step(v).toLocaleString('en-US'); };
+var range = function (f, n) { n = n || 1; return money(b[0] * f * mult * n) + ' – ' + money(b[1] * f * mult * n); };
+var formats = p.f;
+var fmtKey = s.format, fmt = null;
+formats.forEach(function (f) { if (f[0] === fmtKey) fmt = f; });
+if (!fmt) formats.forEach(function (f) { if (f[0] === p.def) fmt = f; });
+var tier = nano ? ['Nano', '#CDF4F2', '#005B57'] : ['Micro', '#DCE4FF', '#0019C2'];
+var pos = Math.round((Math.log(followers) - Math.log(1000)) / (Math.log(50000) - Math.log(1000)) * 1000);
+var cardText = function () {
+var lines = ['My ' + p.label + ' rate card (' + followers.toLocaleString('en-US') + ' ' + p.unit + ')'];
+formats.forEach(function (f) { lines.push(f[1] + ': ' + range(f[2])); });
+lines.push('Bundle of 3 × ' + fmt[1] + ': ' + range(fmt[2], 2.7));
+var on = D.X.filter(function (x) { return s.extras[x[0]]; }).map(function (x) { return x[1]; });
+if (on.length) lines.push('Includes: ' + on.join(', '));
+lines.push('', 'Worked out with aktivate’s free rate calculator: useaktivate.com/tools/influencer-rate-calculator/');
+return lines.join('\n');
+};
+var n = Math.max(1, Math.min(500, parseInt(s.creators, 10) || 1));
+var mainNote = erNote || 'Add your engagement rate to sharpen this. The middle of the range is a fair opening price.';
+return {
+modes: [['creator', 'I’m a creator'], ['brand', 'I’m a brand']].map(function (m) { return { label: m[1], on: s.mode === m[0], pick: function () { self.setState({ mode: m[0] }); } }; }),
+countries: Object.keys(D.C).map(function (k) { return { label: D.C[k].label, flag: D.C[k].flag, on: s.country === k, pick: function () { self.setState({ country: k }); } }; }),
+platforms: Object.keys(D.P).map(function (k) { return { label: D.P[k].label, on: s.platform === k, pick: function () { self.setState({ platform: k, format: '' }); } }; }),
+niches: D.N.map(function (x) { return { key: x[0], label: x[1], on: s.niche === x[0] }; }),
+formats: formats.map(function (f) { return { key: f[0], label: f[1], on: f[0] === fmt[0] }; }),
+extras: D.X.map(function (x) { return { label: x[1], pct: x[2], desc: x[3], on: !!s.extras[x[0]], toggle: function () { var e = Object.assign({}, self.state.extras); e[x[0]] = !e[x[0]]; self.setState({ extras: e }); } }; }),
+extrasCount: extraCount ? '(' + extraCount + ' added)' : '(ad rights, exclusivity…)',
+followers: s.fText,
+followersLabel: (p.unit === 'subscribers' ? 'Subscribers' : 'Followers') + (s.mode === 'brand' ? ' per creator' : ''),
+sliderPos: pos,
+setSlider: function (e) { var t = (+e.target.value) / 1000; var v = Math.exp(Math.log(1000) + t * (Math.log(50000) - Math.log(1000))); v = v < 10000 ? Math.round(v / 100) * 100 : Math.round(v / 500) * 500; self.setState({ fText: String(v) }); },
+setFollowers: function (e) { self.setState({ fText: String(e.target.value).replace(/[^0-9]/g, '').slice(0, 9) }); },
+followerNote: raw > 50000 ? 'Above 50,000 you’re mid-tier, where prices vary a lot more. Treat these numbers as your floor.' : raw > 0 && raw < 1000 ? 'Under 1,000, brands mostly pay in products. ShopLink lets you earn commission while you grow.' : '',
+tierLabel: tier[0], tierBg: tier[1], tierInk: tier[2],
+er: s.er, erPlaceholder: 'e.g. ' + bench,
+setEr: function (e) { self.setState({ er: String(e.target.value).slice(0, 5) }); },
+setNiche: function (e) { self.setState({ niche: e.target.value }); },
+setFormat: function (e) { self.setState({ format: e.target.value }); },
+setCreators: function (e) { self.setState({ creators: e.target.value }); },
+isCreator: s.mode === 'creator', isBrand: s.mode === 'brand',
+platformLabel: p.label,
+mainFormat: fmt[1].toLowerCase().replace(/^tiktok/, 'TikTok').replace(/^youtube/, 'YouTube'),
+mainRange: range(fmt[2]),
+mainNote: mainNote,
+card: formats.map(function (f) { return { label: f[1], range: range(f[2]) }; }),
+bundleLabel: '× ' + fmt[1].replace(/^TikTok video$/, 'TikToks'),
+bundleRange: range(fmt[2], 2.7),
+copyLabel: s.copied ? 'Copied ✓' : 'Copy my rate card',
+copyCard: function () {
+var t = cardText();
+var ok = function () { self.setState({ copied: true }); setTimeout(function () { self.setState({ copied: false }); }, 2000); };
+try { navigator.clipboard.writeText(t).then(ok, function () { window.prompt('Copy your rate card:', t); }); } catch (e) { try { window.prompt('Copy your rate card:', t); } catch (x) {} }
+try { (window.dataLayer = window.dataLayer || []).push({ event: 'rate_card_copied', rc_country: s.country, rc_platform: s.platform }); } catch (e) {}
+},
+creators: s.creators,
+creatorsLabel: n + ' ' + tier[0].toLowerCase() + ' creator' + (n === 1 ? '' : 's') + ' · 1 ' + fmt[1].replace(/^TikTok video$/, 'TikTok').replace(/^(Feed post|Post|Reel|Story|Carousel|Thread|Video post|Photo carousel|Dedicated video)/, function (w) { return w.toLowerCase(); }) + ' each',
+budgetRange: range(fmt[2], n),
+perCreator: range(fmt[2]),
+brandNote: n >= 5 ? 'Several smaller creators usually reach further than one bigger one for the same money.' : 'Try 5–10 creators to see which voices sell best.',
+table: Object.keys(D.C).map(function (k) { var x = D.C[k], m = function (v) { return x.sym + v.toLocaleString('en-US'); }; return { label: x.label, flag: x.flag, a: m(x.a[0]) + ' – ' + m(x.a[1]), b: m(x.b[0]) + ' – ' + m(x.b[1]), c: m(x.c[0]) + ' – ' + m(x.c[1]) }; })
+};
+}
+}
+</script>
+</body>
+</html>
