@@ -34,7 +34,7 @@ const META = {
     ['style="width: 390px; height: 1560px; box-sizing: border-box; background: #5331E8;', 'style="width: 100%; max-width: 440px; min-height: 100vh; margin: 0 auto; box-sizing: border-box; background: #5331E8;'],
     ['body{margin:0}', 'body{margin:0;background:#3A1FC2}'],
   ],
-  About: ['About Aktivate — the creator marketing platform for Africa', 'We’re building the payday for Africa’s creators. 51,400+ creators, $3M+ paid out.'],
+  About: ['About Aktivate — the creator marketing platform for fast-growing creator markets', 'We’re building the payday for everyday creators. 51,400+ creators and $3M+ paid out across Africa, now opening in Brazil, the Philippines and Indonesia.'],
   EngagementCalculator: ['Free engagement rate calculator for Instagram & TikTok — Aktivate', 'Check any Instagram or TikTok handle and see its engagement rate, average likes and comments, and how it compares to creators the same size. Free, no sign-up.'],
   RateCalculator: ['Influencer rate calculator: what nano & micro creators charge — Aktivate', 'Free influencer rate calculator for creators with 1K–50K followers. See what to charge for a post, Reel, TikTok or Story in naira, shillings, rand, pesos, reais and rupiah.'],
   Terms: ['Terms of Use — Aktivate', 'The terms for using Aktivate: campaigns, ShopLink, Aktivate Reports, fees, payouts and content rights, under Nigerian law.'],
