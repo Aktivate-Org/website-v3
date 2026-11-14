@@ -36,7 +36,7 @@ const META = {
   ],
   About: ['About Aktivate — the creator marketing platform for Africa', 'We’re building the payday for Africa’s creators. 51,400+ creators, $3M+ paid out.'],
   EngagementCalculator: ['Free engagement rate calculator for Instagram & TikTok — Aktivate', 'Check any Instagram or TikTok handle and see its engagement rate, average likes and comments, and how it compares to creators the same size. Free, no sign-up.'],
-  RateCalculator: ['Influencer rate calculator: what nano & micro creators charge — Aktivate', 'Free influencer rate calculator for creators with 1K–50K followers. See what to charge for a post, Reel, TikTok or Story in naira, shillings, rand, pesos and reais.'],
+  RateCalculator: ['Influencer rate calculator: what nano & micro creators charge — Aktivate', 'Free influencer rate calculator for creators with 1K–50K followers. See what to charge for a post, Reel, TikTok or Story in naira, shillings, rand, pesos, reais and rupiah.'],
   Terms: ['Terms of Use — Aktivate', 'The terms for using Aktivate: campaigns, ShopLink, Aktivate Reports, fees, payouts and content rights, under Nigerian law.'],
   Privacy: ['Privacy Policy — Aktivate', 'How Aktivate collects, uses and protects personal data, in line with the Nigeria Data Protection Act 2023.'],
   Storefront: ['Example creator shop — Aktivate', 'See what a creator’s ShopLink storefront looks like.'],
@@ -46,7 +46,7 @@ const META = {
 const ORG_LD = `<script type="application/ld+json">${JSON.stringify({
   '@context': 'https://schema.org', '@graph': [
     { '@type': 'Organization', '@id': SITE_URL + '/#org', name: 'Aktivate', url: SITE_URL + '/', logo: SITE_URL + '/assets/favicon.png',
-      areaServed: ['NG', 'KE', 'GH', 'ZA'],
+      areaServed: ['NG', 'KE', 'GH', 'ZA', 'BR', 'PH', 'ID'],
       sameAs: ['https://www.instagram.com/useaktivate', 'https://www.linkedin.com/company/aktivate-inc', 'https://x.com/useaktivate', 'https://www.tiktok.com/@useaktivate'] },
     { '@type': 'WebSite', '@id': SITE_URL + '/#site', name: 'Aktivate', url: SITE_URL + '/', publisher: { '@id': SITE_URL + '/#org' }, inLanguage: 'en' },
   ] })}</script>\n`;
@@ -112,6 +112,7 @@ function load(name) {
 }
 
 const comps = { Nav: load('Nav'), Footer: load('Footer') };
+const markets = require('./markets.js');
 const pages = ['Main', 'CreatorsCampaigns', 'CreatorsShopLink', 'EngagementCalculator', 'RateCalculator', 'Brands', 'SMEs', 'Agencies', 'Pricing', 'About', 'Privacy', 'Terms', 'Storefront'];
 
 function headStyles(list) {
@@ -144,7 +145,7 @@ for (const name of pages) {
   const url = SITE_URL + ROUTES[name];
   const styles = headStyles([root.helmet, comps.Nav.helmet, comps.Footer.helmet]);
   const doc = shell({ title, desc, url, styles, body: html, scripts: pageScripts(ship, name !== 'EngagementCalculator' && name !== 'RateCalculator'),
-    noindex: name === 'Storefront', extraHead: name === 'Main' ? ORG_LD : '' });
+    noindex: name === 'Storefront', extraHead: (name === 'Main' ? ORG_LD : '') + (name === 'Brands' ? markets.hreflang(SITE_URL, 'biz') : name === 'CreatorsCampaigns' ? markets.hreflang(SITE_URL, 'creators') : '') });
   const dir = name === 'Main' ? OUT : path.join(OUT, ROUTES[name]);
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, 'index.html'), doc);
@@ -152,10 +153,11 @@ for (const name of pages) {
   console.log('built', ROUTES[name], (doc.length / 1024).toFixed(0) + 'KB', ship.map(c => c.name).join(','));
 }
 
-function pageScripts(ship, erPopup) {
+function pageScripts(ship, erPopup, marketNudge = true) {
   return `
 <script src="/assets/currency.js"></script>
-<script src="/assets/consent.js" defer></script>` + (erPopup ? `
+<script src="/assets/consent.js" defer></script>` + (marketNudge ? `
+<script src="/assets/market-banner.js" defer></script>` : '') + (erPopup ? `
 <script src="/assets/er-popup.js" defer></script>` : '') + (ship.length ? `
 <script src="/assets/morphdom.min.js"></script>
 <script src="/assets/dc-lite.js"></script>
@@ -163,10 +165,27 @@ function pageScripts(ship, erPopup) {
 new D.Page(defs).hydrate();})();</script>` : '');
 }
 
+/* A small bar for visitors in Brazil, the Philippines or Indonesia (by time zone) pointing to their country page.
+   Dismissable; remembered for 30 days. Never shown on the country pages themselves. */
+function marketBanner() {
+  return `(function(){try{
+var M=${JSON.stringify(markets.bannerConfig())};
+var tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'',k=null;for(var c in M){if(new RegExp(M[c].tz).test(tz))k=c;}
+if(!k||location.pathname.indexOf('/'+k+'/')===0)return;
+var seen=+localStorage.getItem('akt-mk')||0;if(Date.now()-seen<2592e6)return;
+var m=M[k],b=document.createElement('div');b.setAttribute('role','region');b.setAttribute('aria-label',m.text[0]);b.lang=m.lang;
+b.style.cssText='position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:12px;max-width:calc(100% - 24px);box-sizing:border-box;padding:10px 10px 10px 18px;border-radius:18px;background:#080611;color:#fff;font:600 15px Aileron,system-ui,sans-serif;box-shadow:0 20px 40px rgba(8,6,17,.35)';
+b.innerHTML='<span>'+m.text[0]+'</span><a href="'+m.path+'" style="padding:10px 14px;border-radius:12px;background:#00C4BC;color:#080611;text-decoration:none;font-weight:800;white-space:nowrap">'+m.text[1]+' &rarr;</a><button type="button" aria-label="Close" style="border:0;background:transparent;color:#fff;font-size:22px;cursor:pointer;padding:4px 8px">&times;</button>';
+var close=function(){localStorage.setItem('akt-mk',Date.now());b.remove();};
+b.querySelector('button').onclick=close;b.querySelector('a').onclick=function(){localStorage.setItem('akt-mk',Date.now());};
+var show=function(){if(!document.getElementById('akt-cc')||!document.getElementById('akt-cc').isConnected||document.getElementById('akt-cc').hidden)document.body.appendChild(b);else setTimeout(show,4000);};setTimeout(show,2500);
+}catch(e){}})();`;
+}
+
 /* The full HTML document every page shares: consent defaults, GTM, meta tags, fonts. */
-function shell({ title, desc, url, styles, body, scripts, ogType = 'website', ogImage = SITE_URL + '/assets/og.png', extraHead = '', noindex = false }) {
+function shell({ title, desc, url, styles, body, scripts, ogType = 'website', ogImage = SITE_URL + '/assets/og.png', extraHead = '', noindex = false, lang = 'en', locale = 'en_NG' }) {
   return `<!doctype html>
-<html lang="en">
+<html lang="${lang}">
 <head>
 <meta charset="utf-8">
 <!-- Consent Mode v2 defaults (must run before GTM): everything off in the EEA, UK and Switzerland until
@@ -191,7 +210,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="description" content="${desc}">
 <link rel="canonical" href="${url}">
 ${noindex ? '<meta name="robots" content="noindex, follow">\n' : ''}<meta property="og:site_name" content="Aktivate">
-<meta property="og:locale" content="en_NG">
+<meta property="og:locale" content="${locale}">
 <meta property="og:type" content="${ogType}">
 <meta property="og:title" content="${title}">
 <meta property="og:description" content="${desc}">
@@ -242,6 +261,14 @@ require('./blog.js').build({
     footer: chrome.renderInst('Footer', {}, 'alt/Footer#0'),
     scripts: pageScripts([comps.Nav], true),
   }));
+  sitemap.push(...markets.build({
+    OUT, SITE_URL, shell,
+    styles: headStyles([comps.Nav.helmet, comps.Footer.helmet]),
+    nav: chrome.renderInst('Nav', { open: 'none' }, 'mk/Nav#0'),
+    footer: chrome.renderInst('Footer', {}, 'mk/Footer#0'),
+    scripts: pageScripts([comps.Nav], false, false),
+  }));
+  fs.writeFileSync(path.join(OUT, 'assets', 'market-banner.js'), marketBanner());
   fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`);
   fs.writeFileSync(path.join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemap.map(u => `  <url><loc>${u}</loc></url>`).join('\n')}\n</urlset>\n`);
   console.log('done');

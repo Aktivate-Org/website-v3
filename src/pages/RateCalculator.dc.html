@@ -49,9 +49,9 @@ a{color:#5331E8}a:hover{color:#001FFF}
 <div style="flex: 1 1 420px; min-width: 0">
 <p style="display: inline-flex; align-items: center; gap: 8px; margin: 0 0 22px; padding: 8px 14px; border-radius: 999px; background: #FFD23F; color: #080611; font-weight: 800; font-size: 14px">Free tool · nano &amp; micro creators</p>
 <h1 style="margin: 0; font-weight: 800; font-size: clamp(46px, 6.6vw, 96px); line-height: 0.9; letter-spacing: -0.045em">How much should <span style="color: #00C4BC">you charge?</span><img src="/_blob/c0a6662dba2ab1da9605c6a7d108b0f4" alt="" aria-hidden="true" style="display: inline-block; width: 0.5em; height: 0.5em; vertical-align: top; margin-left: 0.08em"></h1>
-<p style="margin: clamp(20px, 2vw, 28px) 0 0; max-width: 520px; font-size: clamp(18px, 1.6vw, 21px); line-height: 1.5; color: #C9C6D6">Get a fair price range for a sponsored post, in your own currency. Built for creators with 1,000 to 50,000 followers in Nigeria, Kenya, South Africa, the Philippines and Brazil.</p>
+<p style="margin: clamp(20px, 2vw, 28px) 0 0; max-width: 520px; font-size: clamp(18px, 1.6vw, 21px); line-height: 1.5; color: #C9C6D6">Get a fair price range for a sponsored post, in your own currency. Built for creators with 1,000 to 50,000 followers in Nigeria, Kenya, South Africa, the Philippines, Brazil and Indonesia.</p>
 <ul class="m-hide" style="margin: 28px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 10px">
-<li style="padding: 10px 14px; border-radius: 999px; background: #1C1830; font-weight: 600; font-size: 14px">₦ · KSh · R · ₱ · R$</li>
+<li style="padding: 10px 14px; border-radius: 999px; background: #1C1830; font-weight: 600; font-size: 14px">₦ · KSh · R · ₱ · R$ · Rp</li>
 <li style="padding: 10px 14px; border-radius: 999px; background: #1C1830; font-weight: 600; font-size: 14px">Instagram, TikTok, YouTube, X, Facebook</li>
 <li style="padding: 10px 14px; border-radius: 999px; background: #1C1830; font-weight: 600; font-size: 14px">Copy your rate card</li>
 </ul>
@@ -199,7 +199,7 @@ a{color:#5331E8}a:hover{color:#001FFF}
 </tbody>
 </table>
 </div>
-<p style="margin: 18px 0 0; font-size: 13px; line-height: 1.55; color: #5A566A">Nano = 1,000–10,000 followers. Micro = 10,000–50,000. Ranges are built from published guides, including the <a href="https://www.bizcommunity.com/article/the-price-of-south-african-influence-255657a" rel="noopener" target="_blank">2024 South African Influencer Benchmark Report</a>, Philippine and Brazilian rate guides, and Nigerian and Kenyan agency price lists, then rounded.</p>
+<p style="margin: 18px 0 0; font-size: 13px; line-height: 1.55; color: #5A566A">Nano = 1,000–10,000 followers. Micro = 10,000–50,000. Ranges are built from published guides, including the <a href="https://www.bizcommunity.com/article/the-price-of-south-african-influence-255657a" rel="noopener" target="_blank">2024 South African Influencer Benchmark Report</a>, Philippine, Brazilian and Indonesian rate guides, and Nigerian and Kenyan agency price lists, then rounded.</p>
 </div>
 </section>
 
@@ -246,6 +246,7 @@ var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
 if (tz === 'Africa/Nairobi') c = 'KE';
 else if (tz === 'Africa/Johannesburg') c = 'ZA';
 else if (tz === 'Asia/Manila') c = 'PH';
+else if (/^Asia\/(Jakarta|Pontianak|Makassar|Jayapura)$/.test(tz)) c = 'ID';
 else if (/^America\/(Sao_Paulo|Bahia|Fortaleza|Recife|Belem|Manaus|Maceio|Cuiaba|Campo_Grande|Araguaina|Porto_Velho|Boa_Vista|Rio_Branco|Santarem|Noronha)$/.test(tz)) c = 'BR';
 var q = new URLSearchParams(window.location.search);
 if (this.data().C[String(q.get('country') || '').toUpperCase()]) c = String(q.get('country')).toUpperCase();
@@ -260,7 +261,8 @@ NG: { label: 'Nigeria', flag: '🇳🇬', sym: '₦', a: [8000, 15000], b: [4000
 KE: { label: 'Kenya', flag: '🇰🇪', sym: 'KSh ', a: [1500, 3000], b: [8000, 18000], c: [30000, 70000] },
 ZA: { label: 'South Africa', flag: '🇿🇦', sym: 'R', a: [600, 1200], b: [2000, 3500], c: [6000, 12000] },
 PH: { label: 'Philippines', flag: '🇵🇭', sym: '₱', a: [1000, 2000], b: [4000, 8000], c: [15000, 30000] },
-BR: { label: 'Brazil', flag: '🇧🇷', sym: 'R$', a: [100, 200], b: [300, 600], c: [900, 1800] }
+BR: { label: 'Brazil', flag: '🇧🇷', sym: 'R$', a: [100, 200], b: [300, 600], c: [900, 1800] },
+ID: { label: 'Indonesia', flag: '🇮🇩', sym: 'Rp ', a: [300000, 600000], b: [1500000, 3000000], c: [5000000, 10000000] }
 };
 var P = {
 instagram: { label: 'Instagram', unit: 'followers', def: 'reel', er: [3.5, 2.5], f: [['story', 'Story (3 frames)', 0.55], ['post', 'Feed post', 1], ['carousel', 'Carousel', 1.15], ['reel', 'Reel', 1.45]] },
@@ -300,7 +302,7 @@ D.X.forEach(function (x) { if (s.extras[x[0]]) { extraPct += x[2]; extraCount++;
 var b = this.base(s.country, followers);
 var mult = erF * nicheF * (1 + extraPct / 100);
 var step = function (v) {
-var r = { NG: v < 20000 ? 500 : v < 200000 ? 1000 : 5000, KE: v < 10000 ? 100 : 500, ZA: v < 2000 ? 50 : 100, PH: v < 5000 ? 100 : 500, BR: v < 1000 ? 10 : 50 }[s.country];
+var r = { NG: v < 20000 ? 500 : v < 200000 ? 1000 : 5000, KE: v < 10000 ? 100 : 500, ZA: v < 2000 ? 50 : 100, PH: v < 5000 ? 100 : 500, BR: v < 1000 ? 10 : 50, ID: v < 1000000 ? 25000 : 100000 }[s.country];
 return Math.max(r, Math.round(v / r) * r);
 };
 var money = function (v) { return c.sym + step(v).toLocaleString('en-US'); };

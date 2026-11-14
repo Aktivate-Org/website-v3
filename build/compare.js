@@ -358,4 +358,4 @@ function build(ctx) {
   return urls;
 }
 
-module.exports = { build, PAGES };
+module.exports = { build, PAGES, CSS, ARROW, CHECK };
