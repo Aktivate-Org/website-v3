@@ -271,7 +271,7 @@ ${crumbs}
 <div class="cp-cards">${c.why.map(([h, t]) => `<div class="cp-card"><span>${CHECK}</span><h3>${h}</h3><p>${t}</p></div>`).join('')}</div></section>
 ${price}
 <section class="cp-sec"><p class="cp-eyebrow">FAQ</p><h2 class="cp-h">${u.faq}</h2><div class="cp-faq">${c.faq.map(([q, a], i) => `<details${i === 0 ? ' open' : ''}><summary>${esc(q)}</summary><p>${a}</p></details>`).join('')}</div>
-<div class="mk-swap"><a href="${other[0]}">${other[1]} ${ARROW}</a></div></section>
+<div class="mk-swap"><a href="${other[0]}">${other[1]} ${ARROW}</a><a href="/blog/${{ br: 'brasil', ph: 'philippines', id: 'indonesia' }[key]}/">Blog ${ARROW}</a></div></section>
 
 <section class="cp-end"><div><h2>${c.endH}</h2><p>${c.endP}</p></div><a class="cp-btn cp-btn--teal" href="${ctaHref}">${c.cta} ${ARROW}</a></section>
 </div>

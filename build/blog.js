@@ -6,8 +6,11 @@
 
    Audience/category of a post (shown as a pill and used by the filters on /blog/):
    add one of these tags in Hashnode to set it explicitly, otherwise it is guessed from the title.
-     for-brands | for-creators | case-study | news                                              */
+     for-brands | for-creators | case-study | news
+   Market posts: tag brasil, philippines or indonesia (see REGIONS). The tag autopublish is used by the weekly
+   regional-blog scheduled task (content/regional-blog.md) and is never shown on the page.            */
 const fs = require('fs');
+const strip = (x) => String(x).replace(/<[^>]+>/g, '');
 const path = require('path');
 const { marked } = require('marked');
 
@@ -97,7 +100,32 @@ async function fetchPosts() {
 
 /* ---------------- helpers ---------------- */
 const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-const fmtDate = (iso) => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Africa/Lagos' });
+/* Posts for the newer markets. Tag a post in Hashnode with one of these to make it a local post: it is
+   rendered in that language, links to that country's pages, and is listed on /blog/<hub>/ instead of the
+   main English blog (Philippines posts are in English, so they appear on both).                         */
+const REGIONS = {
+  brasil: { hub: 'brasil', lang: 'pt-BR', locale: 'pt_BR', name: 'Brasil', flag: '🇧🇷', biz: '/br/', creators: '/br/criadores/', inMain: false },
+  philippines: { hub: 'philippines', lang: 'en-PH', locale: 'en_PH', name: 'Philippines', flag: '🇵🇭', biz: '/ph/', creators: '/ph/creators/', inMain: true },
+  indonesia: { hub: 'indonesia', lang: 'id', locale: 'id_ID', name: 'Indonesia', flag: '🇮🇩', biz: '/id/', creators: '/id/kreator/', inMain: false },
+};
+const region = (p) => { const t = (p.tags || []).map((x) => x.slug); return Object.keys(REGIONS).find((k) => t.includes(k)) || null; };
+const STR = {
+  en: { all: 'All articles', min: 'min read', share: 'Share', toc: 'On this page', more: 'Keep reading', latest: 'Latest', read: 'Read article', copy: 'Copy link',
+    cats: { brands: 'For brands', creators: 'For creators', case: 'Case study', news: 'News' }, endC: 'Ready to start <span>earning?</span>', endB: 'Ready to run your <span>next campaign?</span>' },
+  pt: { all: 'Todos os artigos', min: 'min de leitura', share: 'Compartilhar', toc: 'Neste artigo', more: 'Continue lendo', latest: 'Mais recente', read: 'Ler artigo', copy: 'Copiar link',
+    cats: { brands: 'Para empresas', creators: 'Para criadores', case: 'Caso de sucesso', news: 'Novidades' }, endC: 'Pronto para começar a <span>ganhar?</span>', endB: 'Pronto para a sua <span>próxima campanha?</span>',
+    hub: ['Marketing de influência no <span>Brasil.</span>', 'Guias para empresas e criadores no Brasil: como trabalhar com nano e microinfluenciadores, quanto cobrar e como ganhar dinheiro com conteúdo.'],
+    cta: { creators: { eyebrow: 'Para criadores', title: 'Receba de marcas pelo seu conteúdo.', body: 'Cadastre-se grátis e seja dos primeiros quando as campanhas no Brasil abrirem.', label: 'Criar minha conta grátis' }, brands: { eyebrow: 'Para empresas', title: 'Criadores que vendem pela sua marca.', body: 'Publique uma campanha e pague só pelo conteúdo que for ao ar. US$ 15 por campanha + 10% do orçamento.', label: 'Criar minha campanha' } } },
+  id: { all: 'Semua artikel', min: 'menit baca', share: 'Bagikan', toc: 'Di artikel ini', more: 'Baca juga', latest: 'Terbaru', read: 'Baca artikel', copy: 'Salin tautan',
+    cats: { brands: 'Untuk bisnis', creators: 'Untuk kreator', case: 'Studi kasus', news: 'Berita' }, endC: 'Siap mulai <span>dapat bayaran?</span>', endB: 'Siap untuk <span>kampanye berikutnya?</span>',
+    hub: ['Influencer marketing di <span>Indonesia.</span>', 'Panduan untuk UMKM dan kreator di Indonesia: cara bekerja dengan nano dan micro influencer, rate card, dan cara menghasilkan uang dari konten.'],
+    cta: { creators: { eyebrow: 'Untuk kreator', title: 'Dibayar brand untuk kontenmu.', body: 'Daftar gratis dan jadi yang pertama saat kampanye di Indonesia dibuka.', label: 'Daftar gratis' }, brands: { eyebrow: 'Untuk bisnis', title: 'Kreator yang jualan untuk brand kamu.', body: 'Pasang kampanye dan bayar hanya untuk konten yang tayang. US$15 per kampanye + 10% anggaran.', label: 'Buat kampanye saya' } } },
+  ph: { hub: ['Creator marketing in the <span>Philippines.</span>', 'Guides for businesses and creators in the Philippines: working with nano and micro creators, rate cards, and earning from your content.'],
+    cta: { creators: { eyebrow: 'For creators', title: 'Get paid by brands for your content.', body: 'Join free and be first in line when campaigns in the Philippines open.', label: 'Join free' }, brands: { eyebrow: 'For businesses', title: 'Creators who sell for your brand.', body: 'Post a campaign and pay only for content that goes live. $15 per campaign + 10% of budget.', label: 'Start my campaign' } } },
+};
+let CUR = { lang: 'en', reg: null }; // the page being rendered (set by build before each render)
+const T = () => Object.assign({}, STR.en, CUR.lang === 'pt-BR' ? STR.pt : CUR.lang === 'id' ? STR.id : {});
+const fmtDate = (iso) => new Date(iso).toLocaleDateString(CUR.lang === 'en' || CUR.lang === 'en-PH' ? 'en-GB' : CUR.lang, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Africa/Lagos' });
 const slugify = (s) => String(s).toLowerCase().replace(/<[^>]+>/g, '').replace(/&[a-z]+;|&#\d+;/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 const CATS = {
@@ -123,7 +151,12 @@ const CTA = {
   creators: { eyebrow: 'For creators', title: 'Get paid to create.', body: 'Apply to paid brand campaigns and earn commission with your own ShopLink store. Free to join.', label: 'Join Aktivate free', href: 'https://app.useaktivate.com' },
   brands: { eyebrow: 'For brands', title: 'Make creators your sales team.', body: 'Launch a campaign in minutes and pick from 50,000+ verified creators across Nigeria, Kenya, Ghana and South Africa.', label: 'Launch a campaign', href: 'https://app.useaktivate.com' },
 };
-const ctaFor = (cat) => (cat === 'creators' ? CTA.creators : CTA.brands);
+const ctaFor = (cat) => {
+  const base = cat === 'creators' ? CTA.creators : CTA.brands;
+  if (!CUR.reg) return base;
+  const r = REGIONS[CUR.reg], loc = (CUR.reg === 'brasil' ? STR.pt : CUR.reg === 'indonesia' ? STR.id : STR.ph).cta[cat === 'creators' ? 'creators' : 'brands'];
+  return Object.assign({}, base, loc, { href: cat === 'creators' ? r.creators : r.biz });
+};
 
 /* Hashnode markdown → HTML, with Hashnode-specific syntax handled and old blog links moved to /blog/. */
 function renderMarkdown(md) {
@@ -150,7 +183,7 @@ function renderMarkdown(md) {
 
 /* ---------------- pieces ---------------- */
 const ARROW = '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-const pill = (cat) => `<span class="bl-pill" style="background:${CATS[cat].pill[0]};color:${CATS[cat].pill[1]}">${CATS[cat].label}</span>`;
+const pill = (cat) => `<span class="bl-pill" style="background:${CATS[cat].pill[0]};color:${CATS[cat].pill[1]}">${T().cats[cat] || CATS[cat].label}</span>`;
 
 /* Posts without a cover image get a collage in the website's illustration style (product tiles,
    a creator avatar and a sticker), picked from the slug so every post looks different but stable. */
@@ -183,10 +216,11 @@ ${art(p)}
 <div class="bl-card-body">${pill(p.cat)}
 <h3>${esc(p.title)}</h3>
 <p>${esc(p.excerpt)}</p>
-<span class="bl-meta">${fmtDate(p.publishedAt)} · ${p.readTimeInMinutes || 3} min read</span></div></a>`;
+<span class="bl-meta">${fmtDate(p.publishedAt)} · ${p.readTimeInMinutes || 3} ${T().min}</span></div></a>`;
 }
 
 function ctaBand() {
+  const CTA = { brands: ctaFor('brands'), creators: ctaFor('creators') };
   return `<section class="bl-wrap bl-cta-band">
 <div class="bl-cta bl-cta--dark"><p class="bl-eyebrow" style="color:#9EB3FF">${CTA.brands.eyebrow}</p><h2>${CTA.brands.title}</h2><p>${CTA.brands.body}</p><a class="bl-btn bl-btn--teal" href="${CTA.brands.href}">${CTA.brands.label} ${ARROW}</a></div>
 <div class="bl-cta bl-cta--purple"><p class="bl-eyebrow" style="color:#D9D4FF">${CTA.creators.eyebrow}</p><h2>${CTA.creators.title}</h2><p>${CTA.creators.body}</p><a class="bl-btn bl-btn--white" href="${CTA.creators.href}">${CTA.creators.label} ${ARROW}</a></div>
@@ -322,7 +356,7 @@ const SHARE_JS = `<script>(function(){var b=document.querySelector('[data-copy]'
 function indexPage(posts, ctx) {
   const [feat, ...rest] = posts;
   const counts = posts.reduce((m, p) => ((m[p.cat] = (m[p.cat] || 0) + 1), m), {});
-  const filters = [['all', 'All articles'], ['brands', 'For brands'], ['creators', 'For creators'], ['case', 'Case studies'], ['news', 'News']]
+  const filters = [['all', T().all], ['brands', T().cats.brands], ['creators', T().cats.creators], ['case', T().cats.case], ['news', T().cats.news]]
     .filter(([k]) => k === 'all' || counts[k])
     .map(([k, l]) => `<button type="button" data-f="${k}" aria-pressed="${k === 'all'}">${l}</button>`).join('');
   return `<div class="bl">
@@ -330,14 +364,13 @@ function indexPage(posts, ctx) {
 <main>
 <section class="bl-hero"><div class="bl-wrap">
 <p class="bl-tag"><i aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v15H6a2 2 0 0 0-2 2.5zM8 7h6"/></svg></i>Aktivate Blog</p>
-<h1>Get smarter about <span>creator marketing.</span></h1>
-<p class="bl-sub">Guides, campaign playbooks and real results for brands and creators across Nigeria, Kenya, Ghana and South Africa.</p>
+${CUR.hub ? `<h1>${CUR.hub[0]}</h1>\n<p class="bl-sub">${CUR.hub[1]}</p>` : `<h1>Get smarter about <span>creator marketing.</span></h1>\n<p class="bl-sub">Guides, campaign playbooks and real results for brands and creators across Africa, Brazil, the Philippines and Indonesia.</p>`}
 </div></section>
 <div class="bl-wrap">
-${feat ? `<a class="bl-feat" href="/blog/${feat.slug}/">${art(feat)}<div class="bl-feat-body"><p class="bl-kicker">Latest</p>${pill(feat.cat)}<h2>${esc(feat.title)}</h2><p>${esc(feat.excerpt)}</p>
-<span class="bl-meta" style="padding-top:18px">${fmtDate(feat.publishedAt)} · ${feat.readTimeInMinutes || 3} min read</span><span class="bl-read">Read article ${ARROW}</span></div></a>` : ''}
+${feat ? `<a class="bl-feat" href="/blog/${feat.slug}/">${art(feat)}<div class="bl-feat-body"><p class="bl-kicker">${T().latest}</p>${pill(feat.cat)}<h2>${esc(feat.title)}</h2><p>${esc(feat.excerpt)}</p>
+<span class="bl-meta" style="padding-top:18px">${fmtDate(feat.publishedAt)} · ${feat.readTimeInMinutes || 3} ${T().min}</span><span class="bl-read">${T().read} ${ARROW}</span></div></a>` : ''}
 <div class="bl-filters" role="group" aria-label="Filter articles">${filters}</div>
-<div class="bl-grid">${rest.map(card).join('\n')}</div>
+${feat ? '' : `<p class="bl-sub" style="color:#4A4658">${CUR.empty || ''}</p>`}<div class="bl-grid">${rest.map(card).join('\n')}</div>
 <p class="bl-empty" hidden>No more articles in this category yet. The latest one is above.</p>
 </div>
 ${ctaBand()}
@@ -363,33 +396,33 @@ function postPage(p, related, ctx) {
 <header style="background:#001FFF">${ctx.nav}</header>
 <main>
 <section class="bl-post-hero"><div class="bl-wrap">
-<a class="bl-back" href="/blog/">${ARROW} All articles</a><br>
+<a class="bl-back" href="${CUR.reg ? '/blog/' + REGIONS[CUR.reg].hub + '/' : '/blog/'}">${ARROW} ${T().all}</a><br>
 ${pill(p.cat)}
 <h1>${esc(p.title)}</h1>
 ${p.subtitle ? `<p class="bl-sub">${esc(p.subtitle)}</p>` : ''}
-<div class="bl-byline"><img src="/assets/logomark.png" alt=""><span><b>${esc(p.author?.name || 'Aktivate')}</b>${fmtDate(p.publishedAt)} · ${p.readTimeInMinutes || 3} min read</span></div>
+<div class="bl-byline"><img src="/assets/logomark.png" alt=""><span><b>${esc(p.author?.name || 'Aktivate')}</b>${fmtDate(p.publishedAt)} · ${p.readTimeInMinutes || 3} ${T().min}</span></div>
 </div></section>
 <div class="bl-wrap">
 ${hasCover ? `<div class="bl-cover">${art(p)}</div>` : ''}
 <div class="bl-layout${hasCover ? '' : ' bl-no-cover'}">
 <article class="bl-article"><div class="bl-prose">${html}</div>
 <div class="bl-foot">
-<div class="bl-tags">${(p.tags || []).filter(t => !['for-brands', 'for-creators', 'case-study', 'news'].includes(t.slug)).slice(0, 5).map(t => `<span>${esc(t.name)}</span>`).join('')}</div>
-<div class="bl-share"><span>Share</span>
+<div class="bl-tags">${(p.tags || []).filter(t => !['for-brands', 'for-creators', 'case-study', 'news', 'autopublish', ...Object.keys(REGIONS)].includes(t.slug)).slice(0, 5).map(t => `<span>${esc(t.name)}</span>`).join('')}</div>
+<div class="bl-share"><span>${T().share}</span>
 <a href="https://x.com/intent/post?text=${shareText}&url=${enc(url)}" target="_blank" rel="noopener" aria-label="Share on X">${ICON.x}</a>
 <a href="https://www.linkedin.com/sharing/share-offsite/?url=${enc(url)}" target="_blank" rel="noopener" aria-label="Share on LinkedIn">${ICON.in}</a>
 <a href="https://wa.me/?text=${enc(p.title + ' ' + url)}" target="_blank" rel="noopener" aria-label="Share on WhatsApp">${ICON.wa}</a>
 <button type="button" data-copy aria-label="Copy link">${ICON.link}</button></div>
 </div></article>
 <aside class="bl-aside">
-${toc.length >= 3 ? `<nav class="bl-toc" aria-label="On this page"><p>On this page</p>${toc.map(t => `<a href="#${t.id}">${t.text}</a>`).join('')}</nav>` : ''}
+${toc.length >= 3 ? `<nav class="bl-toc" aria-label="On this page"><p>${T().toc}</p>${toc.map(t => `<a href="#${t.id}">${t.text}</a>`).join('')}</nav>` : ''}
 <div class="bl-side-cta" style="background:${p.cat === 'creators' ? '#5331E8' : '#080611'}"><p class="bl-eyebrow" style="color:${p.cat === 'creators' ? '#D9D4FF' : '#9EB3FF'}">${cta.eyebrow}</p><h3>${cta.title}</h3><p>${cta.body}</p>
 <a class="bl-btn ${p.cat === 'creators' ? 'bl-btn--white' : 'bl-btn--teal'}" href="${cta.href}">${cta.label} ${ARROW}</a></div>
 </aside>
 </div>
-<section class="bl-end-cta"><div><h2>${p.cat === 'creators' ? 'Ready to start <span>earning?</span>' : 'Ready to run your <span>next campaign?</span>'}</h2><p>${cta.body}</p></div>
+<section class="bl-end-cta"><div><h2>${p.cat === 'creators' ? T().endC : T().endB}</h2><p>${cta.body}</p></div>
 <a class="bl-btn bl-btn--teal" href="${cta.href}">${cta.label} ${ARROW}</a></section>
-${related.length ? `<section class="bl-more"><h2>Keep reading</h2><div class="bl-grid">${related.map(card).join('\n')}</div></section>` : ''}
+${related.length ? `<section class="bl-more"><h2>${T().more}</h2><div class="bl-grid">${related.map(card).join('\n')}</div></section>` : ''}
 </div>
 </main>
 ${ctx.footer}
@@ -444,10 +477,11 @@ async function build(ctx) {
   const raw = await fetchPosts();
   const posts = raw
     .filter(p => p && p.slug && p.title && p.publishedAt)
-    .map(p => ({ ...p, cat: category(p), excerpt: String(p.subtitle || p.seo?.description || p.brief || '').replace(/\s+/g, ' ').trim().slice(0, 220) }))
+    .map(p => ({ ...p, reg: region(p), cat: category(p), excerpt: String(p.subtitle || p.seo?.description || p.brief || '').replace(/\s+/g, ' ').trim().slice(0, 220) }))
     .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
   if (!posts.length) throw new Error('Hashnode returned no posts; refusing to publish an empty blog');
-  const listed = posts;
+  const listed = posts.filter((p) => !p.reg || REGIONS[p.reg].inMain);
+  CUR = { lang: 'en', reg: null };
   const urls = [];
   const head = (extra) => CSS + extra;
 
@@ -468,7 +502,9 @@ async function build(ctx) {
   for (const p of posts) {
     const url = `${SITE_URL}/blog/${p.slug}/`;
     const canonical = p.canonicalUrl && !p.canonicalUrl.includes(OLD_HOST) ? p.canonicalUrl : url;
-    const pool = listed.filter(x => x.slug !== p.slug);
+    const R = p.reg ? REGIONS[p.reg] : null;
+    CUR = { lang: R ? R.lang : 'en', reg: p.reg };
+    const pool = (R ? posts.filter((x) => x.reg === p.reg) : listed).filter(x => x.slug !== p.slug);
     const related = [...pool.filter(x => x.cat === p.cat), ...pool.filter(x => x.cat !== p.cat)].slice(0, 3);
     const title = p.seo?.title || p.title;
     const desc = (p.seo?.description || p.excerpt).replace(/"/g, '&quot;');
@@ -476,6 +512,7 @@ async function build(ctx) {
     const ld = { '@context': 'https://schema.org', '@type': 'BlogPosting', headline: p.title, description: p.seo?.description || p.excerpt, image, datePublished: p.publishedAt, dateModified: p.updatedAt || p.publishedAt, author: { '@type': 'Organization', name: 'Aktivate', url: SITE_URL }, publisher: { '@type': 'Organization', name: 'Aktivate', logo: { '@type': 'ImageObject', url: SITE_URL + '/assets/logo.png' } }, mainEntityOfPage: url };
     let doc = shell({
       title: esc(title) + (title.length < 50 ? ' — Aktivate Blog' : ''), desc, url: canonical, styles, scripts, ogType: 'article', ogImage: esc(image),
+      lang: R ? R.lang : 'en', locale: R ? R.locale : 'en_NG',
       body: postPage(p, related, ctx),
       extraHead: head(`<meta property="article:published_time" content="${p.publishedAt}">\n<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>\n`),
     });
@@ -485,6 +522,22 @@ async function build(ctx) {
     fs.writeFileSync(path.join(dir, 'index.html'), doc);
     if (canonical === url) urls.push(url);
   }
+  // /blog/<hub>/: local-language listing for each new market
+  const HUB_EMPTY = { brasil: 'Os primeiros artigos para o Brasil chegam em breve.', philippines: 'The first articles for the Philippines are coming soon.', indonesia: 'Artikel pertama untuk Indonesia segera hadir.' };
+  for (const [k, R] of Object.entries(REGIONS)) {
+    const mine = posts.filter((p) => p.reg === k);
+    const loc = k === 'brasil' ? STR.pt : k === 'indonesia' ? STR.id : STR.ph;
+    CUR = { lang: R.lang, reg: k, hub: loc.hub, empty: HUB_EMPTY[k] };
+    const hubUrl = `${SITE_URL}/blog/${R.hub}/`;
+    const doc = shell({
+      title: `${strip(loc.hub[0])} — Aktivate Blog`, desc: esc(loc.hub[1]), url: hubUrl, styles, scripts, lang: R.lang, locale: R.locale, noindex: !mine.length,
+      body: indexPage(mine, ctx), extraHead: head(''),
+    });
+    fs.mkdirSync(path.join(OUT, 'blog', R.hub), { recursive: true });
+    fs.writeFileSync(path.join(OUT, 'blog', R.hub, 'index.html'), doc);
+    if (mine.length) urls.push(hubUrl);
+  }
+  CUR = { lang: 'en', reg: null };
   // /blog/_live/: the page Render serves (via the rewrite in render.yaml) for any /blog/<slug>/ that wasn't
   // built yet, e.g. a post Hashnode published on a schedule after the last deploy. It loads the post straight
   // from Hashnode in the browser, so readers never see "Not found". The blog-sync GitHub workflow spots these
