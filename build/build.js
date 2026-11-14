@@ -23,23 +23,32 @@ const ROUTES = {
   Storefront: '/example-shop/', Hub: APP_URL, EngagementCalculator: '/tools/engagement-rate-calculator/', Privacy: '/privacy/', Terms: '/terms/',
 };
 const META = {
-  Main: ['Aktivate — Get paid to create', 'Land paid brand campaigns and run your own shop from one link. Built for creators in Nigeria, Kenya, Ghana and South Africa.'],
-  CreatorsCampaigns: ['Collaboration Hub for creators — Aktivate', 'Apply to paid brand campaigns from banks, sportswear, beauty, food and telco brands. Free to join.'],
-  CreatorsShopLink: ['ShopLink for creators — Aktivate', 'Turn your link in bio into a real store. Earn 10–50% commission on every sale.'],
-  Brands: ['Aktivate for brands', 'Run creator campaigns and turn 50,000+ verified African creators into your sales team.'],
-  SMEs: ['Aktivate for SMEs', 'Get creators selling for your business. Pay commission only when you make a sale.'],
-  Agencies: ['Aktivate for agencies', 'Source creators for every client and turn post links into client-ready reports.'],
-  Pricing: ['Pricing — Aktivate', 'Pay per campaign, per product or per report. No subscriptions.'],
+  Main: ['Aktivate — Get paid to create | Influencer marketing in Nigeria & Africa', 'Land paid brand campaigns and run your own shop from one link. Built for creators in Nigeria, Kenya, Ghana and South Africa.'],
+  CreatorsCampaigns: ['Paid brand deals for creators in Nigeria — Aktivate Collaboration Hub', 'Apply to paid brand campaigns from banks, sportswear, beauty, food and telco brands. Free to join.'],
+  CreatorsShopLink: ['ShopLink: turn your link in bio into a store — Aktivate', 'Turn your link in bio into a real store. Earn 10–50% commission on every sale.'],
+  Brands: ['Influencer marketing platform for brands in Nigeria & Africa — Aktivate', 'Run creator campaigns and turn 50,000+ verified African creators into your sales team.'],
+  SMEs: ['Influencer marketing for SMEs in Nigeria, pay per sale — Aktivate', 'Get creators selling for your business. Pay commission only when you make a sale.'],
+  Agencies: ['Influencer sourcing & campaign reports for agencies — Aktivate', 'Source creators for every client and turn post links into client-ready reports.'],
+  Pricing: ['Pricing: influencer campaigns, no subscriptions — Aktivate', 'Pay per campaign, per product or per report. No subscriptions.'],
   Storefront: [
     ['style="width: 390px; height: 1560px; box-sizing: border-box; background: #5331E8;', 'style="width: 100%; max-width: 440px; min-height: 100vh; margin: 0 auto; box-sizing: border-box; background: #5331E8;'],
     ['body{margin:0}', 'body{margin:0;background:#3A1FC2}'],
   ],
-  About: ['About Aktivate', 'We’re building the payday for Africa’s creators. 51,400+ creators, $3M+ paid out.'],
+  About: ['About Aktivate — the creator marketing platform for Africa', 'We’re building the payday for Africa’s creators. 51,400+ creators, $3M+ paid out.'],
   EngagementCalculator: ['Free engagement rate calculator for Instagram & TikTok — Aktivate', 'Check any Instagram or TikTok handle and see its engagement rate, average likes and comments, and how it compares to creators the same size. Free, no sign-up.'],
   Terms: ['Terms of Use — Aktivate', 'The terms for using Aktivate: campaigns, ShopLink, Aktivate Reports, fees, payouts and content rights, under Nigerian law.'],
   Privacy: ['Privacy Policy — Aktivate', 'How Aktivate collects, uses and protects personal data, in line with the Nigeria Data Protection Act 2023.'],
   Storefront: ['Example creator shop — Aktivate', 'See what a creator’s ShopLink storefront looks like.'],
 };
+
+/* Tells Google who Aktivate is (name, logo, social profiles) so the brand search result shows the right details. */
+const ORG_LD = `<script type="application/ld+json">${JSON.stringify({
+  '@context': 'https://schema.org', '@graph': [
+    { '@type': 'Organization', '@id': SITE_URL + '/#org', name: 'Aktivate', url: SITE_URL + '/', logo: SITE_URL + '/assets/favicon.png',
+      areaServed: ['NG', 'KE', 'GH', 'ZA'],
+      sameAs: ['https://www.instagram.com/useaktivate', 'https://www.linkedin.com/company/aktivate-inc', 'https://x.com/useaktivate', 'https://www.tiktok.com/@useaktivate'] },
+    { '@type': 'WebSite', '@id': SITE_URL + '/#site', name: 'Aktivate', url: SITE_URL + '/', publisher: { '@id': SITE_URL + '/#org' }, inLanguage: 'en' },
+  ] })}</script>\n`;
 
 /* -------- launch-safe content swaps (production only) -------- */
 const SWAPS = {
@@ -133,7 +142,8 @@ for (const name of pages) {
   const [title, desc] = META[name];
   const url = SITE_URL + ROUTES[name];
   const styles = headStyles([root.helmet, comps.Nav.helmet, comps.Footer.helmet]);
-  const doc = shell({ title, desc, url, styles, body: html, scripts: pageScripts(ship, name !== 'EngagementCalculator') });
+  const doc = shell({ title, desc, url, styles, body: html, scripts: pageScripts(ship, name !== 'EngagementCalculator'),
+    noindex: name === 'Storefront', extraHead: name === 'Main' ? ORG_LD : '' });
   const dir = name === 'Main' ? OUT : path.join(OUT, ROUTES[name]);
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, 'index.html'), doc);
@@ -153,7 +163,7 @@ new D.Page(defs).hydrate();})();</script>` : '');
 }
 
 /* The full HTML document every page shares: consent defaults, GTM, meta tags, fonts. */
-function shell({ title, desc, url, styles, body, scripts, ogType = 'website', ogImage = SITE_URL + '/assets/og.png', extraHead = '' }) {
+function shell({ title, desc, url, styles, body, scripts, ogType = 'website', ogImage = SITE_URL + '/assets/og.png', extraHead = '', noindex = false }) {
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -179,6 +189,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <title>${title}</title>
 <meta name="description" content="${desc}">
 <link rel="canonical" href="${url}">
+${noindex ? '<meta name="robots" content="noindex, follow">\n' : ''}<meta property="og:site_name" content="Aktivate">
+<meta property="og:locale" content="en_NG">
 <meta property="og:type" content="${ogType}">
 <meta property="og:title" content="${title}">
 <meta property="og:description" content="${desc}">

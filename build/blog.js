@@ -408,7 +408,7 @@ function cat(p){var t=(p.tags||[]).map(function(x){return x.slug});if(t.indexOf(
 if(/^how aktivate|what we learned running|^how .+ used an? |^how creator marketing/i.test(h))return'case';if(/\\bpartners? with\\b/i.test(h))return'news';if(/make money|get paid|your profile|shoplink|as a creator|creators? can earn/i.test(h))return'creators';return'brands'}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function show(){root.style.opacity='1'}
-function notFound(){document.title='Article not found — Aktivate Blog';$('.bl-post-hero h1').textContent='We couldn’t find that article';var sb=$('.bl-sub');if(sb)sb.textContent='It may have been moved or unpublished.';var by=$('.bl-byline');if(by)by.remove();var pl=$('.bl-post-hero .bl-pill');if(pl)pl.remove();
+function notFound(){document.title='Article not found — Aktivate Blog';var nr=document.createElement('meta');nr.name='robots';nr.content='noindex';document.head.appendChild(nr);$('.bl-post-hero h1').textContent='We couldn’t find that article';var sb=$('.bl-sub');if(sb)sb.textContent='It may have been moved or unpublished.';var by=$('.bl-byline');if(by)by.remove();var pl=$('.bl-post-hero .bl-pill');if(pl)pl.remove();
 $('.bl-prose').innerHTML='<p><a href="/blog/">See all articles</a></p>';var f=$('.bl-foot');if(f)f.remove();show()}
 if(!slug||slug.indexOf('/')>-1||slug==='_live')return notFound();
 var Q='query($id:ObjectId,$slug:String!){publication(id:$id){post(slug:$slug){slug title subtitle brief publishedAt readTimeInMinutes author{name} coverImage{url} tags{name slug} content{html} seo{title description}}}}';

@@ -33,6 +33,65 @@ services:
       - type: redirect
         source: /img/*
         destination: https://shop.useaktivate.com/img/*
+      # Pages from the old site (before 1 Nov 2026) that Google still has indexed: 301 them to the closest
+      # new page so they pass their ranking on instead of returning 404.
+      - type: redirect
+        source: /tos
+        destination: /terms/
+      - type: redirect
+        source: /privacy-policy
+        destination: /privacy/
+      - type: redirect
+        source: /creator
+        destination: /creators/collaboration-hub/
+      - type: redirect
+        source: /creators
+        destination: /creators/collaboration-hub/
+      - type: redirect
+        source: /agency
+        destination: /agencies/
+      - type: redirect
+        source: /campaign-management
+        destination: /brands/
+      - type: redirect
+        source: /campaign-reporting
+        destination: /agencies/
+      - type: redirect
+        source: /discovery
+        destination: /brands/
+      - type: redirect
+        source: /search
+        destination: /brands/
+      - type: redirect
+        source: /try-search
+        destination: /brands/
+      - type: redirect
+        source: /compare
+        destination: /alternatives/
+      - type: redirect
+        source: /keandsa
+        destination: /
+      - type: redirect
+        source: /test
+        destination: /
+      - type: redirect
+        source: /login
+        destination: https://app.useaktivate.com/
+      - type: redirect
+        source: /register
+        destination: https://app.useaktivate.com/
+      - type: redirect
+        source: /collaboration-hub
+        destination: https://app.useaktivate.com/
+      - type: redirect
+        source: /collaboration-hub/*
+        destination: https://app.useaktivate.com/
+      - type: redirect
+        source: /blog/content-creation-tools-elevate-your-digital-marketing-strategy
+        destination: /blog/
+      - type: redirect
+        source: /blog/content-creation-tools-elevate-your-digital-marketing-strategy/
+        destination: /blog/
       # A blog post that went live on Hashnode after the last deploy (e.g. a scheduled post) has no page yet.
       # Render only applies this when no file exists at the address, so built posts are untouched; the
       # fallback page loads the post from Hashnode in the browser until the blog-sync workflow rebuilds the site.
