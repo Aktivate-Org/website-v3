@@ -51,3 +51,6 @@ Seed topics (use as starting points, then go longer-tail):
 
 ## Log
 (the drafts task appends one line per post: date · market · audience · keyword · title)
+- 2026-11-16 · Brazil · creators · regras de publi CONAR · Regras de publi do CONAR em 2026: o guia prático para criadores · 6afacba68adb4f10c80ff861
+- 2026-11-16 · Philippines · businesses · influencer marketing for small business philippines · Influencer Marketing for Small Business in the Philippines: A Practical Guide · 6afacbbe952b2ab502a5d188
+- 2026-11-16 · Indonesia · creators · cara dapat endorse · Cara Dapat Endorse untuk Kreator Pemula: Panduan Lengkap 2026 · 6afacbde098b82321fd65312
