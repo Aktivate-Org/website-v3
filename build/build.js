@@ -269,6 +269,9 @@ require('./blog.js').build({
     scripts: pageScripts([comps.Nav], false, false),
   }));
   fs.writeFileSync(path.join(OUT, 'assets', 'market-banner.js'), marketBanner());
+  // Images for blog posts that we host ourselves (Hashnode uploads aren't always possible): content/blog-images → /blog-images/
+  const BI = path.join(__dirname, '..', 'content', 'blog-images');
+  if (fs.existsSync(BI)) { fs.mkdirSync(path.join(OUT, 'blog-images'), { recursive: true }); for (const f of fs.readdirSync(BI)) if (/\.(png|jpe?g|webp|gif)$/i.test(f)) fs.copyFileSync(path.join(BI, f), path.join(OUT, 'blog-images', f)); }
   fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`);
   fs.writeFileSync(path.join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemap.map(u => `  <url><loc>${u}</loc></url>`).join('\n')}\n</urlset>\n`);
   console.log('done');
