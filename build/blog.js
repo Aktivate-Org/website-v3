@@ -1,11 +1,12 @@
-/* Aktivate blog: pulls published posts from Hashnode (headless) at build time and renders
-   /blog/, /blog/<slug>/ and /blog/rss.xml in the website's own design.
+/* Aktivate blog: posts are Markdown files in content/posts/, rendered at build time as
+   /blog/, /blog/<slug>/ and /blog/rss.xml in the website's own design. No outside service is involved.
 
-   Writing still happens in Hashnode. When a post is published or edited there, a Hashnode
-   webhook calls the Render deploy hook, which rebuilds the site with the new post.
+   One file per post: content/posts/<slug>.md (the file name is the address). See content/posts/README.md
+   for the fields. A post whose date is in the future is skipped until then; the Blog schedule GitHub
+   workflow rebuilds the site when its time comes. `draft: true` keeps a post off the site.
 
    Audience/category of a post (shown as a pill and used by the filters on /blog/):
-   add one of these tags in Hashnode to set it explicitly, otherwise it is guessed from the title.
+   add one of these tags to set it explicitly, otherwise it is guessed from the title.
      for-brands | for-creators | case-study | news
    Market posts: tag brasil, philippines or indonesia (see REGIONS). The tag autopublish is used by the weekly
    regional-blog scheduled task (content/regional-blog.md) and is never shown on the page.            */
@@ -14,93 +15,59 @@ const strip = (x) => String(x).replace(/<[^>]+>/g, '');
 const path = require('path');
 const { marked } = require('marked');
 
-const PUBLICATION_ID = '69dcbf84a84fa622cf19f129';
 const OLD_HOST = 'blog.useaktivate.com';
-// Hashnode moved its API in 2026: gql.hashnode.com now answers with a redirect to an announcement page,
-// and every request needs the publication to be on Hashnode Pro. HASHNODE_TOKEN (a Personal Access Token
-// from Hashnode → Settings → Developer) is optional for reading but sent when set.
-const GQL = process.env.HASHNODE_GQL || 'https://gql-beta.hashnode.com';
-const SNAPSHOT = path.join(__dirname, 'blog-snapshot.json');
+const POSTS_DIR = path.join(__dirname, '..', 'content', 'posts');
 
 /* ---------------- data ---------------- */
-const FIELDS_FULL = `id slug title subtitle brief publishedAt updatedAt readTimeInMinutes canonicalUrl
-  coverImage { url } tags { name slug } author { name } content { markdown }
-  seo { title description } ogMetaData { image }`;
-const FIELDS_SAFE = `id slug title subtitle brief publishedAt readTimeInMinutes tags { name slug } author { name } content { markdown }`;
-
-async function gql(query, variables) {
-  let lastErr;
-  for (let attempt = 0; attempt < 3; attempt++) {
-    try {
-      const res = await fetch(GQL, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          accept: 'application/graphql-response+json, application/json',
-          'user-agent': 'Mozilla/5.0 (compatible; AktivateSiteBuild/1.0; +https://useaktivate.com)',
-          ...(process.env.HASHNODE_TOKEN ? { authorization: process.env.HASHNODE_TOKEN.trim() } : {}),
-        },
-        body: JSON.stringify({ query, variables }),
-        redirect: 'manual', // a redirect here means the API moved again: say so instead of parsing a web page
-      });
-      if (res.status >= 300 && res.status < 400) throw new Error(`Hashnode API at ${GQL} redirected (HTTP ${res.status}) to ${res.headers.get('location') || '?'}. The API address may have changed: set HASHNODE_GQL to the "GraphQL API endpoint" shown in Hashnode's dashboard.`);
-      if (res.status === 401 || res.status === 403) throw new Error(`Hashnode API refused the request (HTTP ${res.status}). Check the publication is on Hashnode Pro, and set HASHNODE_TOKEN on Render if it asks for one.`);
-      const text = await res.text();
-      let json;
-      try { json = JSON.parse(text); }
-      catch { throw new Error(`Hashnode API answered HTTP ${res.status} (${res.headers.get('content-type') || 'no content-type'}), not JSON: ${text.replace(/\s+/g, ' ').slice(0, 300)}`); }
-      if (json.errors) { const e = new Error(json.errors.map(x => x.message).join('; ')); e.gql = true; throw e; }
-      return json.data;
-    } catch (e) {
-      lastErr = e;
-      if (e.gql) throw e;
-      console.warn(`blog: Hashnode request failed (attempt ${attempt + 1}/3): ${e.message}`);
-      await new Promise(r => setTimeout(r, 2000 * (attempt + 1)));
-    }
+/* A tiny front-matter reader: `key: value` lines between --- fences. Lists (tags) are comma-separated. */
+function parsePost(file, text) {
+  const m = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/.exec(text);
+  if (!m) throw new Error(`${file}: missing the --- front matter block at the top`);
+  const f = {};
+  for (const line of m[1].split(/\r?\n/)) {
+    const kv = /^([a-z_]+):\s*(.*)$/.exec(line.trim());
+    if (!kv) continue;
+    let v = kv[2].trim();
+    if (/^".*"$|^'.*'$/.test(v)) v = v.slice(1, -1);
+    f[kv[1]] = v;
   }
-  throw lastErr;
+  const slug = path.basename(file, '.md');
+  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) throw new Error(`${file}: the file name must be lowercase words joined by dashes`);
+  for (const k of ['title', 'date']) if (!f[k]) throw new Error(`${file}: "${k}:" is required`);
+  if (isNaN(Date.parse(f.date))) throw new Error(`${file}: date "${f.date}" isn't a date (use 2026-11-23T08:00:00+01:00)`);
+  const markdown = m[2].trim() + '\n';
+  const words = markdown.replace(/[#>*_`|[\]()!-]/g, ' ').split(/\s+/).filter(Boolean).length;
+  const firstPara = (markdown.split(/\n\s*\n/).find((b) => b.trim() && !/^(#|!\[|\||-|\d+\.)/.test(b.trim())) || '').replace(/[*_`]/g, '').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/\s+/g, ' ').trim();
+  const cover = f.cover ? (/^https?:/.test(f.cover) ? f.cover : 'https://useaktivate.com' + (f.cover.startsWith('/') ? '' : '/') + f.cover) : null;
+  return {
+    id: slug, slug, title: f.title, subtitle: f.subtitle || null,
+    publishedAt: new Date(f.date).toISOString(), updatedAt: f.updated ? new Date(f.updated).toISOString() : null,
+    readTimeInMinutes: Number(f.read_time) || Math.max(1, Math.round(words / 230)),
+    tags: (f.tags || '').split(',').map((t) => t.trim()).filter(Boolean).map((name) => ({ name, slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') })),
+    author: { name: f.author || 'Aktivate' },
+    canonicalUrl: f.canonical || null,
+    coverImage: cover ? { url: cover } : null,
+    ogMetaData: { image: f.og_image || cover || null },
+    seo: { title: f.seo_title || null, description: f.seo_description || null },
+    content: { markdown }, brief: firstPara.slice(0, 300),
+    draft: /^(true|yes)$/i.test(f.draft || ''),
+  };
 }
 
-async function fetchLive() {
-  async function all(fields) {
-    const out = []; let after = null;
-    do {
-      const d = await gql(`query($id: ObjectId, $after: String) { publication(id: $id) { posts(first: 20, after: $after) {
-        edges { node { ${fields} } } pageInfo { hasNextPage endCursor } } } }`, { id: PUBLICATION_ID, after });
-      if (!d.publication) throw new Error('Hashnode publication not found: ' + PUBLICATION_ID);
-      const p = d.publication.posts;
-      out.push(...p.edges.map(e => e.node));
-      after = p.pageInfo.hasNextPage ? p.pageInfo.endCursor : null;
-    } while (after);
-    return out;
-  }
-  try { return await all(FIELDS_FULL); }
-  catch (e) {
-    if (!e.gql) throw e;
-    console.warn('blog: full query rejected (' + e.message + '), retrying with core fields');
-    return all(FIELDS_SAFE);
-  }
-}
-
-/* Live posts from Hashnode when it answers; otherwise the saved copy in build/blog-snapshot.json,
-   so a Hashnode outage or block never stops the website from deploying. */
-async function fetchPosts() {
+/* Every post in content/posts/ that isn't a draft and whose date has come. */
+function fetchPosts(now = Date.now()) {
   if (process.env.BLOG_FIXTURE) return JSON.parse(fs.readFileSync(process.env.BLOG_FIXTURE, 'utf8'));
-  try {
-    const posts = await fetchLive();
-    if (!posts.length) throw new Error('Hashnode returned no posts');
-    console.log(`blog: using ${posts.length} live posts from Hashnode`);
-    return posts;
-  } catch (e) {
-    const snap = JSON.parse(fs.readFileSync(SNAPSHOT, 'utf8'));
-    console.warn(`blog: WARNING - could not load posts from Hashnode (${e.message}). Using the saved copy from ${snap.savedAt} (${snap.posts.length} posts); new or edited posts will not appear until Hashnode is reachable.`);
-    return snap.posts;
-  }
+  const files = fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith('.md') && f !== 'README.md');
+  const all = files.map((f) => parsePost(f, fs.readFileSync(path.join(POSTS_DIR, f), 'utf8')));
+  const live = all.filter((p) => !p.draft && Date.parse(p.publishedAt) <= now);
+  const later = all.filter((p) => !p.draft && Date.parse(p.publishedAt) > now);
+  if (later.length) console.log('blog: scheduled, not built yet: ' + later.map((p) => `${p.slug} (${p.publishedAt})`).join(', '));
+  return live;
 }
 
 /* ---------------- helpers ---------------- */
 const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-/* Posts for the newer markets. Tag a post in Hashnode with one of these to make it a local post: it is
+/* Posts for the newer markets. Tag a post with one of these to make it a local post: it is
    rendered in that language, links to that country's pages, and is listed on /blog/<hub>/ instead of the
    main English blog (Philippines posts are in English, so they appear on both).                         */
 const REGIONS = {
@@ -158,7 +125,7 @@ const ctaFor = (cat) => {
   return Object.assign({}, base, loc, { href: cat === 'creators' ? r.creators : r.biz });
 };
 
-/* Hashnode markdown → HTML, with Hashnode-specific syntax handled and old blog links moved to /blog/. */
+/* Markdown → HTML (posts moved from Hashnode keep its extra syntax, which is handled here) and old blog links moved to /blog/. */
 function renderMarkdown(md) {
   md = String(md || '')
     .replace(/(!\[[^\]]*\]\([^)\s]+)\s+align="[^"]*"\)/g, '$1)')
@@ -429,43 +396,6 @@ ${ctx.footer}
 </div>${SHARE_JS}`;
 }
 
-/* Fills the /blog/_live/ page from Hashnode for the slug in the address bar. */
-function liveScript(SITE_URL) {
-  const cats = Object.fromEntries(Object.entries(CATS).map(([k, v]) => [k, { label: v.label, pill: v.pill }]));
-  return `<script data-live-post>(function(){
-var PUB=${JSON.stringify(PUBLICATION_ID)},SITE=${JSON.stringify(SITE_URL)},CATS=${JSON.stringify(cats)},CTA=${JSON.stringify(CTA)};
-var root=document.querySelector('.bl');if(!root)return;root.style.opacity='0';root.style.transition='opacity .25s';
-var slug=decodeURIComponent(location.pathname.replace(/^\\/blog\\//,'').replace(/\\/+$/,''));
-function $(s){return root.querySelector(s)}
-function cat(p){var t=(p.tags||[]).map(function(x){return x.slug});if(t.indexOf('for-brands')>-1)return'brands';if(t.indexOf('for-creators')>-1)return'creators';if(t.indexOf('case-study')>-1)return'case';if(t.indexOf('news')>-1)return'news';var h=p.title||'';
-if(/^how aktivate|what we learned running|^how .+ used an? |^how creator marketing/i.test(h))return'case';if(/\\bpartners? with\\b/i.test(h))return'news';if(/make money|get paid|your profile|shoplink|as a creator|creators? can earn/i.test(h))return'creators';return'brands'}
-function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-function show(){root.style.opacity='1'}
-function notFound(){document.title='Article not found — Aktivate Blog';var nr=document.createElement('meta');nr.name='robots';nr.content='noindex';document.head.appendChild(nr);$('.bl-post-hero h1').textContent='We couldn’t find that article';var sb=$('.bl-sub');if(sb)sb.textContent='It may have been moved or unpublished.';var by=$('.bl-byline');if(by)by.remove();var pl=$('.bl-post-hero .bl-pill');if(pl)pl.remove();
-$('.bl-prose').innerHTML='<p><a href="/blog/">See all articles</a></p>';var f=$('.bl-foot');if(f)f.remove();show()}
-if(!slug||slug.indexOf('/')>-1||slug==='_live')return notFound();
-var Q='query($id:ObjectId,$slug:String!){publication(id:$id){post(slug:$slug){slug title subtitle brief publishedAt readTimeInMinutes author{name} coverImage{url} tags{name slug} content{html} seo{title description}}}}';
-fetch(${JSON.stringify(GQL)},{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({query:Q,variables:{id:PUB,slug:slug}})})
-.then(function(r){return r.json()}).then(function(d){var p=d&&d.data&&d.data.publication&&d.data.publication.post;if(!p)return notFound();
-var url=SITE+'/blog/'+p.slug+'/',c=cat(p),pc=CATS[c];
-document.title=(p.seo&&p.seo.title||p.title)+' — Aktivate Blog';
-var can=document.querySelector('link[rel=canonical]');if(can)can.href=url;
-var md=document.querySelector('meta[name=description]');if(md)md.content=(p.seo&&p.seo.description)||p.subtitle||p.brief||'';
-$('.bl-post-hero h1').textContent=p.title;
-var sb=$('.bl-sub');if(sb){if(p.subtitle)sb.textContent=p.subtitle;else sb.remove()}
-var pl=$('.bl-post-hero .bl-pill');if(pl&&pc){pl.textContent=pc.label;pl.style.background=pc.pill[0];pl.style.color=pc.pill[1]}
-var by=$('.bl-byline span');if(by)by.innerHTML='<b>'+esc(p.author&&p.author.name||'Aktivate')+'</b>'+new Date(p.publishedAt).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'Africa/Lagos'})+' · '+(p.readTimeInMinutes||3)+' min read';
-if(p.coverImage&&p.coverImage.url){var lay=$('.bl-layout');var cv=document.createElement('div');cv.className='bl-cover';cv.innerHTML='<div class="bl-art"><img src="'+esc(p.coverImage.url)+'" alt=""></div>';lay.parentNode.insertBefore(cv,lay);lay.classList.remove('bl-no-cover')}
-if(c==='creators'){var k=CTA.creators,sc=$('.bl-side-cta');if(sc){sc.style.background='#5331E8';var e=sc.querySelector('.bl-eyebrow');if(e){e.textContent=k.eyebrow;e.style.color='#D9D4FF'}sc.querySelector('h3').textContent=k.title;sc.querySelector('p:not(.bl-eyebrow)').textContent=k.body;var ba=sc.querySelector('a');ba.href=k.href;ba.className='bl-btn bl-btn--white';ba.firstChild.nodeValue=k.label+' '}
-var ec=$('.bl-end-cta');if(ec){ec.querySelector('h2').innerHTML='Ready to start <span>earning?</span>';ec.querySelector('p').textContent=k.body;var ea=ec.querySelector('a');ea.href=k.href;ea.firstChild.nodeValue=k.label+' '}}
-$('.bl-prose').innerHTML=p.content&&p.content.html||('<p>'+esc(p.brief||'')+'</p>');
-var tg=$('.bl-tags');if(tg)tg.innerHTML=(p.tags||[]).filter(function(t){return['for-brands','for-creators','case-study','news'].indexOf(t.slug)<0}).slice(0,5).map(function(t){return'<span>'+esc(t.name)+'</span>'}).join('');
-root.querySelectorAll('.bl-share a').forEach(function(a){a.href=a.href.replace(encodeURIComponent(SITE+'/blog/_live/'),encodeURIComponent(url)).replace(/text=%C2%A0/,'text='+encodeURIComponent(p.title))});
-root.querySelectorAll('.bl-more .bl-card, .bl-more a').forEach(function(a){if(a.getAttribute&&a.getAttribute('href')==='/blog/'+p.slug+'/')(a.closest('.bl-card')||a).remove()});
-show()}).catch(function(){document.title='Aktivate Blog';$('.bl-post-hero h1').textContent='This article will be here in a few minutes';var sb=$('.bl-sub');if(sb)sb.textContent='It has just been published and the page is being prepared.';var by=$('.bl-byline');if(by)by.remove();var pl=$('.bl-post-hero .bl-pill');if(pl)pl.remove();$('.bl-prose').innerHTML='<p><a href="/blog/">See all articles</a> in the meantime.</p>';var f=$('.bl-foot');if(f)f.remove();show()});
-})();</script>`;
-}
-
 function rss(posts, SITE_URL) {
   const items = posts.slice(0, 30).map(p => `<item><title>${esc(p.title)}</title><link>${SITE_URL}/blog/${p.slug}/</link><guid isPermaLink="true">${SITE_URL}/blog/${p.slug}/</guid><pubDate>${new Date(p.publishedAt).toUTCString()}</pubDate><description>${esc(p.excerpt)}</description></item>`).join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>Aktivate Blog</title><link>${SITE_URL}/blog/</link><description>Creator marketing guides, playbooks and results for African brands and creators.</description><language>en</language>\n${items}\n</channel></rss>\n`;
@@ -474,12 +404,12 @@ function rss(posts, SITE_URL) {
 /* ---------------- build ---------------- */
 async function build(ctx) {
   const { OUT, SITE_URL, shell, styles, scripts } = ctx;
-  const raw = await fetchPosts();
+  const raw = fetchPosts();
   const posts = raw
     .filter(p => p && p.slug && p.title && p.publishedAt)
     .map(p => ({ ...p, reg: region(p), cat: category(p), excerpt: String(p.subtitle || p.seo?.description || p.brief || '').replace(/\s+/g, ' ').trim().slice(0, 220) }))
     .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-  if (!posts.length) throw new Error('Hashnode returned no posts; refusing to publish an empty blog');
+  if (!posts.length) throw new Error('No blog posts found in content/posts; refusing to publish an empty blog');
   const listed = posts.filter((p) => !p.reg || REGIONS[p.reg].inMain);
   CUR = { lang: 'en', reg: null };
   const urls = [];
@@ -538,21 +468,8 @@ async function build(ctx) {
     if (mine.length) urls.push(hubUrl);
   }
   CUR = { lang: 'en', reg: null };
-  // /blog/_live/: the page Render serves (via the rewrite in render.yaml) for any /blog/<slug>/ that wasn't
-  // built yet, e.g. a post Hashnode published on a schedule after the last deploy. It loads the post straight
-  // from Hashnode in the browser, so readers never see "Not found". The blog-sync GitHub workflow spots these
-  // and rebuilds the site, which replaces it with the normal page.
-  const ph = { slug: '_live', title: ' ', subtitle: ' ', publishedAt: new Date().toISOString(), cat: 'brands', content: { markdown: '' }, tags: [], author: { name: 'Aktivate' }, readTimeInMinutes: 3 };
-  const live = shell({
-    title: 'Aktivate Blog', desc: 'Creator marketing guides, playbooks and results for African brands and creators.',
-    url: SITE_URL + '/blog/', styles, scripts, ogType: 'article',
-    body: postPage(ph, listed.slice(0, 3), ctx) + liveScript(SITE_URL),
-    extraHead: head(''),
-  });
-  fs.mkdirSync(path.join(OUT, 'blog', '_live'), { recursive: true });
-  fs.writeFileSync(path.join(OUT, 'blog', '_live', 'index.html'), live);
   console.log(`built /blog/ with ${posts.length} posts (${listed.length} listed)`);
   return urls;
 }
 
-module.exports = { build, category, renderMarkdown };
+module.exports = { build, category, renderMarkdown, parsePost, fetchPosts };

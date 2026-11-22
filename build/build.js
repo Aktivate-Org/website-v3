@@ -270,7 +270,7 @@ fs.copyFileSync(path.join(__dirname, 'currency.js'), path.join(OUT, 'assets/curr
 fs.copyFileSync(path.join(__dirname, 'consent.js'), path.join(OUT, 'assets/consent.js'));
 fs.copyFileSync(path.join(__dirname, 'er-popup.js'), path.join(OUT, 'assets/er-popup.js'));
 
-/* blog: posts come from Hashnode at build time (see build/blog.js) */
+/* blog: posts are Markdown files in content/posts/ (see build/blog.js) */
 const chrome = new DC.Page({ Nav: comps.Nav, Footer: comps.Footer });
 require('./blog.js').build({
   OUT, SITE_URL, APP_URL, shell,
@@ -295,7 +295,7 @@ require('./blog.js').build({
     scripts: pageScripts([comps.Nav], false, false),
   }));
   fs.writeFileSync(path.join(OUT, 'assets', 'market-banner.js'), marketBanner());
-  // Images for blog posts that we host ourselves (Hashnode uploads aren't always possible): content/blog-images → /blog-images/
+  // Images for blog posts that we host ourselves : content/blog-images → /blog-images/
   const BI = path.join(__dirname, '..', 'content', 'blog-images');
   if (fs.existsSync(BI)) { fs.mkdirSync(path.join(OUT, 'blog-images'), { recursive: true }); for (const f of fs.readdirSync(BI)) if (/\.(png|jpe?g|webp|gif)$/i.test(f)) fs.copyFileSync(path.join(BI, f), path.join(OUT, 'blog-images', f)); }
   fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`);

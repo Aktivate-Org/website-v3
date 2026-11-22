@@ -1,3 +1,13 @@
+---
+title: Black Friday on ShopLink: get ₦10,000 extra on your first sale this week
+subtitle: Make one sale of ₦15,000 or more between 23 and 30 November and we add ₦10,000 to your earnings. Only 50 creators get it.
+date: 2026-11-23T00:20:00+01:00
+tags: for-creators, ShopLink, Black Friday, Nigeria, Make Money Online
+cover: /blog-images/shoplink-black-friday-first-sale-bonus.jpg
+seo_title: ShopLink Black Friday bonus: ₦10,000 on your first sale
+seo_description: Creators: make one ShopLink sale of ₦15,000 or more between 23 and 30 November and get ₦10,000 on top of your commission. Only 50 spots.
+---
+
 Black Friday is the one week a year your followers are actively looking for something to buy. So this week, we're paying you extra to sell to them.
 
 **Make your first ShopLink sale of ₦15,000 or more between Monday 23 and Monday 30 November, and we'll add ₦10,000 to your earnings, on top of your normal commission.** Only the first 50 creators get it.
