@@ -51,6 +51,32 @@ const ORG_LD = `<script type="application/ld+json">${JSON.stringify({
     { '@type': 'WebSite', '@id': SITE_URL + '/#site', name: 'Aktivate', url: SITE_URL + '/', publisher: { '@id': SITE_URL + '/#org' }, inLanguage: 'en' },
   ] })}</script>\n`;
 
+/* -------- announcement bar above the nav, on every page (incl. the blog) --------
+   Edit or switch off here. It hides itself after `until`, and stays closed for a visitor who closes it. */
+const PROMO = {
+  id: 'bf26', // change this for a new promo, so people who closed the last one see it
+  until: '2026-11-30T23:00:00Z', // end of Cyber Monday, Lagos time
+  text: '<b>Black Friday on ShopLink:</b> creators get <b>₦10,000 extra</b> on their first sale this week. Only 50 spots.',
+  short: '<b>+₦10,000</b> on your first ShopLink sale',
+  cta: 'Claim yours',
+  href: 'https://useaktivate.com/blog/shoplink-black-friday-first-sale-bonus/',
+};
+
+function promoBar() {
+  if (!PROMO || Date.now() >= Date.parse(PROMO.until)) return '';
+  return `<div id="akt-promo" role="region" aria-label="Black Friday offer" style="position:relative;z-index:50;background:#00C4BC;color:#080611;font:400 15px/1.35 Aileron,system-ui,sans-serif">
+<a href="${PROMO.href}" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:11px 52px;color:inherit;text-decoration:none;text-align:center">
+<span aria-hidden="true" style="flex:none;width:8px;height:8px;border-radius:50%;background:#080611;animation:aktPulse 1.6s ease-in-out infinite"></span>
+<span class="akt-promo-l">${PROMO.text}</span><span class="akt-promo-s">${PROMO.short}</span>
+<span style="flex:none;font-weight:800;white-space:nowrap;text-decoration:underline;text-underline-offset:3px">${PROMO.cta} &rarr;</span></a>
+<button type="button" aria-label="Close" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:#080611;font-size:22px;line-height:1;cursor:pointer;padding:6px 10px">&times;</button>
+</div>
+<style>.akt-promo-s{display:none}#akt-promo b{font-weight:800}@media (max-width:760px){.akt-promo-l{display:none}.akt-promo-s{display:inline}#akt-promo a{font-size:14px;padding:10px 44px 10px 16px;justify-content:flex-start;text-align:left}}@keyframes aktPulse{50%{opacity:.35}}@media (prefers-reduced-motion:reduce){#akt-promo span[aria-hidden]{animation:none}}</style>
+<script>(function(){var b=document.getElementById('akt-promo'),k='akt-promo-${PROMO.id}';try{if(Date.now()>=${Date.parse(PROMO.until)}||localStorage.getItem(k)){b.remove();return;}}catch(e){}
+b.querySelector('button').onclick=function(){try{localStorage.setItem(k,'1')}catch(e){}b.remove();};})();</script>
+`;
+}
+
 /* -------- launch-safe content swaps (production only) -------- */
 const SWAPS = {
 };
@@ -230,7 +256,7 @@ img{max-width:100%}
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-${body}${scripts}
+${lang === 'en' && !/\/(br|ph|id)\/|\/blog\/(brasil|philippines|indonesia)/.test(url) ? promoBar() : ''}${body}${scripts}
 </body>
 </html>
 `;
