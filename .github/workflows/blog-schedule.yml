@@ -1,0 +1,47 @@
+# Publishes scheduled blog posts on time. A post in content/posts/ with a future date is left out of the
+# build; every 30 minutes this checks for posts whose time has come but that aren't on the site yet,
+# and rebuilds the site if there are any.
+#
+# Setup (once): Render → aktivate-website → Settings → Deploy Hook → copy the URL, then
+# GitHub → this repo → Settings → Secrets and variables → Actions → New repository secret
+# named RENDER_DEPLOY_HOOK with that URL.
+name: Blog schedule
+
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rebuild the site if a scheduled post is due
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          set -euo pipefail
+          SITE=https://useaktivate.com
+          # posts whose date has passed in the last 3 days (drafts excluded), one slug per line
+          due=$(node -e '
+            const fs=require("fs"),path=require("path"),dir="content/posts";
+            for (const f of fs.readdirSync(dir)) {
+              if (!f.endsWith(".md") || f === "README.md") continue;
+              const fm = (/^---\r?\n([\s\S]*?)\r?\n---/.exec(fs.readFileSync(path.join(dir, f), "utf8")) || [])[1] || "";
+              const get = (k) => ((new RegExp("^" + k + ":\\s*(.*)$", "m").exec(fm) || [])[1] || "").trim();
+              if (/^(true|yes)$/i.test(get("draft"))) continue;
+              const t = Date.parse(get("date"));
+              if (t && t <= Date.now() && t > Date.now() - 3 * 864e5) console.log(f.slice(0, -3));
+            }')
+          missing=""
+          for s in $due; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "$SITE/blog/$s/" || true)
+            if [ "$code" != "200" ]; then missing="$missing $s"; fi
+          done
+          if [ -z "$missing" ]; then echo "Nothing due that isn't live."; exit 0; fi
+          echo "Due but not on the site yet:$missing"
+          if [ -z "${RENDER_DEPLOY_HOOK:-}" ]; then echo "::warning::Add the RENDER_DEPLOY_HOOK secret so this can rebuild the site."; exit 0; fi
+          curl -sS --max-time 30 -X POST "$RENDER_DEPLOY_HOOK" > /dev/null
+          echo "Rebuild started on Render."
