@@ -35,7 +35,7 @@ The bonus is the same whatever the product, as long as the order is ₦15,000 or
 - **One bonus per creator.** Your first qualifying sale earns it; sales after that earn your normal commission.
 - **First 50 creators only.** When the spots are gone, they're gone. You can see how many are left on your Leaderboard page.
 - **The order must be paid between Monday 23 November and the end of Monday 30 November, Lagos time.** It can be delivered after that.
-- **Naira orders of ₦15,000 or more.** The minimum is the order total, so two items that add up to ₦15,000 count.
+- **Naira orders of ₦15,000 or more.** The minimum is the order total, so buying two or more of the same product counts.
 - **Paid after delivery.** Like your commission, the bonus is held for 7 days in case of a refund, then it's yours.
 - **Buying from your own store doesn't count.** Orders placed with your own email or phone number don't qualify, and a cancelled or refunded order loses the bonus.
 
