@@ -53,3 +53,6 @@ Seed topics (use as starting points, then go longer-tail):
 - 2026-11-16 · Brazil · creators · regras de publi CONAR · Regras de publi do CONAR em 2026: o guia prático para criadores · 6afacba68adb4f10c80ff861
 - 2026-11-16 · Philippines · businesses · influencer marketing for small business philippines · Influencer Marketing for Small Business in the Philippines: A Practical Guide · 6afacbbe952b2ab502a5d188
 - 2026-11-16 · Indonesia · creators · cara dapat endorse · Cara Dapat Endorse untuk Kreator Pemula: Panduan Lengkap 2026 · 6afacbde098b82321fd65312
+- 2026-11-25 · Brazil · businesses · marketing de influência para pequenas empresas · Marketing de influência para pequenas empresas: como começar com pouco orçamento · marketing-de-influencia-para-pequenas-empresas.md
+- 2026-11-25 · Philippines · creators · how to get brand deals philippines · How to Get Brand Deals in the Philippines: A Step-by-Step Guide for Small Creators · how-to-get-brand-deals-in-the-philippines.md
+- 2026-11-25 · Indonesia · businesses · cara cari influencer untuk bisnis · Cara Cari Influencer untuk Bisnis: Panduan Praktis buat UMKM · cara-cari-influencer-untuk-bisnis.md
