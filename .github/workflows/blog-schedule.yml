@@ -2,15 +2,19 @@
 # build; every 30 minutes this checks for posts whose time has come but that aren't on the site yet,
 # and rebuilds the site if there are any.
 #
-# Setup (once): Render → aktivate-website → Settings → Deploy Hook → copy the URL, then
-# GitHub → this repo → Settings → Secrets and variables → Actions → New repository secret
-# named RENDER_DEPLOY_HOOK with that URL.
+# How it rebuilds: with the RENDER_DEPLOY_HOOK secret it calls Render's deploy hook (cleanest). Without it, it pushes
+# an empty "Publish scheduled blog posts" commit, which Render's auto-deploy picks up, so posts never stay missing.
+# Optional setup: Render → aktivate-website → Settings → Deploy Hook → copy the URL, then GitHub → this repo →
+# Settings → Secrets and variables → Actions → New repository secret named RENDER_DEPLOY_HOOK with that URL.
 name: Blog schedule
 
 on:
   schedule:
     - cron: '7,37 * * * *'
   workflow_dispatch:
+
+permissions:
+  contents: write # only for the empty-commit fallback when there's no deploy hook
 
 jobs:
   check:
@@ -42,6 +46,14 @@ jobs:
           done
           if [ -z "$missing" ]; then echo "Nothing due that isn't live."; exit 0; fi
           echo "Due but not on the site yet:$missing"
-          if [ -z "${RENDER_DEPLOY_HOOK:-}" ]; then echo "::warning::Add the RENDER_DEPLOY_HOOK secret so this can rebuild the site."; exit 0; fi
-          curl -sS --max-time 30 -X POST "$RENDER_DEPLOY_HOOK" > /dev/null
-          echo "Rebuild started on Render."
+          if [ -n "${RENDER_DEPLOY_HOOK:-}" ]; then
+            curl -sS --max-time 30 -X POST "$RENDER_DEPLOY_HOOK" > /dev/null
+            echo "Rebuild started on Render (deploy hook)."
+            exit 0
+          fi
+          # no deploy hook: an empty commit makes Render's auto-deploy rebuild the site
+          git config user.name "Aktivate blog schedule"
+          git config user.email "hello@useaktivate.com"
+          git commit --allow-empty -q -m "Publish scheduled blog posts:$missing"
+          git push -q
+          echo "Rebuild started on Render (empty commit)."
