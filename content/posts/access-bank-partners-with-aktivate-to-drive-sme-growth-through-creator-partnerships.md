@@ -1,6 +1,6 @@
 ---
 title: Access Bank partners with Aktivate to drive SME growth through creator partnerships
-date: 2026-09-28T11:37:34.869Z
+date: 2026-09-28T12:37:34+01:00
 og_image: https://cdn.hashnode.com/uploads/covers/69dcba38a84fa622cf15b3cf/17567caa-c1be-4451-aeed-a858a6a34a5f.jpg
 seo_description: Access Bank Plc has partnered with Aktivate, a creator commerce platform, to give its SME customers affordable access to creator-led marketing.
 read_time: 3

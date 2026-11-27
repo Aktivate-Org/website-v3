@@ -1,6 +1,6 @@
 ---
 title: What is influencer marketing? A plain-English guide for African brands
-date: 2026-04-13T14:16:28.273Z
+date: 2026-04-13T15:16:28+01:00
 tags: Influencer Marketing, Africa, Nigeria, marketing, kenya
 og_image: https://cdn.hashnode.com/uploads/covers/69dcba38a84fa622cf15b3cf/03a52384-30d1-402e-88dc-4576c98c27d9.png
 seo_title: What is Influencer Marketing? A Guide for African Brands

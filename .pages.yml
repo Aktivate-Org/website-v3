@@ -1,0 +1,73 @@
+# Pages CMS (app.pagescms.org): a normal editor for the blog. Sign in with GitHub, pick Aktivate-Org/website-v3.
+# Every save is a commit to main; Render rebuilds the site. Posts dated in the future go live at that time.
+# Field names match content/posts/README.md and build/blog.js. Keep them in sync if either changes.
+
+media:
+  input: content/blog-images
+  output: /blog-images
+  categories: [image]
+
+content:
+  - name: posts
+    label: Blog posts
+    type: collection
+    path: content/posts
+    exclude: [README.md]
+    filename:
+      template: "{primary}.md"
+      field: create
+    view:
+      fields: [title, date, draft]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: subtitle
+        label: Subtitle
+        type: text
+        description: One line under the title (optional).
+      - name: date
+        label: Publish date and time
+        type: date
+        required: true
+        description: Lagos time. Pick a time in the future to schedule the post; it goes live within half an hour of it.
+        options:
+          time: true
+          format: "yyyy-MM-dd'T'HH:mm:ssxxx"
+      - name: draft
+        label: Draft (hidden from the site)
+        type: boolean
+        default: false
+      - name: tags
+        label: Tags
+        type: string
+        description: Comma-separated. Include for-brands or for-creators (or case-study, news) to set the category, e.g. "for-creators, Nigeria, ShopLink".
+      - name: cover
+        label: Cover image
+        type: image
+        description: Optional, 1600×840 works best. Without one, the post gets an illustration.
+      - name: seo_title
+        label: Google title
+        type: string
+        description: Optional. A shorter title for Google, about 60 characters.
+      - name: seo_description
+        label: Google description
+        type: text
+        description: Optional. One or two sentences for Google and link previews, about 155 characters.
+      - name: read_time
+        label: Read time (minutes)
+        type: number
+        description: Optional. Worked out from the length if left empty.
+      - name: og_image
+        label: Link preview image URL
+        type: string
+        description: Optional. Only if the link preview should use a different image from the cover.
+      - name: body
+        label: Post
+        type: rich-text

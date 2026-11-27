@@ -1,6 +1,6 @@
 ---
 title: Your Profile Might Be Why Brands Keep Skipping You
-date: 2026-09-07T08:48:07.346Z
+date: 2026-09-07T09:48:07+01:00
 og_image: https://cdn.hashnode.com/uploads/covers/69dcba38a84fa622cf15b3cf/55082c02-27d3-4126-b080-8e735345e9a3.jpg
 seo_description: You've got good content. Your niche is clear. You're consistent. So why aren't brands booking you? More often than not, it's not the content — it's the profile.
 read_time: 3

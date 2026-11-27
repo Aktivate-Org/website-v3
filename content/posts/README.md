@@ -4,8 +4,16 @@ Every file in this folder is one post on useaktivate.com/blog. The file name is 
 `what-is-shoplink.md` → `useaktivate.com/blog/what-is-shoplink/`. Use lowercase words joined by dashes.
 
 To publish, add or edit a file and merge it into `main`. Render rebuilds the site and the post is live a few
-minutes later. Writing in the browser: open the file on GitHub and press the pencil, or use Pages CMS
-(pagescms.org, sign in with GitHub) for a normal editor.
+minutes later.
+
+## Writing in an editor (Pages CMS)
+
+Go to app.pagescms.org, sign in with GitHub and open **Aktivate-Org/website-v3 → Blog posts**. You get a form for
+the fields below and a normal text editor for the post; images you add go to `content/blog-images/`. Save
+commits straight to `main`. The set-up lives in `.pages.yml` at the root of the repo. The site reads the top of
+each file as YAML, so what Pages CMS writes (wrapped lines, quotes) works, and hand-written files still do too.
+
+You can also open a file on GitHub and press the pencil.
 
 ## The top of each file
 

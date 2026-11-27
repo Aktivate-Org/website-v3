@@ -1,7 +1,7 @@
 ---
 title: How Aktivate Ran Burger King Nigeria's Ramadan Campaign — And What the Data Said
 subtitle: Seven creators. One campaign. Here's what worked, what the numbers revealed, and why it matters for brands targeting Muslim audiences in Nigeria.
-date: 2026-10-12T10:40:59.752Z
+date: 2026-10-12T11:40:59+01:00
 tags: burger king, Ramadan, Nigeria, creator economy, Influencer Marketing
 og_image: https://cdn.hashnode.com/uploads/covers/69dcba38a84fa622cf15b3cf/36f48b02-4712-4755-b6c8-e84693ee9588.png
 seo_title: How Aktivate Ran Burger King Nigeria’s Ramadan Campaign

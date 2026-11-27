@@ -1,7 +1,7 @@
 ---
 title: How to Find Influencers in Nigeria for Your Brand (2026 Guide)
 subtitle: A practical, step-by-step guide to finding, vetting and working with the right creators, even on a small budget.
-date: 2026-11-10T08:01:20.359Z
+date: 2026-11-10T09:01:20+01:00
 tags: Influencer Marketing, Nigeria, creator economy, marketing
 seo_description: Learn how to find and vet influencers in Nigeria: where to look, how to check engagement, what to put in your brief, and how to run your first creator campaign.
 read_time: 5

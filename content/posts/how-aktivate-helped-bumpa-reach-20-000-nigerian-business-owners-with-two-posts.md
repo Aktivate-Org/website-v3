@@ -1,7 +1,7 @@
 ---
 title: How Aktivate Helped Bumpa Reach 20,000+ Nigerian Business Owners With Two Posts
 subtitle: A creator campaign built around one simple idea — Nigerian businesses deserve a website that actually works for them.
-date: 2026-09-01T20:07:23.734Z
+date: 2026-09-01T21:07:23+01:00
 tags: creator economy, influencer marketing Nigeria, bumpa
 og_image: https://cdn.hashnode.com/uploads/covers/69dcba38a84fa622cf15b3cf/6541ed7f-4a95-4730-a52a-fa6e1fb9632a.png
 seo_title: How 2 Creators Got Bumpa 20K Views in Nigeria

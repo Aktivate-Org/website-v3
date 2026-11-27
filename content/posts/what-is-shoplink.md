@@ -1,7 +1,7 @@
 ---
 title: What Is ShopLink? Creator Storefronts Built for Africa
 subtitle: One link in your bio. Real products from real brands. Commission paid to your bank account.
-date: 2026-10-27T09:01:40.413Z
+date: 2026-10-27T10:01:40+01:00
 tags: creator economy, ecommerce, Affiliate marketing, Startups, Nigeria
 og_image: https://shop.useaktivate.com/assets/blog/cover-1-what-is-shoplink.png
 seo_description: ShopLink gives African creators a shoppable storefront and brands a sales team paid on results. See how it works, what it costs and how to start.
