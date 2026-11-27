@@ -1,7 +1,7 @@
 ---
 title: How Adidas Nigeria Used a Nano Creator to Drive Black Friday Sales
 subtitle: When Adidas Nigeria activated a Black Friday campaign through creator @chiomakayy, the results weren't just good — they were a textbook example of what authentic nano-influencer marketing can deliver. Here's the full breakdown.
-date: 2026-05-05T15:19:11.410Z
+date: 2026-05-05T16:19:11+01:00
 tags: marketing, Nigeria, Influencer Marketing
 og_image: https://cdn.hashnode.com/uploads/covers/69dcba38a84fa622cf15b3cf/e66a8924-6637-4b60-b022-0e7470d27445.png
 seo_title: How Adidas Nigeria Used a Nano Creator to Drive Black Friday

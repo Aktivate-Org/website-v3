@@ -1,6 +1,6 @@
 ---
 title: The best influencer marketing platforms in Nigeria and Kenya (2026)
-date: 2026-04-16T11:40:11.653Z
+date: 2026-04-16T12:40:11+01:00
 tags: Influencer Marketing, Nigeria, kenya, Africa, marketing
 seo_title: Best Influencer Marketing Platforms in Nigeria & Kenya (2026)
 seo_description: Comparing the top influencer marketing platforms available to brands in Nigeria and Kenya in 2026 — from self-serve tools to full-service agencies.

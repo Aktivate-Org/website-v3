@@ -1,6 +1,6 @@
 ---
 title: What We Learned Running Adidas Nigeria's World Cup 2026 Creator Campaign
-date: 2026-08-02T12:52:56.994Z
+date: 2026-08-02T13:52:56+01:00
 tags: World Cup 2026, adidas nigeria, Influencer Marketing, Nigeria
 og_image: https://cdn.hashnode.com/uploads/covers/69dcba38a84fa622cf15b3cf/204112fd-82f9-4605-b07c-992fb0d483fd.png
 seo_title: How Adidas Nigeria Won the World Cup with Creators

@@ -19,18 +19,37 @@ const OLD_HOST = 'blog.useaktivate.com';
 const POSTS_DIR = path.join(__dirname, '..', 'content', 'posts');
 
 /* ---------------- data ---------------- */
-/* A tiny front-matter reader: `key: value` lines between --- fences. Lists (tags) are comma-separated. */
-function parsePost(file, text) {
-  const m = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/.exec(text);
-  if (!m) throw new Error(`${file}: missing the --- front matter block at the top`);
+/* The front matter between the --- fences. Read as YAML (what Pages CMS writes: wrapped long lines, escaped
+   quotes, true/false). If a hand-written block isn't valid YAML (e.g. an unquoted "Title: subtitle"),
+   fall back to simple `key: value` lines. Every value ends up a string; lists (tags) become comma-separated. */
+const YAML = require('yaml');
+function readFrontMatter(block) {
+  try {
+    const y = YAML.parse(block);
+    if (y && typeof y === 'object' && !Array.isArray(y)) {
+      const f = {};
+      for (const [k, v] of Object.entries(y)) {
+        if (v == null) continue;
+        f[k] = Array.isArray(v) ? v.join(', ') : v instanceof Date ? v.toISOString() : String(v);
+      }
+      return f;
+    }
+  } catch {}
   const f = {};
-  for (const line of m[1].split(/\r?\n/)) {
+  for (const line of block.split(/\r?\n/)) {
     const kv = /^([a-z_]+):\s*(.*)$/.exec(line.trim());
     if (!kv) continue;
     let v = kv[2].trim();
     if (/^".*"$|^'.*'$/.test(v)) v = v.slice(1, -1);
     f[kv[1]] = v;
   }
+  return f;
+}
+
+function parsePost(file, text) {
+  const m = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/.exec(text);
+  if (!m) throw new Error(`${file}: missing the --- front matter block at the top`);
+  const f = readFrontMatter(m[1]);
   const slug = path.basename(file, '.md');
   if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) throw new Error(`${file}: the file name must be lowercase words joined by dashes`);
   for (const k of ['title', 'date']) if (!f[k]) throw new Error(`${file}: "${k}:" is required`);

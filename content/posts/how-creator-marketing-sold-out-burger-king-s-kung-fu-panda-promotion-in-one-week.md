@@ -1,7 +1,7 @@
 ---
 title: How Creator Marketing Sold Out Burger King's Kung Fu Panda Promotion in One Week
 subtitle: A data-driven breakdown of what happened, why it worked, and what Nigerian brands can learn from it.
-date: 2026-04-21T00:23:46.847Z
+date: 2026-04-21T01:23:46+01:00
 tags: Influencer Marketing, creator economy, Nigeria, brand campaign
 og_image: https://cdn.hashnode.com/uploads/covers/69dcba38a84fa622cf15b3cf/361e63ee-f5f7-475f-bc43-25bd5307c1cb.jpg
 seo_title: How Instagram Creators Sold Out Burger King Nigeria in 1 Week

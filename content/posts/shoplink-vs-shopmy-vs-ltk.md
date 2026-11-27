@@ -1,7 +1,7 @@
 ---
 title: ShopLink vs ShopMy vs LTK: Which Creator Platform Works in Africa?
 subtitle: The creator commerce tools everyone talks about weren't built for African creators. Here's what was.
-date: 2026-11-03T09:01:18.487Z
+date: 2026-11-03T10:01:18+01:00
 tags: creator economy, Affiliate marketing, Influencer Marketing, Africa, comparison
 og_image: https://shop.useaktivate.com/assets/blog/cover-2-shoplink-vs-shopmy-ltk.png
 seo_title: ShopLink vs ShopMy vs LTK: Best Creator Platform in Africa

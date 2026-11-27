@@ -1,7 +1,7 @@
 ---
 title: Aktivate Partners With Sochitel UK to Give African Creators a New Way to Earn
 subtitle: Through ShopLink, creators on Aktivate can now earn royalties every time their audience buys airtime, data, eSIMs, international vouchers, and football content, automatically.
-date: 2026-04-30T14:22:26.936Z
+date: 2026-04-30T15:22:26+01:00
 tags: creator economy, Affiliate marketing, African creators
 og_image: https://cdn.hashnode.com/uploads/covers/69dcba38a84fa622cf15b3cf/a65daf91-9b9a-4529-b1fc-fb25a1cfa697.png
 seo_title: Aktivate has officially partnered with Sochitel UK Limited
