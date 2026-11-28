@@ -29,7 +29,7 @@ Aktivate has worked with creators since the start. Our network now has more than
 1. **Sign in** at [shop.useaktivate.com](https://shop.useaktivate.com) with your Aktivate account.
 2. **Build your store.** Your profile fills in from Aktivate. Pick products from brands in the catalogue, from fashion and beauty to lifestyle and everyday goods.
 3. **Share your link.** Your store lives at `shop.useaktivate.com/@yourname`. Put it in your Instagram or TikTok bio, your WhatsApp status, your YouTube description.
-4. **Followers buy.** They check out on your store with card, bank transfer or USSD through Paystack. The brand ships the order.
+4. **Followers buy.** They check out on your store with card, bank transfer or USSD through secure checkout. The brand ships the order.
 5. **You get paid.** Your commission clears after a 7-day refund window and goes straight to your Nigerian bank account in the next daily payout.
 
 Every product shows exactly what you earn before you add it, for example "you earn ₦1,800". No guessing.
@@ -42,14 +42,14 @@ ShopLink gives a business a sales team that only gets paid when it sells.
 2. **Set the commission** for each product, anywhere from 5% to 50% of the price. For services like restaurants and hotels, you can set a fixed amount per sale instead.
 3. **Choose who sells.** Let any creator add your products, approve creators who apply, or invite creators you pick from the Aktivate network. You can also give a top creator a better rate.
 4. **Fulfil orders** from your dashboard and add tracking.
-5. **Get paid automatically.** Your share of each sale is split at checkout and settled to your bank account by Paystack.
+5. **Get paid automatically.** Your share of each sale is split at checkout and settled to your bank account automatically.
 
 Listing costs a one-time **$15 per business**. After that you only pay commission when something sells.
 
 ## What makes ShopLink different
 
 - **It's a real store, not a redirect.** Shoppers buy on the creator's ShopLink page, so the sale is tracked from click to payment. There's no lost cookie and no "I bought it later on another site" problem.
-- **Local payments, local payouts.** Paystack checkout for shoppers and bank payouts for creators, in naira.
+- **Local payments, local payouts.** Secure checkout for shoppers and bank payouts for creators, in naira.
 - **Fast pay.** Creator commissions are paid about a week after the sale, not months.
 - **Brands stay in control.** Brands set the commission, approve who sells, and see sales by creator and by product.
 - **Built for mobile data.** Storefronts load fast on a phone and show proper link previews on WhatsApp and Instagram.

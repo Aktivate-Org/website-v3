@@ -20,7 +20,7 @@ const SHOPLINK = {
   'Built for': 'Creators and brands in Nigeria, Kenya, Ghana and South Africa',
   'Products': 'African fashion, beauty, lifestyle and everyday brands that deliver to your followers',
   'Where your follower pays': 'On your own ShopLink store, at shop.useaktivate.com/@yourname',
-  'How your follower pays': 'Card, bank transfer or USSD, in local currency (Paystack)',
+  'How your follower pays': 'Card, bank transfer or USSD, in local currency, with secure checkout',
   'How you get paid': 'Aktivate wallet, then your local bank account',
   'When you get paid': '7 days after each purchase',
   'Commission': 'Set by each brand per product: 10–50%, or a fixed amount',

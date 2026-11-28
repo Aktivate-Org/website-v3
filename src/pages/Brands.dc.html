@@ -102,7 +102,7 @@ For brands</p>
 <p style="margin: 0; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em">{{p.kicker}}</p>
 <h3 style="margin: 0; font-weight: 800; font-size: clamp(28px, 3.06vw, 44px); line-height: 1; letter-spacing: -0.03em">{{p.title}}</h3>
 <p style="margin: 0; font-size: 18px; line-height: 1.5">{{p.body}}</p>
-<p style="margin: auto 0 0; padding: 14px 18px; border-radius: 16px; background: #FFFFFF; color: #080611; font-weight: 700; font-size: 16px"><span data-usd="15">$15</span> {{p.priceRest}}</p>
+<p style="margin: auto 0 0; padding: 14px 18px; border-radius: 16px; background: #FFFFFF; color: #080611; font-weight: 700; font-size: 16px"><span data-price="{{p.priceKey}}">$15</span> {{p.priceRest}}</p>
 </div>
 <ol style="flex: 1 1 520px; min-width: 0; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px">
 <sc-for list="{{p.steps}}" as="step" hint-placeholder-count="5">
@@ -202,7 +202,7 @@ collab: {
 label: 'Collaboration Hub', color: '#5331E8', ink: '#FFFFFF',
 kicker: 'Pay for content', title: 'Collaboration Hub',
 body: 'Post a brief to the whole creator network, review who applies, and pick the creators that fit your brand.',
-priceRest: 'per campaign + 10% of budget',
+priceKey: 'listing', priceRest: 'per campaign + 10% of budget',
 steps: [
 { n: 1, title: 'Sign up on Aktivate', body: 'Create your brand account in minutes.' },
 { n: 2, title: 'Create your campaign', body: 'Add details, deliverables, budget and timeline.' },
@@ -215,13 +215,13 @@ shop: {
 label: 'ShopLink', color: '#00C4BC', ink: '#080611',
 kicker: 'Pay on results', title: 'ShopLink',
 body: 'List your products once. Creators add them to their storefronts and sell to their followers. You only pay commission on real sales.',
-priceRest: 'per business + commission you set',
+priceKey: 'shoplink', priceRest: 'once per business + commission you set',
 steps: [
 { n: 1, title: 'Sign up on Aktivate', body: 'Create your brand account in minutes.' },
 { n: 2, title: 'List your products', body: 'Add pricing, photos and details.' },
 { n: 3, title: 'Set the commission', body: '10–50% per product, or a fixed amount per sale.' },
 { n: 4, title: 'Creators promote', body: 'They add your products to their shops and share.' },
-{ n: 5, title: 'Track and get paid', body: 'Paystack checkout. You ship, payouts are automatic.' }
+{ n: 5, title: 'Track and get paid', body: 'Secure checkout. You ship, payouts are automatic.' }
 ]
 }
 };

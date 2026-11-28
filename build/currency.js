@@ -1,10 +1,10 @@
 /* Local pricing. Rates are USD -> local (Wise mid-market, 1 Nov 2026). Update here and in Pricing.dc.html. */
 (function () {
   var FX = {
-    USD: { sym: '$', rate: 1, listing: 15, reports: 26, round: 1 },
-    NGN: { sym: '₦', rate: 1359, listing: 20500, reports: 35000, round: 100 },
-    GHS: { sym: 'GH₵', rate: 11.62, listing: 175, reports: 300, round: 1 },
-    KES: { sym: 'KSh ', rate: 130, listing: 1950, reports: 3350, round: 10 }
+    USD: { sym: '$', rate: 1, listing: 15, shoplink: 15, reports: 26, round: 1 },
+    NGN: { sym: '₦', rate: 1359, listing: 20500, shoplink: 15000, reports: 35000, round: 100 },
+    GHS: { sym: 'GH₵', rate: 11.62, listing: 175, shoplink: 175, reports: 300, round: 1 },
+    KES: { sym: 'KSh ', rate: 130, listing: 1950, shoplink: 1950, reports: 3350, round: 10 }
   };
   window.AKT_FX = FX;
   function current() {

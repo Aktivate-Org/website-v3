@@ -20,7 +20,7 @@ const GA_ID = process.env.GA_MEASUREMENT_ID || 'G-97WXZ4BH1S';
 const ROUTES = {
   Main: '/', CreatorsCampaigns: '/creators/collaboration-hub/', CreatorsShopLink: '/creators/shoplink/',
   Brands: '/brands/', SMEs: '/smes/', Agencies: '/agencies/', Pricing: '/pricing/', About: '/about/',
-  Storefront: '/example-shop/', Hub: APP_URL, EngagementCalculator: '/tools/engagement-rate-calculator/', RateCalculator: '/tools/influencer-rate-calculator/', Privacy: '/privacy/', Terms: '/terms/',
+  Storefront: '/example-shop/', ShopLinkBusiness: '/go/shoplink/', Hub: APP_URL, EngagementCalculator: '/tools/engagement-rate-calculator/', RateCalculator: '/tools/influencer-rate-calculator/', Privacy: '/privacy/', Terms: '/terms/',
 };
 const META = {
   Main: ['Aktivate — Get paid to create | Influencer marketing in Nigeria & Africa', 'Land paid brand campaigns and run your own shop from one link. Built for creators in Nigeria, Kenya, Ghana and South Africa.'],
@@ -39,6 +39,7 @@ const META = {
   RateCalculator: ['Influencer rate calculator: what nano & micro creators charge — Aktivate', 'Free influencer rate calculator for creators with 1K–50K followers. See what to charge for a post, Reel, TikTok or Story in naira, shillings, rand, pesos, reais and rupiah.'],
   Terms: ['Terms of Use — Aktivate', 'The terms for using Aktivate: campaigns, ShopLink, Aktivate Reports, fees, payouts and content rights, under Nigerian law.'],
   Privacy: ['Privacy Policy — Aktivate', 'How Aktivate collects, uses and protects personal data, in line with the Nigeria Data Protection Act 2023.'],
+  ShopLinkBusiness: ['ShopLink for businesses: creators sell, you pay per sale — Aktivate', 'List your products and let creators across Nigeria sell them to their followers. ₦15,000 once, then commission only on real sales.'],
   Storefront: ['Example creator shop — Aktivate', 'See what a creator’s ShopLink storefront looks like.'],
 };
 
@@ -139,7 +140,7 @@ function load(name) {
 
 const comps = { Nav: load('Nav'), Footer: load('Footer') };
 const markets = require('./markets.js');
-const pages = ['Main', 'CreatorsCampaigns', 'CreatorsShopLink', 'EngagementCalculator', 'RateCalculator', 'Brands', 'SMEs', 'Agencies', 'Pricing', 'About', 'Privacy', 'Terms', 'Storefront'];
+const pages = ['Main', 'CreatorsCampaigns', 'CreatorsShopLink', 'EngagementCalculator', 'RateCalculator', 'Brands', 'SMEs', 'Agencies', 'Pricing', 'About', 'Privacy', 'Terms', 'Storefront', 'ShopLinkBusiness'];
 
 function headStyles(list) {
   const seen = new Set(); let out = '';
@@ -171,11 +172,12 @@ for (const name of pages) {
   const url = SITE_URL + ROUTES[name];
   const styles = headStyles([root.helmet, comps.Nav.helmet, comps.Footer.helmet]);
   const doc = shell({ title, desc, url, styles, body: html, scripts: pageScripts(ship, name !== 'EngagementCalculator' && name !== 'RateCalculator'),
-    noindex: name === 'Storefront', extraHead: (name === 'Main' ? ORG_LD : '') + (name === 'Brands' ? markets.hreflang(SITE_URL, 'biz') : name === 'CreatorsCampaigns' ? markets.hreflang(SITE_URL, 'creators') : '') });
+    noindex: name === 'Storefront' || name === 'ShopLinkBusiness', // the ads page: kept out of search so it never competes with the main pages
+    extraHead: (name === 'Main' ? ORG_LD : '') + (name === 'Brands' ? markets.hreflang(SITE_URL, 'biz') : name === 'CreatorsCampaigns' ? markets.hreflang(SITE_URL, 'creators') : '') });
   const dir = name === 'Main' ? OUT : path.join(OUT, ROUTES[name]);
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, 'index.html'), doc);
-  if (name !== 'Storefront') sitemap.push(url);
+  if (name !== 'Storefront' && name !== 'ShopLinkBusiness') sitemap.push(url);
   console.log('built', ROUTES[name], (doc.length / 1024).toFixed(0) + 'KB', ship.map(c => c.name).join(','));
 }
 
@@ -256,7 +258,7 @@ img{max-width:100%}
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-${lang === 'en' && !/\/(br|ph|id)\/|\/blog\/(brasil|philippines|indonesia)/.test(url) ? promoBar() : ''}${body}${scripts}
+${lang === 'en' && !/\/(br|ph|id)\/|\/blog\/(brasil|philippines|indonesia)|\/go\//.test(url) ? promoBar() : ''}${body}${scripts}
 </body>
 </html>
 `;

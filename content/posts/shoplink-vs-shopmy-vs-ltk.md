@@ -20,7 +20,7 @@ So why not just use them in Lagos, Nairobi or Accra? Because the details that ma
 | Built for | African creators and brands | US and global retailers | US and global retailers |
 | Products | African fashion, beauty, lifestyle and FMCG brands that deliver locally | Mostly US and European retailers | Mostly US and European retailers |
 | Where the shopper pays | On the creator's ShopLink store | On the retailer's website, after a redirect | On the retailer's website, after a redirect |
-| Shopper payment | Card, bank transfer, USSD (Paystack) | Retailer's checkout | Retailer's checkout |
+| Shopper payment | Card, bank transfer, USSD | Retailer's checkout | Retailer's checkout |
 | Creator payout | Local bank account, in naira | Stripe or PayPal | PayPal or direct deposit |
 | When commission is paid | After a 7-day refund window, in the next daily payout | Weekly, once commission is "locked", which can take 30–120 days | Once commission is "closed", which can take months |
 | Who can join | Any creator on Aktivate; brands set their own rules | Open, with referral | By application, selective |
@@ -58,7 +58,7 @@ ShopMy and LTK mostly work with large retailers. ShopLink is open to African bus
 
 - **One-time $15 listing fee per business**, then commission only on sales.
 - **Full control:** brands set the commission per product, choose whether creators can join freely, apply, or be invited, and can reward top creators with a higher rate.
-- **Instant split:** the brand's share of each sale is split at checkout and settled to their bank by Paystack.
+- **Instant split:** the brand's share of each sale is split at checkout and settled to their bank automatically.
 - **Access to 51,400+ verified creators** in the Aktivate network across Nigeria, Kenya, Ghana and South Africa.
 
 ## What about other ways creators earn?
