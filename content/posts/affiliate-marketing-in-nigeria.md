@@ -54,7 +54,7 @@ There's also the tracking problem. Most programmes send shoppers to another webs
 We built [ShopLink](https://shop.useaktivate.com) because Aktivate's creators kept running into these problems. Here's how it works:
 
 - **Your own store, not just a link.** You get a storefront at `shop.useaktivate.com/@yourname`, filled with products you choose from Nigerian brands.
-- **Shoppers pay on your store.** Card, transfer or USSD via Paystack, so every sale is tracked to you at checkout. No lost cookies.
+- **Shoppers pay on your store.** Card, transfer or USSD through secure checkout, so every sale is tracked to you at checkout. No lost cookies.
 - **Commission is set upfront.** Brands set rates from 5% to 50% per product, or a fixed amount, and each product shows exactly what you'll earn.
 - **Paid to your bank in about a week.** Commission clears after a 7-day refund window and goes out in the next daily payout.
 

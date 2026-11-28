@@ -90,13 +90,14 @@ input[type=range]{accent-color:#00C4BC;width:100%;height:28px}
 <article style="flex: 1 1 340px; min-width: 0; background: #FFFFFF; border-radius: 36px; padding: 36px; display: flex; flex-direction: column; gap: 18px">
 <span aria-hidden="true" style="width: 52px; height: 52px; border-radius: 16px; background: #00C4BC; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#080611" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1 13H7L6 7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg></span>
 <div><h2 style="margin: 0; font-weight: 800; font-size: 28px">ShopLink</h2><p style="margin: 6px 0 0; color: #4A4658">Pay creators on results</p></div>
-<p style="margin: 0; font-weight: 800; font-size: clamp(40px, 4.44vw, 64px); letter-spacing: -0.045em; line-height: 0.9">{{listing}}<span style="font-size: 18px; font-weight: 600; letter-spacing: 0"> / business</span></p>
-<p style="margin: -6px 0 0; font-weight: 700; color: #5331E8">+ commission you set, only on sales</p>
+<p style="margin: 0; font-weight: 800; font-size: clamp(40px, 4.44vw, 64px); letter-spacing: -0.045em; line-height: 0.9">{{shoplinkPrice}}<span style="font-size: 18px; font-weight: 600; letter-spacing: 0"> one-time</span></p>
+<p style="margin: -6px 0 0; font-weight: 700; color: #5331E8">+ commission you set, only on sales. No monthly fee.</p>
 <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 16px">
-<li>✓ Creator commission 10–50%, or fixed per sale</li>
-<li>✓ Paystack checkout on creator storefronts</li>
+<li>✓ Activate once, list as many products as you like</li>
+<li>✓ Commission 5–50% per product, or fixed per sale</li>
+<li>✓ Secure checkout on every creator storefront</li>
 <li>✓ You fulfil orders, payouts are automatic</li>
-<li>✓ 8% Aktivate fee per sale</li>
+<li>✓ Aktivate’s fee is 35% of the commission, nothing on top</li>
 </ul>
 <a href="#shop-signup" style="margin-top: auto; display: flex; align-items: center; justify-content: center; min-height: 56px; border-radius: 16px; background: #080611; color: #FFFFFF; text-decoration: none; font-weight: 800; font-size: 16px">List your products</a>
 </article>
@@ -161,7 +162,7 @@ input[type=range]{accent-color:#00C4BC;width:100%;height:28px}
 </article>
 <div style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
 <div style="background: #FFFFFF; border-radius: 28px; padding: 26px"><p style="margin: 0; font-weight: 700; color: #5A566A">Campaign payouts</p><p style="margin: 6px 0 0; font-weight: 800; font-size: clamp(28px, 2.78vw, 40px); letter-spacing: -0.03em">5% fee</p><p style="margin: 6px 0 0; color: #4A4658">Taken when you get paid for a campaign.</p></div>
-<div style="background: #00C4BC; border-radius: 28px; padding: 26px"><p style="margin: 0; font-weight: 700">ShopLink sales</p><p style="margin: 6px 0 0; font-weight: 800; font-size: clamp(28px, 2.78vw, 40px); letter-spacing: -0.03em">10–50%</p><p style="margin: 6px 0 0">Commission on every sale, set by the brand.</p></div>
+<div style="background: #00C4BC; border-radius: 28px; padding: 26px"><p style="margin: 0; font-weight: 700">ShopLink sales</p><p style="margin: 6px 0 0; font-weight: 800; font-size: clamp(28px, 2.78vw, 40px); letter-spacing: -0.03em">10–50%</p><p style="margin: 6px 0 0">Commission on every sale, set by the brand. You keep 65% of it; Aktivate’s fee is the other 35%.</p></div>
 <div style="background: #080611; color: #FFFFFF; border-radius: 28px; padding: 26px"><p style="margin: 0; font-weight: 700; color: #9EB3FF">Referrals</p><p style="margin: 6px 0 0; font-weight: 800; font-size: clamp(28px, 2.78vw, 40px); letter-spacing: -0.03em">+₦300</p><p style="margin: 6px 0 0; color: #C9C6D6">Per verified creator you refer.</p></div>
 </div>
 </div>
@@ -208,10 +209,10 @@ renderVals() {
 var self = this;
 var s = this.state;
 var FX = (typeof window !== 'undefined' && window.AKT_FX) || {
-USD: { sym: '$', rate: 1, listing: 15, reports: 26, round: 1 },
-NGN: { sym: '₦', rate: 1359, listing: 20500, reports: 35000, round: 100 },
-GHS: { sym: 'GH₵', rate: 11.62, listing: 175, reports: 300, round: 1 },
-KES: { sym: 'KSh ', rate: 130, listing: 1950, reports: 3350, round: 10 }
+USD: { sym: '$', rate: 1, listing: 15, shoplink: 15, reports: 26, round: 1 },
+NGN: { sym: '₦', rate: 1359, listing: 20500, shoplink: 15000, reports: 35000, round: 100 },
+GHS: { sym: 'GH₵', rate: 11.62, listing: 175, shoplink: 175, reports: 300, round: 1 },
+KES: { sym: 'KSh ', rate: 130, listing: 1950, shoplink: 1950, reports: 3350, round: 10 }
 };
 var f = FX[s.cur] || FX.USD;
 function money(n) { var v = Math.round(n / f.round) * f.round; return f.sym + v.toLocaleString('en-US'); }
@@ -231,6 +232,7 @@ isBusiness: s.view === 'business',
 isCreator: s.view === 'creator',
 budget: s.budget,
 listing: f.sym + f.listing.toLocaleString('en-US'),
+shoplinkPrice: f.sym + f.shoplink.toLocaleString('en-US'),
 reportsPrice: f.sym + (f.reports || 26).toLocaleString('en-US'),
 budgetLabel: money(budgetL),
 feeLabel: money(fee),
