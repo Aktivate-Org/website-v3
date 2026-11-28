@@ -30,7 +30,7 @@ function hreflang(SITE_URL, group) {
 const MARKETS = {
   br: {
     lang: 'pt-BR', locale: 'pt_BR', name: 'Brasil', flag: '🇧🇷', rate: 'BR', creatorsPath: 'criadores',
-    ui: { home: 'Início', faq: 'Perguntas frequentes', how: 'Como funciona', price: 'Preço', creatorsLink: 'Você é criador? Veja a página para criadores', bizLink: 'Você tem uma empresa? Veja a página para empresas', calc: 'Calcular o orçamento', calcC: 'Quanto devo cobrar?' },
+    ui: { help: 'Ainda tem dúvidas? Escreva para', home: 'Início', faq: 'Perguntas frequentes', how: 'Como funciona', price: 'Preço', creatorsLink: 'Você é criador? Veja a página para criadores', bizLink: 'Você tem uma empresa? Veja a página para empresas', calc: 'Calcular o orçamento', calcC: 'Quanto devo cobrar?' },
     biz: {
       title: 'Marketing de influência com nano e microinfluenciadores no Brasil — Aktivate',
       desc: 'Publique uma campanha, receba candidaturas de criadores verificados e pague só pelo conteúdo publicado. US$ 15 por campanha + 10% do orçamento. Sem assinatura.',
@@ -84,7 +84,7 @@ const MARKETS = {
 
   ph: {
     lang: 'en-PH', locale: 'en_PH', name: 'Philippines', flag: '🇵🇭', rate: 'PH', creatorsPath: 'creators',
-    ui: { home: 'Home', faq: 'Questions', how: 'How it works', price: 'Pricing', creatorsLink: 'Are you a creator? See the creator page', bizLink: 'Run a business? See the business page', calc: 'Work out a budget', calcC: 'What should I charge?' },
+    ui: { help: 'Still have a question? Email', home: 'Home', faq: 'Questions', how: 'How it works', price: 'Pricing', creatorsLink: 'Are you a creator? See the creator page', bizLink: 'Run a business? See the business page', calc: 'Work out a budget', calcC: 'What should I charge?' },
     biz: {
       title: 'Influencer marketing for small businesses in the Philippines — Aktivate',
       desc: 'Post a campaign, get applications from verified nano and micro creators, and pay only for content that goes live. $15 per campaign + 10% of budget. No subscription.',
@@ -138,7 +138,7 @@ const MARKETS = {
 
   id: {
     lang: 'id', locale: 'id_ID', name: 'Indonesia', flag: '🇮🇩', rate: 'ID', creatorsPath: 'kreator',
-    ui: { home: 'Beranda', faq: 'Pertanyaan', how: 'Cara kerja', price: 'Harga', creatorsLink: 'Kamu kreator? Lihat halaman untuk kreator', bizLink: 'Punya bisnis? Lihat halaman untuk bisnis', calc: 'Hitung anggaran', calcC: 'Berapa rate card saya?' },
+    ui: { help: 'Masih ada pertanyaan? Email ke', home: 'Beranda', faq: 'Pertanyaan', how: 'Cara kerja', price: 'Harga', creatorsLink: 'Kamu kreator? Lihat halaman untuk kreator', bizLink: 'Punya bisnis? Lihat halaman untuk bisnis', calc: 'Hitung anggaran', calcC: 'Berapa rate card saya?' },
     biz: {
       title: 'Influencer marketing untuk UMKM di Indonesia dengan nano & micro influencer — Aktivate',
       desc: 'Pasang kampanye, terima lamaran dari kreator terverifikasi, dan bayar hanya untuk konten yang tayang. US$15 per kampanye + 10% anggaran. Tanpa langganan.',
@@ -247,6 +247,8 @@ function page(key, m, kind, ctx) {
   const c = m[kind], u = m.ui, home = `/${key}/`, me = kind === 'biz' ? home : `/${key}/${m.creatorsPath}/`;
   const other = kind === 'biz' ? [`/${key}/${m.creatorsPath}/`, u.creatorsLink] : [home, u.bizLink];
   const ctaHref = APP;
+  const helpMail = kind === 'biz' ? 'sales@useaktivate.com' : 'creators@useaktivate.com';
+  const help = `<p class="cp-help">${esc(u.help)} <a href="mailto:${helpMail}">${helpMail}</a></p>`;
   const ghostHref = kind === 'biz' ? '#price' : `/tools/influencer-rate-calculator/?country=${m.rate}`;
   const crumbs = `<p class="cp-crumbs"><a href="/">Aktivate</a> &nbsp;/&nbsp; ${kind === 'biz' ? `${m.flag} ${m.name}` : `<a href="${home}">${m.flag} ${m.name}</a> &nbsp;/&nbsp; ${esc(c.tag)}`}</p>`;
   const price = kind === 'biz' ? `<section class="cp-sec" id="price"><div class="cp-steps mk-price"><div><p class="cp-eyebrow" style="color:#00C4BC">${u.price}</p><h2>${c.priceH}</h2><ul>${c.price.map((x) => `<li><span>${CHECK}</span><span style="all:unset">${x}</span></li>`).join('')}</ul><p style="margin:16px 0 0;color:#C9C6D6;font-size:15px;line-height:1.5">${c.priceNote}</p></div>
@@ -271,7 +273,7 @@ ${crumbs}
 <div class="cp-cards">${c.why.map(([h, t]) => `<div class="cp-card"><span>${CHECK}</span><h3>${h}</h3><p>${t}</p></div>`).join('')}</div></section>
 ${price}
 <section class="cp-sec"><p class="cp-eyebrow">FAQ</p><h2 class="cp-h">${u.faq}</h2><div class="cp-faq">${c.faq.map(([q, a], i) => `<details${i === 0 ? ' open' : ''}><summary>${esc(q)}</summary><p>${a}</p></details>`).join('')}</div>
-<div class="mk-swap"><a href="${other[0]}">${other[1]} ${ARROW}</a><a href="/blog/${{ br: 'brasil', ph: 'philippines', id: 'indonesia' }[key]}/">Blog ${ARROW}</a></div></section>
+<div class="mk-swap"><a href="${other[0]}">${other[1]} ${ARROW}</a><a href="/blog/${{ br: 'brasil', ph: 'philippines', id: 'indonesia' }[key]}/">Blog ${ARROW}</a></div>${help}</section>
 
 <section class="cp-end"><div><h2>${c.endH}</h2><p>${c.endP}</p></div><a class="cp-btn cp-btn--teal" href="${ctaHref}">${c.cta} ${ARROW}</a></section>
 </div>

@@ -193,6 +193,7 @@ body{margin:0;background:#ECEBF2}
 .cp-faq{background:#fff;border-radius:32px;padding:clamp(10px,2vw,20px) clamp(20px,3vw,40px)}
 .cp-faq details{border-top:1px solid #ECEBF2}.cp-faq details:first-child{border-top:0}
 .cp-faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:center;padding:22px 0;font-size:18px;font-weight:800;letter-spacing:-.01em}
+.cp-help{margin:22px 0 0;font-size:16px;color:#4A4560}.cp-help a{color:#5331E8;font-weight:700}
 .cp-faq summary::-webkit-details-marker{display:none}
 .cp-faq summary::after{content:'+';flex:none;width:36px;height:36px;border-radius:50%;background:#ECEBF2;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700}
 .cp-faq details[open] summary::after{content:'–';background:#001FFF;color:#fff}

@@ -95,7 +95,7 @@ function prep(name, src) {
   const LINKS = {
     signup: APP_URL, login: APP_URL, refer: APP_URL, access: APP_URL,
     'shop-signup': SHOP_URL, claim: SHOP_URL, 'reports-app': 'https://reports.useaktivate.com',
-    contact: SALES, sales: SALES, book: SALES + '?subject=Aktivate%20demo', careers: SALES + '?subject=Customer%20Growth%20Associate',
+    contact: SALES, sales: SALES, 'creator-help': 'mailto:creators@useaktivate.com', 'sales-help': SALES + '?subject=Campaign%20support', book: SALES + '?subject=Aktivate%20demo', careers: SALES + '?subject=Customer%20Growth%20Associate',
     blog: '/blog/', alternatives: '/alternatives/',
     instagram: 'https://www.instagram.com/useaktivate', tiktok: 'https://www.tiktok.com/@useaktivate',
     x: 'https://x.com/useaktivate', whatsapp: 'https://chat.whatsapp.com/KyOL3vkMOtLFESGUqSpsqY', linkedin: 'https://www.linkedin.com/company/aktivate-inc/',
